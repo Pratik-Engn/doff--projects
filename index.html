@@ -1,204 +1,659 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Manya</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Message for Manya</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:Segoe UI,Arial,sans-serif;
-height:100vh;overflow:hidden;
-background:linear-gradient(180deg,#0f172a,#1e293b,#334155);
-display:flex;align-items:center;justify-content:center;
-color:#fff;
-}
-body::before{
-content:"";
-position:fixed;inset:0;
-background:url('background.jpg') center/cover no-repeat;
-opacity:.25;
-animation:zoom 25s infinite alternate ease-in-out;
-}
-@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
 
-.card{
-position:relative;z-index:5;
-width:900px;height:560px;
-background:rgba(255,255,255,.12);
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.2);
-border-radius:28px;
-box-shadow:0 20px 50px rgba(0,0,0,.45);
-overflow:hidden;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.slide{
-position:absolute;inset:0;
-display:flex;flex-direction:column;
-align-items:center;justify-content:center;
-padding:60px;text-align:center;
-opacity:0;transform:translateX(80px);
-transition:.8s ease;
-pointer-events:none;
-}
-.slide.active{
-opacity:1;transform:translateX(0);
-pointer-events:auto;
-}
-h1{font-size:56px;margin-bottom:20px}
-p{font-size:28px;line-height:1.6;max-width:700px}
+  :root {
+    --glass-bg: rgba(255,255,255,0.07);
+    --glass-border: rgba(255,255,255,0.18);
+    --glass-shadow: 0 24px 80px rgba(0,0,0,0.45), 0 4px 20px rgba(0,0,0,0.3);
+    --text-primary: rgba(255,255,255,0.96);
+    --text-secondary: rgba(255,255,255,0.65);
+    --accent: rgba(200,180,140,0.9);
+    --accent-glow: rgba(200,180,140,0.35);
+    --btn-primary: rgba(200,180,140,0.22);
+    --btn-primary-hover: rgba(200,180,140,0.38);
+    --btn-decline: rgba(255,255,255,0.08);
+    --btn-decline-hover: rgba(255,255,255,0.14);
+  }
 
-.btn{
-margin-top:40px;
-padding:14px 32px;
-border:none;border-radius:40px;
-font-size:18px;cursor:pointer;
-}
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0e;
+  }
 
-.next{background:white}
-.accept{background:#16a34a;color:white}
-.decline{
-background:#dc2626;color:white;
-position:absolute;
-left:55%;top:72%;
-}
+  /* ── BACKGROUND ── */
+  #bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: url('background.jpg') center center / cover no-repeat;
+    transform-origin: center center;
+    animation: bgZoom 30s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes bgZoom {
+    from { transform: scale(1); }
+    to   { transform: scale(1.12); }
+  }
+  #overlay {
+    position: fixed; inset: 0; z-index: 1;
+    background: linear-gradient(
+      160deg,
+      rgba(5,5,15,0.72) 0%,
+      rgba(10,8,20,0.65) 40%,
+      rgba(5,5,15,0.78) 100%
+    );
+  }
 
-.success{
-display:none;
-position:fixed;inset:0;
-background:rgba(0,0,0,.85);
-z-index:50;
-align-items:center;justify-content:center;
-}
-.success-box{
-background:white;color:black;
-padding:60px;border-radius:24px;
-width:650px;text-align:center;
-animation:pop .5s ease;
-}
-@keyframes pop{from{transform:scale(.7)}to{transform:scale(1)}}
+  /* ── SNOWFALL ── */
+  #snow-canvas {
+    position: fixed; inset: 0; z-index: 2;
+    pointer-events: none;
+  }
 
-.snow{
-position:fixed;
-top:-20px;
-pointer-events:none;
-animation:fall linear infinite;
-z-index:1;
-}
-@keyframes fall{
-to{transform:translateY(110vh)}
-}
+  /* ── MAIN STAGE ── */
+  #stage {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── CARD ── */
+  #card {
+    position: relative;
+    width: min(680px, 92vw);
+    min-height: 420px;
+    padding: 64px 72px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(28px) saturate(140%);
+    -webkit-backdrop-filter: blur(28px) saturate(140%);
+    overflow: visible;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    animation: cardIn 1.2s cubic-bezier(.22,.68,0,1.2) forwards;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  #card::before {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 28px;
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.22) 0%,
+      rgba(255,255,255,0) 50%,
+      rgba(200,180,140,0.12) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── SLIDES ── */
+  .slide {
+    position: absolute; inset: 0;
+    padding: 64px 72px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 28px;
+    text-align: center;
+    opacity: 0; pointer-events: none;
+    transition: none;
+    border-radius: 28px;
+    z-index: 1;
+  }
+  .slide.active {
+    opacity: 1; pointer-events: all;
+  }
+  .slide.enter {
+    animation: slideEnter 0.65s cubic-bezier(.22,.68,0,1.1) forwards;
+  }
+  .slide.exit {
+    animation: slideExit 0.45s cubic-bezier(.4,0,1,1) forwards;
+  }
+  @keyframes slideEnter {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideExit {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-22px); }
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .slide-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 3.5px; text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.85;
+  }
+  .slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+  }
+  .slide-title em { font-style: italic; }
+  .slide-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+    font-weight: 300; line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 480px;
+  }
+  .slide-body strong {
+    color: var(--text-primary); font-weight: 400;
+  }
+  .slide-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 400;
+    letter-spacing: 1.8px; text-transform: uppercase;
+    color: var(--accent);
+    margin-top: -6px;
+  }
+  .divider {
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.6;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-row {
+    display: flex; gap: 16px;
+    align-items: center; justify-content: center;
+    margin-top: 12px;
+    position: relative;
+  }
+  .btn {
+    position: relative;
+    padding: 14px 38px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    background: var(--btn-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .btn::after {
+    content: '';
+    position: absolute; inset: 0; border-radius: 50px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    pointer-events: none;
+  }
+  .btn:hover {
+    background: var(--btn-primary-hover);
+    border-color: rgba(200,180,140,0.45);
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+  .btn:active { transform: translateY(0); }
+
+  .btn-accept {
+    background: rgba(200,180,140,0.2);
+    border-color: rgba(200,180,140,0.45);
+  }
+  .btn-accept:hover {
+    background: rgba(200,180,140,0.38);
+    box-shadow: 0 0 32px rgba(200,180,140,0.5);
+  }
+
+  .btn-decline {
+    background: var(--btn-decline);
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+    /* position managed by JS */
+  }
+  .btn-decline.floating {
+    position: fixed;
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+    z-index: 20;
+  }
+  .btn-decline:hover {
+    background: var(--btn-decline-hover);
+  }
+
+  /* ── CONFIRMATION SCREEN ── */
+  #confirmation {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(5,5,15,0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    pointer-events: none;
+    transition: background 0.8s ease, backdrop-filter 0.8s ease, -webkit-backdrop-filter 0.8s ease;
+  }
+  #confirmation.visible {
+    background: rgba(5,5,15,0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: all;
+  }
+  #conf-card {
+    width: min(560px, 88vw);
+    padding: 72px 72px 64px;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 28px;
+    box-shadow: 0 32px 100px rgba(0,0,0,0.55), 0 0 60px rgba(200,180,140,0.15);
+    backdrop-filter: blur(36px) saturate(160%);
+    -webkit-backdrop-filter: blur(36px) saturate(160%);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    transform: scale(0.88) translateY(30px);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(.22,.68,0,1.15), opacity 0.7s ease;
+    position: relative;
+  }
+  #confirmation.visible #conf-card {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  #conf-card::before {
+    content: '';
+    position: absolute; inset: -1px; border-radius: 28px;
+    background: linear-gradient(135deg, rgba(200,180,140,0.25) 0%, rgba(255,255,255,0) 50%, rgba(200,180,140,0.1) 100%);
+    pointer-events: none;
+  }
+  .conf-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .conf-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+    font-weight: 300; color: var(--text-primary);
+    line-height: 1.1;
+  }
+  .conf-time {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent);
+    padding: 10px 22px;
+    border: 1px solid rgba(200,180,140,0.3);
+    border-radius: 50px;
+    background: rgba(200,180,140,0.08);
+  }
+  .conf-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 300; color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 380px;
+  }
+
+  /* ── CONFETTI CANVAS ── */
+  #confetti-canvas {
+    position: fixed; inset: 0; z-index: 99;
+    pointer-events: none;
+  }
+
+  /* ── PROGRESS DOTS ── */
+  #dots {
+    position: absolute; bottom: 26px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 2;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.22);
+    transition: background 0.4s, transform 0.4s;
+  }
+  .dot.active {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
 </style>
 </head>
 <body>
 
-<div class="card">
-<div class="slide active">
-<h1>Hello Manya</h1>
-<p>I wanted to tell you a few things.</p>
-<button class="btn next" onclick="nextSlide()">Continue →</button>
+<div id="bg"></div>
+<div id="overlay"></div>
+<canvas id="snow-canvas"></canvas>
+<canvas id="confetti-canvas"></canvas>
+
+<div id="stage">
+  <div id="card">
+
+    <!-- Slide 1 -->
+    <div class="slide active" id="s1">
+      <span class="slide-eyebrow">A message for you</span>
+      <h1 class="slide-title">Hello <em>Manya</em></h1>
+      <div class="divider"></div>
+      <p class="slide-body">I wanted to tell you a few things.</p>
+      <div class="btn-row">
+        <button class="btn" onclick="nextSlide()">Continue &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" id="s2">
+      <p class="slide-body" style="font-size:clamp(1.5rem,2.8vw,2rem);color:var(--text-primary);">
+        Since you are an <strong>amazing friend.</strong>
+      </p>
+      <div class="btn-row">
+        <button class="btn" onclick="nextSlide()">Continue &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" id="s3">
+      <p class="slide-body" style="font-size:clamp(1.5rem,2.8vw,2rem);color:var(--text-primary);">
+        Since you are an <strong>amazing person by heart.</strong>
+      </p>
+      <div class="btn-row">
+        <button class="btn" onclick="nextSlide()">Continue &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide" id="s4">
+      <p class="slide-body" style="font-size:clamp(1.5rem,2.8vw,2rem);color:var(--text-primary);">
+        You have <strong>always been there</strong> for me.
+      </p>
+      <p class="slide-body" style="margin-top:-8px;">There is something special ahead.</p>
+      <div class="btn-row">
+        <button class="btn" onclick="nextSlide()">Continue &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide" id="s5">
+      <span class="slide-eyebrow">An invitation</span>
+      <h2 class="slide-title">Movie Night</h2>
+      <div class="divider"></div>
+      <p class="slide-body">Would you like to join me for a movie night?</p>
+      <p class="slide-meta">Friday &nbsp;·&nbsp; 11:00 PM IST</p>
+      <div class="btn-row" id="invite-btns" style="margin-top:8px;">
+        <button class="btn btn-accept" id="btn-accept" onclick="showConfirmation()">Accept</button>
+        <button class="btn btn-decline" id="btn-decline">Decline</button>
+      </div>
+    </div>
+
+    <div id="dots">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+      <div class="dot" id="dot-3"></div>
+      <div class="dot" id="dot-4"></div>
+    </div>
+
+  </div>
 </div>
 
-<div class="slide">
-<h1>Since you are an amazing friend.</h1>
-<button class="btn next" onclick="nextSlide()">Continue →</button>
-</div>
-
-<div class="slide">
-<h1>Since you are an amazing person by heart.</h1>
-<button class="btn next" onclick="nextSlide()">Continue →</button>
-</div>
-
-<div class="slide">
-<h1>You have always been there for me.</h1>
-<p>Through good days, bad days, and random conversations. I genuinely appreciate that.</p>
-<button class="btn next" onclick="nextSlide()">One More Thing →</button>
-</div>
-
-<div class="slide">
-<h1>Movie Night</h1>
-<p>Would you like to join me for a movie night?<br><br>Friday • 11:00 PM IST</p>
-<div style="margin-top:40px">
-<button class="btn accept" onclick="acceptInvite()">Accept</button>
-<button class="btn decline" id="declineBtn">Decline</button>
-</div>
-</div>
-</div>
-
-<div class="success" id="success">
-<div class="success-box">
-<h1 style="color:#16a34a;font-size:44px">Invitation Accepted</h1>
-<p style="color:black">
-Movie Night Confirmed<br><br>
-Friday • 11:00 PM IST
-</p>
-</div>
+<!-- Confirmation -->
+<div id="confirmation">
+  <div id="conf-card">
+    <span class="conf-eyebrow">It&rsquo;s happening</span>
+    <h2 class="conf-title">Movie Night<br><em>Confirmed</em></h2>
+    <div class="divider"></div>
+    <span class="conf-time">Friday &nbsp;·&nbsp; 11:00 PM IST</span>
+    <p class="conf-message">Looking forward to seeing you.</p>
+  </div>
 </div>
 
 <script>
-for(let i=0;i<180;i++){
- let s=document.createElement("div");
- s.className="snow";
- s.innerHTML="❄";
- s.style.left=Math.random()*100+"vw";
- s.style.fontSize=(10+Math.random()*18)+"px";
- s.style.opacity=Math.random();
- s.style.animationDuration=(5+Math.random()*10)+"s";
- document.body.appendChild(s);
-}
+// ─── SNOWFALL ───────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('snow-canvas');
+  const ctx = canvas.getContext('2d');
+  let flakes = [];
+  const COUNT = 120;
 
-const slides=document.querySelectorAll(".slide");
-let current=0;
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
 
-function nextSlide(){
- slides[current].classList.remove("active");
- current++;
- if(current<slides.length){
-   slides[current].classList.add("active");
- }
-}
+  function rand(a, b) { return Math.random() * (b - a) + a; }
 
-function acceptInvite(){
- document.getElementById("success").style.display="flex";
-}
+  function createFlake() {
+    return {
+      x: rand(0, canvas.width),
+      y: rand(-canvas.height, 0),
+      r: rand(0.8, 3.6),
+      speed: rand(0.4, 1.4),
+      drift: rand(-0.25, 0.25),
+      opacity: rand(0.25, 0.75),
+      wobble: rand(0, Math.PI * 2),
+      wobbleSpeed: rand(0.005, 0.02),
+    };
+  }
 
-const declineBtn = document.getElementById("declineBtn");
+  for (let i = 0; i < COUNT; i++) {
+    const f = createFlake();
+    f.y = rand(0, canvas.height); // scatter initial
+    flakes.push(f);
+  }
 
-function moveDeclineButton() {
-
-    const buttonWidth = declineBtn.offsetWidth;
-    const buttonHeight = declineBtn.offsetHeight;
-
-    const maxX = window.innerWidth - buttonWidth - 100;
-    const maxY = window.innerHeight - buttonHeight - 100;
-
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-
-    declineBtn.style.position = "fixed";
-    declineBtn.style.left = randomX + "px";
-    declineBtn.style.top = randomY + "px";
-}
-
-declineBtn.addEventListener("mouseenter", moveDeclineButton);
-
-document.addEventListener("mousemove", (e) => {
-
-    const rect = declineBtn.getBoundingClientRect();
-
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const distance = Math.sqrt(
-        Math.pow(e.clientX - centerX, 2) +
-        Math.pow(e.clientY - centerY, 2)
-    );
-
-    if (distance < 180) {
-        moveDeclineButton();
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const f of flakes) {
+      f.wobble += f.wobbleSpeed;
+      f.x += f.drift + Math.sin(f.wobble) * 0.3;
+      f.y += f.speed;
+      if (f.y > canvas.height + 10) {
+        Object.assign(f, createFlake());
+        f.x = rand(0, canvas.width);
+        f.y = -6;
+      }
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
+      ctx.fill();
     }
-});
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ─── SLIDES ─────────────────────────────────────────────────
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function nextSlide() {
+  if (current >= slides.length - 1) return;
+  const prev = slides[current];
+  prev.classList.remove('active');
+  prev.classList.add('exit');
+  prev.addEventListener('animationend', () => {
+    prev.classList.remove('exit');
+  }, { once: true });
+
+  current++;
+  const next = slides[current];
+  next.classList.add('active', 'enter');
+  next.addEventListener('animationend', () => {
+    next.classList.remove('enter');
+  }, { once: true });
+
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+// ─── DECLINE BUTTON EVASION ─────────────────────────────────
+(function() {
+  const btn = document.getElementById('btn-decline');
+  const card = document.getElementById('card');
+  let isFloating = false;
+  let floatX = 0, floatY = 0;
+  const AVOID_RADIUS = 90;
+
+  function getCardBounds() {
+    return card.getBoundingClientRect();
+  }
+
+  function randomPosInCard() {
+    const cb = getCardBounds();
+    const bw = btn.offsetWidth || 110;
+    const bh = btn.offsetHeight || 48;
+    const pad = 24;
+    const minX = cb.left + pad;
+    const maxX = cb.right - bw - pad;
+    const minY = cb.top + pad;
+    const maxY = cb.bottom - bh - pad;
+    return {
+      x: Math.random() * (maxX - minX) + minX,
+      y: Math.random() * (maxY - minY) + minY,
+    };
+  }
+
+  function makeFloat() {
+    if (isFloating) return;
+    isFloating = true;
+    const pos = randomPosInCard();
+    floatX = pos.x; floatY = pos.y;
+    btn.classList.add('floating');
+    btn.style.left = floatX + 'px';
+    btn.style.top  = floatY + 'px';
+    btn.style.position = 'fixed';
+  }
+
+  function moveAway() {
+    if (!isFloating) makeFloat();
+    let tries = 0;
+    let pos;
+    do {
+      pos = randomPosInCard();
+      tries++;
+    } while (
+      tries < 20 &&
+      Math.hypot(pos.x - floatX, pos.y - floatY) < 80
+    );
+    floatX = pos.x; floatY = pos.y;
+    btn.style.left = floatX + 'px';
+    btn.style.top  = floatY + 'px';
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const s5 = document.getElementById('s5');
+    if (!s5.classList.contains('active')) return;
+
+    const bRect = btn.getBoundingClientRect();
+    const bCX = bRect.left + bRect.width / 2;
+    const bCY = bRect.top  + bRect.height / 2;
+    const dist = Math.hypot(e.clientX - bCX, e.clientY - bCY);
+
+    if (dist < AVOID_RADIUS) {
+      moveAway();
+    }
+  });
+
+  // also trap mouseover directly on button
+  btn.addEventListener('mouseenter', function() {
+    const s5 = document.getElementById('s5');
+    if (!s5.classList.contains('active')) return;
+    moveAway();
+  });
+})();
+
+// ─── CONFIRMATION + CONFETTI ─────────────────────────────────
+function showConfirmation() {
+  const conf = document.getElementById('confirmation');
+  conf.classList.add('visible');
+  launchConfetti();
+}
+
+(function() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let running = false;
+  let animId;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COLORS = [
+    'rgba(200,180,140,0.9)',
+    'rgba(255,255,255,0.85)',
+    'rgba(180,160,220,0.85)',
+    'rgba(140,200,180,0.8)',
+    'rgba(220,200,160,0.9)',
+    'rgba(255,230,180,0.85)',
+  ];
+
+  function rand(a, b) { return Math.random() * (b - a) + a; }
+
+  function createParticle() {
+    const angle = rand(-30, 30) * Math.PI / 180;
+    return {
+      x: rand(0, canvas.width),
+      y: rand(-40, -10),
+      w: rand(5, 11),
+      h: rand(4, 7),
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      vx: Math.sin(angle) * rand(1, 2.5),
+      vy: rand(2.5, 5.5),
+      rot: rand(0, 360),
+      rotSpeed: rand(-4, 4),
+      opacity: 1,
+      fade: rand(0.004, 0.01),
+    };
+  }
+
+  function tick() {
+    if (!running) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = particles.filter(p => p.opacity > 0);
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      p.rot += p.rotSpeed;
+      if (p.y > canvas.height * 0.6) p.opacity -= p.fade * 3;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    }
+    animId = requestAnimationFrame(tick);
+  }
+
+  window.launchConfetti = function() {
+    if (running) return;
+    running = true;
+    // spawn in waves
+    let wave = 0;
+    const totalWaves = 8;
+    function spawnWave() {
+      if (wave >= totalWaves) return;
+      for (let i = 0; i < 55; i++) particles.push(createParticle());
+      wave++;
+      setTimeout(spawnWave, 220);
+    }
+    spawnWave();
+    tick();
+    // stop after 5s
+    setTimeout(() => { running = false; cancelAnimationFrame(animId); ctx.clearRect(0,0,canvas.width,canvas.height); }, 5500);
+  };
+})();
 </script>
 </body>
 </html>
