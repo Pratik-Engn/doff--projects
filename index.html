@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Manya</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+url('background.jpg');
+background-size:cover;
+background-position:center;
+color:white;
+}
+
+/* Snowfall */
+
+.snow{
+position:fixed;
+top:-20px;
+color:white;
+user-select:none;
+pointer-events:none;
+animation:fall linear infinite;
+z-index:1;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh);
+}
+}
+
+/* Card */
+
+.card{
+width:900px;
+height:520px;
+
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(16px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:30px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+padding:50px;
+
+z-index:10;
+}
+
+.slide{
+display:none;
+width:100%;
+}
+
+.slide.active{
+display:block;
+animation:fade .6s ease;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+h1{
+font-size:3rem;
+margin-bottom:25px;
+}
+
+p{
+font-size:1.6rem;
+line-height:1.8;
+}
+
+.next{
+margin-top:35px;
+
+padding:14px 32px;
+
+font-size:18px;
+
+border:none;
+border-radius:40px;
+
+cursor:pointer;
+
+background:white;
+color:black;
+}
+
+/* Invitation Buttons */
+
+.accept{
+background:#22c55e;
+color:white;
+padding:15px 35px;
+border:none;
+border-radius:40px;
+font-size:18px;
+cursor:pointer;
+margin-right:20px;
+}
+
+.decline{
+background:#ef4444;
+color:white;
+padding:15px 35px;
+border:none;
+border-radius:40px;
+font-size:18px;
+cursor:pointer;
+position:fixed;
+}
+
+/* Success Screen */
+
+.success{
+display:none;
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,.85);
+
+justify-content:center;
+align-items:center;
+
+z-index:999;
+}
+
+.success-box{
+background:white;
+color:black;
+
+padding:60px;
+
+border-radius:25px;
+
+width:700px;
+
+text-align:center;
+}
+
+.success-box h2{
+font-size:2.7rem;
+margin-bottom:25px;
+}
+
+.success-box p{
+font-size:1.4rem;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- Slides -->
+
+<div class="card">
+
+<div class="slide active">
+<h1>Hello Manya</h1>
+<p>
+I wanted to tell you a few things.
+</p>
+<button class="next" onclick="nextSlide()">
+Next
+</button>
+</div>
+
+<div class="slide">
+<h1>Slide 1</h1>
+<p>
+Since you are an amazing friend.
+</p>
+<button class="next" onclick="nextSlide()">
+Next
+</button>
+</div>
+
+<div class="slide">
+<h1>Slide 2</h1>
+<p>
+Since you are an amazing person by heart.
+</p>
+<button class="next" onclick="nextSlide()">
+Next
+</button>
+</div>
+
+<div class="slide">
+<h1>Slide 3</h1>
+<p>
+You have always been there for me.
+<br><br>
+There is a special thing ahead.
+</p>
+<button class="next" onclick="nextSlide()">
+Continue
+</button>
+</div>
+
+<div class="slide">
+<h1>Movie Night</h1>
+
+<p>
+Would you like to join me for a movie night?
+<br><br>
+Friday • 11:00 PM IST
+</p>
+
+<br><br>
+
+<button class="accept" onclick="acceptMovie()">
+Accept
+</button>
+
+<button id="declineBtn" class="decline">
+Decline
+</button>
+
+</div>
+
+</div>
+
+<!-- Success -->
+
+<div class="success" id="success">
+
+<div class="success-box">
+
+<h2>Booking Confirmed</h2>
+
+<p>
+Movie Night Scheduled
+<br><br>
+
+Friday <br>
+
+11:00 PM IST
+
+<br><br>
+
+Looking forward to seeing you.
+
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+/* Snow */
+
+for(let i=0;i<150;i++){
+
+let snow=document.createElement("div");
+
+snow.classList.add("snow");
+
+snow.innerHTML="❄";
+
+snow.style.left=Math.random()*100+"vw";
+
+snow.style.fontSize=(10+Math.random()*20)+"px";
+
+snow.style.opacity=Math.random();
+
+snow.style.animationDuration=(5+Math.random()*8)+"s";
+
+snow.style.animationDelay=Math.random()*5+"s";
+
+document.body.appendChild(snow);
+
+}
+
+/* Slides */
+
+let current=0;
+
+const slides=document.querySelectorAll(".slide");
+
+function nextSlide(){
+
+slides[current].classList.remove("active");
+
+current++;
+
+slides[current].classList.add("active");
+
+}
+
+/* Accept */
+
+function acceptMovie(){
+
+document.getElementById("success").style.display="flex";
+
+}
+
+/* Runaway Decline Button */
+
+const declineBtn=document.getElementById("declineBtn");
+
+document.addEventListener("mousemove",(e)=>{
+
+const rect=declineBtn.getBoundingClientRect();
+
+const centerX=rect.left + rect.width/2;
+const centerY=rect.top + rect.height/2;
+
+const distance=Math.sqrt(
+
+Math.pow(e.clientX-centerX,2)+
+Math.pow(e.clientY-centerY,2)
+
+);
+
+if(distance<180){
+
+const maxX=
+window.innerWidth-rect.width-50;
+
+const maxY=
+window.innerHeight-rect.height-50;
+
+declineBtn.style.left=
+Math.random()*maxX+"px";
+
+declineBtn.style.top=
+Math.random()*maxY+"px";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
