@@ -163,20 +163,41 @@ function acceptInvite(){
  document.getElementById("success").style.display="flex";
 }
 
-const btn=document.getElementById("declineBtn");
+const declineBtn = document.getElementById("declineBtn");
 
-document.addEventListener("mousemove",(e)=>{
- const r=btn.getBoundingClientRect();
- const cx=r.left+r.width/2;
- const cy=r.top+r.height/2;
- const d=Math.hypot(e.clientX-cx,e.clientY-cy);
+function moveDeclineButton() {
 
- if(d<140){
-   const maxX=window.innerWidth-r.width-40;
-   const maxY=window.innerHeight-r.height-40;
-   btn.style.left=Math.random()*maxX+"px";
-   btn.style.top=Math.random()*maxY+"px";
- }
+    const buttonWidth = declineBtn.offsetWidth;
+    const buttonHeight = declineBtn.offsetHeight;
+
+    const maxX = window.innerWidth - buttonWidth - 100;
+    const maxY = window.innerHeight - buttonHeight - 100;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    declineBtn.style.position = "fixed";
+    declineBtn.style.left = randomX + "px";
+    declineBtn.style.top = randomY + "px";
+}
+
+declineBtn.addEventListener("mouseenter", moveDeclineButton);
+
+document.addEventListener("mousemove", (e) => {
+
+    const rect = declineBtn.getBoundingClientRect();
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const distance = Math.sqrt(
+        Math.pow(e.clientX - centerX, 2) +
+        Math.pow(e.clientY - centerY, 2)
+    );
+
+    if (distance < 180) {
+        moveDeclineButton();
+    }
 });
 </script>
 </body>
