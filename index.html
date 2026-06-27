@@ -1,708 +1,959 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Demoted & Perks Report 👑</title>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Patrick+Hand&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Something I've been wanting to say 💛</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    min-height: 100vh;
-    background: #fdf0e8;
-    background-image:
-      radial-gradient(circle at 20% 20%, #fce4d6 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, #fde8f0 0%, transparent 50%);
-    font-family: 'Patrick Hand', cursive;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+    :root {
+      --bg:     #0D0A14;
+      --bg2:    #120E1C;
+      --card:   #1A1428;
+      --card2:  #201830;
+      --purple: #9B6DCA;
+      --lilac:  #C4A0E8;
+      --violet: #6B3FA0;
+      --glow:   #B47EE5;
+      --text:   #EDE0FF;
+      --soft:   #B8A8D0;
+      --mist:   #2A1F40;
+      --white:  #F5EEFF;
+      --gold:   #C4A0E8;
+    }
 
-  .page {
-    max-width: 860px;
-    width: 100%;
-    background: #fef9f4;
-    border: 2.5px solid #e8c9b0;
-    border-radius: 18px;
-    padding: 30px 32px 28px;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(180,100,60,0.10);
-  }
+    html { scroll-behavior: smooth; }
 
-  /* Decorative corner dots */
-  .page::before, .page::after {
-    content: '✦';
-    position: absolute;
-    color: #f4a6c0;
-    font-size: 18px;
-  }
-  .page::before { top: 12px; left: 14px; }
-  .page::after { bottom: 12px; right: 14px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
 
-  /* ── Sticky notes ── */
-  .sticky-employee {
-    position: absolute;
-    top: 18px;
-    left: 22px;
-    background: #fce8d0;
-    border: 1.5px solid #e8c9a0;
-    border-radius: 6px 6px 6px 2px;
-    padding: 10px 14px 12px;
-    width: 140px;
-    font-family: 'Caveat', cursive;
-    font-size: 15px;
-    transform: rotate(-2deg);
-    box-shadow: 2px 3px 8px rgba(0,0,0,0.08);
-  }
-  .sticky-employee .label { font-size: 13px; color: #b05a20; }
-  .sticky-employee .val { font-weight: 700; color: #e05a10; text-decoration: underline; font-size: 17px; }
-  .sticky-employee .dept { font-size: 13px; color: #b05a20; margin-top: 4px; }
-  .sticky-employee .dept-val { color: #3a7bd5; text-decoration: underline wavy; font-size: 15px; font-weight: 600; }
-  .sticky-employee .heart { color: #e05a7a; margin-left: 2px; }
+    /* ── PAGES ── */
+    .page {
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem 5rem;
+      position: relative;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      background: var(--bg);
+    }
+    .page.active { display: flex; }
+    .page.visible { opacity: 1; }
 
-  .sticky-letter {
-    position: absolute;
-    top: 14px;
-    right: 22px;
-    background: #fffde7;
-    border: 1.5px solid #e8d88a;
-    border-radius: 6px;
-    padding: 10px 14px;
-    width: 188px;
-    font-family: 'Caveat', cursive;
-    font-size: 13.5px;
-    line-height: 1.5;
-    transform: rotate(1.5deg);
-    box-shadow: 2px 3px 8px rgba(0,0,0,0.08);
-    color: #4a3a10;
-  }
-  .sticky-letter .sig { margin-top: 6px; font-style: italic; color: #888; font-size: 12px; }
+    /* ── BLOBS ── */
+    .paint-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 { width: 380px; height: 380px; background: rgba(107,63,160,0.35); top: -100px; right: -100px; }
+    .blob-2 { width: 260px; height: 260px; background: rgba(155,109,202,0.2); bottom: 40px; left: -70px; }
+    .blob-3 { width: 300px; height: 300px; background: rgba(180,126,229,0.15); top: 35%; left: 25%; }
 
-  /* ── Title block ── */
-  .title-area {
-    text-align: center;
-    padding: 0 160px;
-    margin-bottom: 10px;
-  }
-  .title-main {
-    font-family: 'Architects Daughter', cursive;
-    font-size: 2.3rem;
-    line-height: 1.1;
-    color: #1a1a1a;
-    letter-spacing: -0.5px;
-  }
-  .title-main .demoted { color: #e04a7a; }
-  .title-main .perks   { color: #8b5cf6; }
-  .title-main .report  { color: #1a1a1a; }
+    .content { position: relative; z-index: 1; max-width: 520px; width: 100%; }
 
-  .status-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    margin-top: 6px;
-  }
-  .status-badge {
-    font-family: 'Caveat', cursive;
-    font-size: 1.15rem;
-    color: #8b5cf6;
-    background: #f3efff;
-    border: 1.5px dashed #c4b5fd;
-    border-radius: 20px;
-    padding: 3px 16px;
-  }
-  .under-review {
-    font-family: 'Patrick Hand', cursive;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #e04a4a;
-    border: 2px solid #e04a4a;
-    border-radius: 4px;
-    padding: 3px 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: #fff;
-  }
+    /* ── LABELS ── */
+    .chapter-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lilac);
+      margin-bottom: 1.2rem;
+    }
 
-  /* ── Table ── */
-  .report-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 18px;
-    border: 2px solid #e8c9a0;
-    border-radius: 10px;
-    overflow: hidden;
-  }
+    /* ── TYPE ── */
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 5.5vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 0.9rem;
+    }
+    h2 em { font-style: italic; color: var(--lilac); }
+    p {
+      font-size: 0.97rem;
+      line-height: 1.8;
+      color: var(--soft);
+      margin-bottom: 1rem;
+    }
 
-  .report-table th {
-    padding: 9px 10px;
-    font-family: 'Caveat', cursive;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border: 1px solid #e8c9a0;
-  }
-  .th-perk   { background: #fad4c0; color: #8b3a10; width: 36%; }
-  .th-chance { background: #e8d8f8; color: #5a2a8b; width: 36%; }
-  .th-notes  { background: #c8e8d8; color: #1a6a40; width: 28%; }
+    /* ── HINGE CARD ── */
+    .hinge-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 1.8rem;
+      box-shadow: 0 8px 44px rgba(107,63,160,0.3), 0 0 0 1px rgba(155,109,202,0.15);
+      margin-bottom: 1.8rem;
+      border: 1px solid rgba(155,109,202,0.2);
+    }
+    .card-avatar {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6B3FA0, #C4A0E8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.9rem;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 0 20px rgba(180,126,229,0.4);
+    }
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .card-meta { font-size: 0.82rem; color: var(--lilac); margin-bottom: 0.9rem; }
+    .card-tag {
+      display: inline-block;
+      background: var(--mist);
+      border-radius: 100px;
+      padding: 0.28rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--lilac);
+      margin: 0.2rem;
+      border: 1px solid rgba(155,109,202,0.2);
+    }
+    .card-prompt {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(155,109,202,0.2);
+      font-size: 0.82rem;
+      color: var(--lilac);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .card-prompt-answer {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--white);
+      line-height: 1.55;
+    }
 
-  .chance-sub {
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid #d8c0f0;
-    padding-top: 4px;
-    margin-top: 2px;
-  }
-  .chance-sub span {
-    font-size: 0.88rem;
-    font-weight: 700;
-    font-family: 'Caveat', cursive;
-  }
-  .c-yes   { color: #16a34a; }
-  .c-maybe { color: #ea580c; }
-  .c-no    { color: #dc2626; }
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.9rem;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+    .btn-primary { background: var(--violet); color: var(--white); }
+    .btn-primary:hover { background: var(--purple); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(155,109,202,0.5); }
+    .btn-outline { background: transparent; color: var(--lilac); border: 1.5px solid rgba(155,109,202,0.5); }
+    .btn-outline:hover { background: var(--mist); }
+    .btn-gold { background: linear-gradient(135deg, #7B4FBF, #C4A0E8); color: var(--white); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(180,126,229,0.5); }
 
-  .report-table td {
-    padding: 14px 10px;
-    border: 1px solid #e8c9a0;
-    vertical-align: middle;
-  }
+    .divider { width: 48px; height: 2px; background: var(--violet); margin: 1.4rem 0; }
 
-  .perk-cell {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .perk-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 6px;
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 15px;
-    flex-shrink: 0;
-    color: #fff;
-  }
-  .perk-num.n1 { background: #f87171; }
-  .perk-num.n2 { background: #60a5fa; }
-  .perk-num.n3 { background: #a78bfa; }
-  .perk-num.n4 { background: #fbbf24; }
+    /* ── QUIZ ── */
+    .quiz-wrap { width: 100%; max-width: 520px; }
+    .quiz-progress { display: flex; gap: 6px; margin-bottom: 2rem; }
+    .quiz-dot {
+      height: 4px; flex: 1; border-radius: 4px;
+      background: var(--mist);
+      transition: background 0.4s;
+    }
+    .quiz-dot.done { background: var(--violet); }
+    .quiz-dot.active { background: var(--glow); }
 
-  .perk-icon { font-size: 24px; }
-  .perk-text { font-size: 1rem; line-height: 1.35; color: #2a1a0a; }
+    .quiz-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 4px 30px rgba(107,63,160,0.2);
+      border: 1px solid rgba(155,109,202,0.15);
+      margin-bottom: 1.2rem;
+    }
+    .quiz-q {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+      line-height: 1.45;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.65rem; }
+    .quiz-opt {
+      padding: 0.8rem 1.15rem;
+      border-radius: 12px;
+      border: 1.5px solid rgba(155,109,202,0.2);
+      background: var(--bg2);
+      cursor: pointer;
+      font-size: 0.93rem;
+      color: var(--soft);
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .quiz-opt:hover { border-color: var(--purple); background: var(--mist); color: var(--white); }
+    .quiz-opt.correct { border-color: #7CAE8D; background: rgba(124,174,141,0.15); color: #A8D5B5; }
+    .quiz-opt.wrong { border-color: #C97B7B; background: rgba(201,123,123,0.12); color: #E0A0A0; }
 
-  /* Radio group */
-  .chance-group {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .chance-opt {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-  }
-  .chance-opt input[type="radio"] { display: none; }
-  .chance-box {
-    width: 28px;
-    height: 28px;
-    border: 2px solid #b0a090;
-    border-radius: 4px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    transition: background 0.15s, border-color 0.15s;
-    cursor: pointer;
-  }
-  .chance-opt input[type="radio"]:checked + .chance-box {
-    background: #f0fdf4;
-    border-color: #16a34a;
-  }
-  .chance-opt input[type="radio"]:checked + .chance-box::after { content: '✔'; color: #16a34a; font-size: 16px; }
-  .chance-opt.maybe input[type="radio"]:checked + .chance-box { background: #fff7ed; border-color: #ea580c; }
-  .chance-opt.maybe input[type="radio"]:checked + .chance-box::after { content: '✔'; color: #ea580c; }
-  .chance-opt.no input[type="radio"]:checked + .chance-box    { background: #fef2f2; border-color: #dc2626; }
-  .chance-opt.no input[type="radio"]:checked + .chance-box::after    { content: '✔'; color: #dc2626; }
+    .quiz-feedback {
+      margin-top: 1rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 12px;
+      background: var(--mist);
+      font-size: 0.93rem;
+      color: var(--lilac);
+      line-height: 1.65;
+      display: none;
+      border: 1px solid rgba(155,109,202,0.2);
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-score {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--lilac);
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
 
-  /* For row 4 (promotion %), radio shows text */
-  .promo-group {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .promo-opt { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-  .promo-opt input[type="radio"] { display: none; }
-  .promo-box {
-    width: 28px; height: 28px;
-    border: 2px solid #b0a090;
-    border-radius: 4px;
-    background: #fff;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s, border-color 0.15s;
-    cursor: pointer;
-  }
-  .promo-opt input[type="radio"]:checked + .promo-box { background: #f0fdf4; border-color: #16a34a; }
-  .promo-opt input[type="radio"]:checked + .promo-box::after { content: '✔'; color: #16a34a; font-size: 16px; }
-  .promo-opt.p50 input[type="radio"]:checked + .promo-box { background: #fff7ed; border-color: #ea580c; }
-  .promo-opt.p50 input[type="radio"]:checked + .promo-box::after { content: '✔'; color: #ea580c; }
-  .promo-opt.p0 input[type="radio"]:checked + .promo-box  { background: #fef2f2; border-color: #dc2626; }
-  .promo-opt.p0 input[type="radio"]:checked + .promo-box::after  { content: '✔'; color: #dc2626; }
+    /* ── THINGS I LIKE (page 2) ── */
+    .likes-list { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
+    .like-item {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 1.1rem 1.3rem;
+      border: 1px solid rgba(155,109,202,0.18);
+      box-shadow: 0 3px 14px rgba(107,63,160,0.15);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .like-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .like-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.15rem;
+    }
+    .like-desc { font-size: 0.83rem; color: var(--soft); line-height: 1.55; }
 
-  /* Note cloud */
-  .note-cloud {
-    background: #eef7ff;
-    border: 1.5px solid #b0d4f0;
-    border-radius: 16px 16px 16px 4px;
-    padding: 8px 14px;
-    font-family: 'Caveat', cursive;
-    font-size: 1rem;
-    color: #1a4070;
-    line-height: 1.4;
-    position: relative;
-  }
-  .note-cloud.yellow { background: #fffde7; border-color: #fad84a; color: #6a5010; }
-  .note-cloud.green  { background: #f0fdf4; border-color: #86efac; color: #14532d; }
-  .note-cloud.pink   { background: #fdf2f8; border-color: #f9a8d4; color: #701a75; }
+    /* ── GROWTH TIMELINE (page 3) ── */
+    .timeline { position: relative; padding-left: 2rem; margin-bottom: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--glow), var(--violet));
+      border-radius: 2px;
+    }
+    .timeline-item { position: relative; margin-bottom: 1.6rem; }
+    .timeline-dot {
+      position: absolute;
+      left: -1.75rem;
+      top: 5px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--glow);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--glow), 0 0 8px rgba(180,126,229,0.6);
+    }
+    .timeline-phase {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lilac);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-desc { font-size: 0.83rem; color: var(--soft); line-height: 1.6; }
 
-  /* ── Terms ── */
-  .terms {
-    margin-top: 20px;
-    background: #fff8f0;
-    border: 1.5px solid #e8c9a0;
-    border-radius: 10px;
-    padding: 14px 18px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 30px;
-  }
-  .terms-title {
-    grid-column: 1 / -1;
-    font-family: 'Caveat', cursive;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #e04a10;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .term-item {
-    font-size: 0.93rem;
-    color: #3a2a10;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 2px 0;
-    line-height: 1.35;
-  }
-  .term-item::before {
-    content: '☑';
-    color: #e04a10;
-    flex-shrink: 0;
-    font-size: 15px;
-  }
+    /* ── CONFESSION (page 4) ── */
+    .confession-wrap { text-align: center; }
+    .confession-heart {
+      font-size: 3.2rem;
+      margin-bottom: 1.4rem;
+      animation: heartbeat 1.7s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px rgba(180,126,229,0.8));
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .confession-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.15rem, 3.8vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .response-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-  /* ── Bottom row ── */
-  .bottom-row {
-    display: flex;
-    align-items: stretch;
-    gap: 16px;
-    margin-top: 16px;
-  }
-  .promotion-block {
-    flex: 1;
-    font-family: 'Caveat', cursive;
-    font-size: 1.1rem;
-    color: #3a1a0a;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    background: #fff;
-    border: 1.5px dashed #f4a020;
-    border-radius: 10px;
-    flex-wrap: wrap;
-  }
-  .promotion-block .promo-word {
-    font-weight: 700;
-    color: #e04a10;
-    font-size: 1.4rem;
-  }
+    /* ── FINAL PAGE (page 5) ── */
+    #page-5 {
+      background-image: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=900&auto=format&fit=crop&q=60');
+      background-size: cover;
+      background-position: center;
+    }
+    #page-5::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(13,5,30,0.88) 0%, rgba(60,20,100,0.75) 100%);
+      z-index: 0;
+    }
+    #page-5 .content { position: relative; z-index: 1; text-align: center; }
+    #page-5 .chapter-label { color: var(--lilac); }
+    .final-msg {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.25rem, 4.5vw, 1.8rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.85;
+      margin-bottom: 1.8rem;
+    }
+    .final-msg em { font-style: italic; color: var(--lilac); }
+    .final-heart {
+      font-size: 3rem;
+      margin-bottom: 1.2rem;
+      animation: heartbeat 1.7s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(196,160,232,0.9));
+    }
 
-  .designation-box {
-    background: #fce8f0;
-    border: 2px solid #f4a0c0;
-    border-radius: 10px;
-    padding: 12px 18px;
-    text-align: center;
-    font-family: 'Caveat', cursive;
-    min-width: 175px;
-  }
-  .designation-box .d-label { font-size: 0.9rem; color: #8a3050; }
-  .designation-box .d-val   { font-size: 1.2rem; font-weight: 700; color: #c01050; margin: 2px 0; }
-  .designation-box .review-label { font-size: 0.85rem; color: #8a3050; margin-top: 4px; }
-  .designation-box .review-val   { font-size: 1rem; color: #c01050; font-weight: 600; }
+    /* ── NAV DOTS ── */
+    .page-nav {
+      position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 100;
+    }
+    .page-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(155,109,202,0.3);
+      transition: all 0.3s;
+    }
+    .page-dot.active { background: var(--purple); width: 22px; border-radius: 4px; box-shadow: 0 0 8px rgba(155,109,202,0.6); }
 
-  /* ── Footer bar ── */
-  .footer-bar {
-    margin-top: 14px;
-    background: #fce8f4;
-    border-radius: 8px;
-    padding: 9px 18px;
-    text-align: center;
-    font-family: 'Caveat', cursive;
-    font-size: 1.05rem;
-    color: #8a1050;
-    letter-spacing: 0.2px;
-  }
+    /* ── BRUSH ACCENTS ── */
+    .brush-accent {
+      position: absolute;
+      opacity: 0.08;
+      pointer-events: none;
+    }
 
-  /* ── Submit & Result ── */
-  .submit-area {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .submit-btn {
-    font-family: 'Caveat', cursive;
-    font-size: 1.2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #f87171, #a78bfa);
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    padding: 12px 36px;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 4px 16px rgba(180,60,120,0.18);
-  }
-  .submit-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 7px 24px rgba(180,60,120,0.25); }
-  .submit-btn:active { transform: scale(0.97); }
+    /* ── SNOWFALL ── */
+    #snow-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
 
-  #result-card {
-    display: none;
-    margin-top: 22px;
-    background: #fff;
-    border: 2px solid #f4a0c0;
-    border-radius: 16px;
-    padding: 22px 28px;
-    text-align: center;
-    font-family: 'Caveat', cursive;
-  }
-  #result-card h2 {
-    font-size: 1.6rem;
-    color: #c01050;
-    margin-bottom: 10px;
-  }
-  #result-card .result-detail {
-    font-size: 1.05rem;
-    color: #3a1a40;
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
-  #result-card .verdict {
-    display: inline-block;
-    background: linear-gradient(135deg, #fce8f0, #e8d8f8);
-    border-radius: 10px;
-    padding: 12px 24px;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #5a1a7a;
-    border: 1.5px dashed #c4b5fd;
-    margin-top: 6px;
-  }
+    /* ── LISTENING CARD ── */
+    .listen-card {
+      background: linear-gradient(135deg, rgba(107,63,160,0.2) 0%, var(--card) 100%);
+      border-radius: 20px;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid rgba(155,109,202,0.3);
+      box-shadow: 0 4px 24px rgba(107,63,160,0.2);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .listen-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--lilac), var(--violet));
+      border-radius: 3px 0 0 3px;
+    }
+    .listen-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .listen-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.15rem;
+    }
+    .listen-desc { font-size: 0.83rem; color: var(--soft); line-height: 1.6; }
 
-  /* Deco sparkles */
-  .sparkle { color: #f4a020; font-size: 16px; }
-  .heart   { color: #e04a7a; }
+    /* ── CALL VISUAL ── */
+    .call-visual {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid rgba(155,109,202,0.2);
+      box-shadow: 0 4px 24px rgba(107,63,160,0.2);
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    .call-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 5px;
+      height: 48px;
+      margin-bottom: 0.8rem;
+    }
+    .bar {
+      width: 8px;
+      border-radius: 4px;
+      background: var(--purple);
+      animation: wave 1.4s ease-in-out infinite;
+    }
+    .bar:nth-child(1) { height: 20%; animation-delay: 0s; background: var(--lilac); }
+    .bar:nth-child(2) { height: 60%; animation-delay: 0.15s; }
+    .bar:nth-child(3) { height: 90%; animation-delay: 0.3s; }
+    .bar:nth-child(4) { height: 45%; animation-delay: 0.45s; background: var(--lilac); }
+    .bar:nth-child(5) { height: 75%; animation-delay: 0.6s; }
+    .bar:nth-child(6) { height: 30%; animation-delay: 0.75s; background: var(--lilac); }
+    .bar:nth-child(7) { height: 55%; animation-delay: 0.9s; }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+    .call-label {
+      font-size: 0.78rem;
+      color: var(--lilac);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .call-sublabel {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--soft);
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
 
-  /* Row alternating bg */
-  .report-table tbody tr:nth-child(even) td { background: #fdf5f0; }
-  .report-table tbody tr:nth-child(odd)  td { background: #fffcfa; }
-
-  @media (max-width: 640px) {
-    .title-area { padding: 0 10px; }
-    .sticky-employee, .sticky-letter { position: static; transform: none; margin-bottom: 10px; width: auto; display: inline-block; }
-    .title-main { font-size: 1.5rem; }
-    .terms { grid-template-columns: 1fr; }
-    .bottom-row { flex-direction: column; }
-    .report-table th, .report-table td { padding: 8px 5px; font-size: 0.88rem; }
-  }
-</style>
+    @media (max-width: 480px) {
+      .response-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
 </head>
 <body>
-<div class="page">
 
-  <!-- Sticky notes -->
-  <div class="sticky-employee">
-    <div class="label">Friend:</div>
-    <div class="val">ME</div>
-    <div class="dept">Best Friend:</div>
-    <div class="dept-val">Ryoshi <span class="heart">♥</span></div>
-  </div>
+<!-- SNOWFALL -->
+<canvas id="snow-canvas"></canvas>
 
-  <div class="sticky-letter">
-    Dear Ryoshi (aka You),<br>
-    I accept my demotion with love &amp; regrets. I promise to improve, behave &amp; not act like cringe. 🫣❤️<br>
-    <span class="sig">— Yours (Hopefully Promoted Soon)</span>
-  </div>
-
-  <!-- Title -->
-  <div class="title-area">
-    <div class="title-main">
-      <span class="demoted">DEMOTED</span> &amp; <span class="perks">PERKS</span> <span class="report">REPORT</span>
-    </div>
-    <div class="status-row">
-      <span class="status-badge">👑 Status: Currently Demoted</span>
-      <span class="under-review">Under Review</span>
-    </div>
-  </div>
-
-  <!-- Table -->
-  <table class="report-table">
-    <thead>
-      <tr>
-        <th class="th-perk">Perk / Privilege</th>
-        <th class="th-chance">
-          Chance (Tick One)
-          <div class="chance-sub">
-            <span class="c-yes">YES</span>
-            <span class="c-maybe">MAYBE</span>
-            <span class="c-no">NO</span>
-          </div>
-        </th>
-        <th class="th-notes">Notes (From You 🐱)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Row 1 -->
-      <tr>
-        <td>
-          <div class="perk-cell">
-            <span class="perk-icon">🎬</span>
-            <span class="perk-num n1">1</span>
-            <span class="perk-text">Will you watch movie with me? ❤️</span>
-          </div>
-        </td>
-        <td>
-          <div class="chance-group">
-            <label class="chance-opt">
-              <input type="radio" name="q1" value="yes">
-              <span class="chance-box"></span>
-            </label>
-            <label class="chance-opt maybe">
-              <input type="radio" name="q1" value="maybe">
-              <span class="chance-box"></span>
-            </label>
-            <label class="chance-opt no">
-              <input type="radio" name="q1" value="no">
-              <span class="chance-box"></span>
-            </label>
-          </div>
-        </td>
-        <td><div class="note-cloud">Mood dependent 😌</div></td>
-      </tr>
-      <!-- Row 2 -->
-      <tr>
-        <td>
-          <div class="perk-cell">
-            <span class="perk-icon">📸</span>
-            <span class="perk-num n2">2</span>
-            <span class="perk-text">Will you hangout with me? 💙</span>
-          </div>
-        </td>
-        <td>
-          <div class="chance-group">
-            <label class="chance-opt">
-              <input type="radio" name="q2" value="yes">
-              <span class="chance-box"></span>
-            </label>
-            <label class="chance-opt maybe">
-              <input type="radio" name="q2" value="maybe">
-              <span class="chance-box"></span>
-            </label>
-            <label class="chance-opt no">
-              <input type="radio" name="q2" value="no">
-              <span class="chance-box"></span>
-            </label>
-          </div>
-        </td>
-        <td><div class="note-cloud yellow">If you behave... maybe 😉</div></td>
-      </tr>
-      <!-- Row 3 -->
-      <tr>
-        <td>
-          <div class="perk-cell">
-            <span class="perk-icon">📱</span>
-            <span class="perk-num n3">3</span>
-            <span class="perk-text">Will you send me Instagram reels? 💗</span>
-          </div>
-        </td>
-        <td>
-          <div class="chance-group">
-            <label class="chance-opt">
-              <input type="radio" name="q3" value="yes">
-              <span class="chance-box"></span>
-            </label>
-            <label class="chance-opt maybe">
-              <input type="radio" name="q3" value="maybe">
-              <span class="chance-box"></span>
-            </label>
-            <label class="chance-opt no">
-              <input type="radio" name="q3" value="no">
-              <span class="chance-box"></span>
-            </label>
-          </div>
-        </td>
-        <td><div class="note-cloud pink">Reel queen vibes 👑</div></td>
-      </tr>
-      <!-- Row 4 -->
-      <tr>
-        <td>
-          <div class="perk-cell">
-            <span class="perk-icon">📈</span>
-            <span class="perk-num n4">4</span>
-            <span class="perk-text">What are the chances of my <strong style="color:#3a7bd5;text-decoration:underline;">PROMOTION</strong>? ✦</span>
-          </div>
-        </td>
-        <td>
-          <div class="promo-group">
-            <label class="promo-opt">
-              <input type="radio" name="q4" value="100">
-              <span class="promo-box"></span>
-              <span class="c-yes" style="font-family:'Caveat',cursive;font-weight:700;font-size:0.95rem;">100%</span>
-            </label>
-            <label class="promo-opt p50">
-              <input type="radio" name="q4" value="50">
-              <span class="promo-box"></span>
-              <span class="c-maybe" style="font-family:'Caveat',cursive;font-weight:700;font-size:0.95rem;">50%</span>
-            </label>
-            <label class="promo-opt p0">
-              <input type="radio" name="q4" value="0">
-              <span class="promo-box"></span>
-              <span class="c-no" style="font-family:'Caveat',cursive;font-weight:700;font-size:0.95rem;">0%</span>
-            </label>
-          </div>
-        </td>
-        <td><div class="note-cloud green">Work hard, behave nice, get promoted 😎👑</div></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Terms & Conditions -->
-  <div class="terms">
-    <div class="terms-title">✨ Terms & Conditions (As per You)</div>
-    <div class="term-item">No over-variety (I'll fix that) 🐼</div>
-    <div class="term-item">Listen more, talk less (try karunga) 😅</div>
-    <div class="term-item">Consistency is the key 🔑</div>
-    <div class="term-item">Respect <strong>MY</strong> mood swings (always) 💎❤️</div>
-    <div class="term-item">No unnecessary bakchodi 🤫</div>
-    <div class="term-item">Make you laugh daily 😄</div>
-  </div>
-
-  <!-- Bottom row -->
-  <div class="bottom-row">
-    <div class="promotion-block">
-      🏆 I'm working hard for my <span class="promo-word">PROMOTION!</span> 💪❤️ — Ryoshi pls
-    </div>
-    <div class="designation-box">
-      <div class="d-label">Current Designation:</div>
-      <div class="d-val">DEMOTED FRIEND 😢</div>
-      <div class="review-label">Next Review Date:</div>
-      <div class="review-val">Whenever you smile 😊</div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer-bar">
-    💗 Pretty Please? 🥺 &nbsp;|&nbsp; Please tick honestly. My future depends on this. 😱🙏❤️
-  </div>
-
-  <!-- Submit -->
-  <div class="submit-area">
-    <button class="submit-btn" onclick="submitReport()">Submit My Verdict 👑✨</button>
-  </div>
-
-  <!-- Result Card -->
-  <div id="result-card">
-    <h2 id="result-title"></h2>
-    <div class="result-detail" id="result-detail"></div>
-    <div class="verdict" id="result-verdict"></div>
-  </div>
-
+<div class="page-nav">
+  <div class="page-dot active" data-page="0"></div>
+  <div class="page-dot" data-page="1"></div>
+  <div class="page-dot" data-page="2"></div>
+  <div class="page-dot" data-page="3"></div>
+  <div class="page-dot" data-page="4"></div>
+  <div class="page-dot" data-page="5"></div>
 </div>
 
+<!-- ══════════════════════════════════
+     PAGE 0 — WELCOME CARD
+════════════════════════════════════ -->
+<div class="page active" id="page-0">
+  <div class="paint-blob blob-1"></div>
+  <div class="paint-blob blob-2"></div>
+  <svg class="brush-accent" style="top:8%;right:-10px;width:170px" viewBox="0 0 200 60" fill="none">
+    <path d="M10 40 Q60 10 120 30 Q160 45 195 20" stroke="#C97B63" stroke-width="18" stroke-linecap="round"/>
+  </svg>
+
+  <div class="content">
+    <div class="chapter-label">✦ Something I made just for you</div>
+
+    <div class="hinge-card">
+      <div class="card-avatar">🌸</div>
+      <div class="card-name">Someone you know</div>
+      <div class="card-meta">Has been saving something up…</div>
+      <div>
+        <span class="card-tag">📞 Those long calls</span>
+        <span class="card-tag">💛 Your warmth</span>
+        <span class="card-tag">🌱 Watching you grow</span>
+      </div>
+      <div class="card-prompt">The thing I can't stop thinking about is…</div>
+      <div class="card-prompt-answer">"You. And how rare you actually are."</div>
+    </div>
+
+    <p style="font-size:0.93rem;">
+      There's something I've been meaning to say for a while now.
+      So I built a little something instead of just texting it. Ready?
+    </p>
+
+    <button class="btn btn-primary" style="margin-top:1.3rem" onclick="goTo(1)">
+      Open it →
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE 1 — QUIZ
+════════════════════════════════════ -->
+<div class="page" id="page-1">
+  <div class="paint-blob blob-3"></div>
+  <div class="content">
+    <div class="chapter-label">✦ Chapter One — Let's see</div>
+    <h2>How well do you know <em>him?</em></h2>
+    <p style="margin-bottom:1.5rem; font-size:0.88rem;">5 questions. Each right answer unlocks a little truth. 🔑</p>
+
+    <div class="quiz-wrap">
+      <div class="quiz-progress" id="quiz-progress"></div>
+      <div id="quiz-area"></div>
+      <div id="quiz-result" style="display:none; text-align:center;">
+        <div class="quiz-score" id="score-display"></div>
+        <p id="score-msg" style="margin-bottom:1.5rem;"></p>
+        <button class="btn btn-primary" onclick="goTo(2)">Keep going →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE 2 — THINGS I LIKE ABOUT YOU
+════════════════════════════════════ -->
+<div class="page" id="page-2">
+  <div class="paint-blob blob-1" style="opacity:0.35"></div>
+  <div class="content">
+    <div class="chapter-label">✦ Chapter Two — What I like about you</div>
+    <h2>Not <em>love.</em> Not yet.<br/>But something close.</h2>
+    <p style="margin-bottom:1.5rem; font-size:0.88rem;">These are the things I notice. The things I like. A lot.</p>
+
+    <div class="likes-list">
+
+      <div class="like-item">
+        <div class="like-icon">🌿</div>
+        <div>
+          <div class="like-title">How genuine you are</div>
+          <div class="like-desc">There's no performance with you. What you feel, you say. What you are, you show. That's rarer than you think.</div>
+        </div>
+      </div>
+
+      <div class="like-item">
+        <div class="like-icon">☀️</div>
+        <div>
+          <div class="like-title">Your warmth when I'm being kiddish</div>
+          <div class="like-desc">You never make me feel small for it. You just… go with it. That kind of warmth is something I genuinely treasure.</div>
+        </div>
+      </div>
+
+      <div class="like-item">
+        <div class="like-icon">🎙️</div>
+        <div>
+          <div class="like-title">Your voice</div>
+          <div class="like-desc">I don't know how else to say this — but your voice on a call makes everything feel calmer. Warmer. Better.</div>
+        </div>
+      </div>
+
+      <div class="like-item">
+        <div class="like-icon">💪</div>
+        <div>
+          <div class="like-title">The way you show up — for yourself</div>
+          <div class="like-desc">You put in effort. You take stands. You have rules for yourself and you actually keep them. That's not common. That's character.</div>
+        </div>
+      </div>
+
+      <div class="like-item">
+        <div class="like-icon">🌙</div>
+        <div>
+          <div class="like-title">A woman with dreams — and doing something about it</div>
+          <div class="like-desc">You don't just talk about what you want. You work for it. Quietly. Steadily. That is one of the most beautiful things about you.</div>
+        </div>
+      </div>
+
+      <div class="like-item">
+        <div class="like-icon">📞</div>
+        <div>
+          <div class="like-title">Those long calls</div>
+          <div class="like-desc">Hours disappear when we talk. I never want to hang up. Honestly, talking to you is one of my favourite things.</div>
+        </div>
+      </div>
+
+      <div class="listen-card">
+        <div class="listen-icon">🎧</div>
+        <div>
+          <div class="listen-title">You listen. Really listen.</div>
+          <div class="listen-desc">I talk a lot — I know I do. And you just… listen. Every word. No interruptions, no rushing me. You make me feel like what I say actually matters. That's not small. That's everything.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="goTo(3)">One more thing →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE 3 — GROWTH TIMELINE
+════════════════════════════════════ -->
+<div class="page" id="page-3">
+  <div class="paint-blob blob-2" style="opacity:0.4"></div>
+  <svg class="brush-accent" style="top:5%;right:-10px;width:180px" viewBox="0 0 200 60" fill="none">
+    <path d="M10 40 Q60 10 120 30 Q160 45 195 20" stroke="#D4A96A" stroke-width="16" stroke-linecap="round"/>
+  </svg>
+
+  <div class="content">
+    <div class="chapter-label">✦ Chapter Three — Since day one</div>
+    <h2>I've watched you <em>grow.</em></h2>
+    <p style="margin-bottom:1.8rem; font-size:0.88rem;">From the day we started talking to right now — you have become something amazing.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">When we first started talking</div>
+        <div class="timeline-title">Already herself</div>
+        <div class="timeline-desc">Even from the beginning, you had this quiet certainty about who you were. Most people spend years searching for that.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--purple); box-shadow: 0 0 0 2px var(--purple), 0 0 8px rgba(155,109,202,0.6);"></div>
+        <div class="timeline-phase">Along the way</div>
+        <div class="timeline-title">She started owning her space</div>
+        <div class="timeline-desc">I watched you get more comfortable taking stands, setting rules for yourself, not apologising for who you are. That shift? Quiet but powerful.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--lilac); box-shadow: 0 0 0 2px var(--lilac), 0 0 8px rgba(196,160,232,0.6);"></div>
+        <div class="timeline-phase">Chasing her dreams</div>
+        <div class="timeline-title">A woman with a plan</div>
+        <div class="timeline-desc">You don't just dream. You build. I've seen the effort and the late nights and the discipline, and I admire it more than I've said.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--violet); box-shadow: 0 0 0 2px var(--violet), 0 0 8px rgba(107,63,160,0.6);"></div>
+        <div class="timeline-phase">Right now, today</div>
+        <div class="timeline-title">An amazing, amazing woman</div>
+        <div class="timeline-desc">Genuinely. From where you started to who you are right now — it's been something to witness. I'm really glad I got to.</div>
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="goTo(4)">Okay, the real part now →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE 4 — THE CONFESSION
+════════════════════════════════════ -->
+<div class="page" id="page-4">
+  <div class="paint-blob blob-1"></div>
+  <div class="paint-blob blob-3" style="opacity:0.12"></div>
+
+  <div class="content confession-wrap">
+    <div class="chapter-label">✦ The part I've been trying to say</div>
+
+    <div class="confession-heart">💛</div>
+
+    <div class="call-visual">
+      <div class="call-bars">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="call-label">On every call</div>
+      <div class="call-sublabel">I talk a lot. You listen to all of it. 🤍</div>
+    </div>
+
+    <div class="confession-text">
+      "I'm not going to say love.<br/>
+      That's a big word and I want to be honest with you.<br/><br/>
+      But I like you.<br/>
+      A lot.<br/><br/>
+      I like your voice and your warmth<br/>
+      and the way you laugh at my kiddish stuff.<br/>
+      I like that you listen to every word I say<br/>
+      without ever making me feel like too much.<br/><br/>
+      I like who you're becoming<br/>
+      and who you already are.<br/><br/>
+      Those calls? They're the best part of my day.<br/><br/>
+      I just want to know —<br/>
+      would you want to explore this<br/>
+      with me?"
+    </div>
+
+    <div class="response-btns">
+      <button class="btn btn-gold" onclick="goTo(5, 'yes')">💛 Yes, I'd like that</button>
+      <button class="btn btn-outline" onclick="goTo(5, 'maybe')">😊 Make me smile first</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE 5 — FINAL (background photo)
+════════════════════════════════════ -->
+<div class="page" id="page-5">
+  <div class="content" id="final-content">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+
 <script>
-function submitReport() {
-  const q1 = document.querySelector('input[name="q1"]:checked');
-  const q2 = document.querySelector('input[name="q2"]:checked');
-  const q3 = document.querySelector('input[name="q3"]:checked');
-  const q4 = document.querySelector('input[name="q4"]:checked');
+  let currentPage = 0;
 
-  if (!q1 || !q2 || !q3 || !q4) {
-    alert('Please tick all the boxes first! 🥺 My future depends on this!');
-    return;
-  }
+  const questions = [
+    {
+      q: "What's his favourite part of your conversations?",
+      opts: ["When the call ends quickly", "When you laugh at something random", "The silence", "When you talk about anything — he just likes hearing you"],
+      correct: 3,
+      feedback: "He genuinely never wants to hang up. Every single time. 📞"
+    },
+    {
+      q: "What does he admire most about you?",
+      opts: ["Your social media", "How genuine and real you are — no performance, just you", "That you're fun at parties", "Your fashion sense"],
+      correct: 1,
+      feedback: "Your genuineness is the first thing he noticed. And it stuck. 🌿"
+    },
+    {
+      q: "How does he feel watching you work toward your dreams?",
+      opts: ["Indifferent", "A little jealous", "Proud — genuinely, quietly proud", "Confused about what you're doing"],
+      correct: 2,
+      feedback: "Watching you build something for yourself? He finds it one of the most beautiful things about you. 🌙"
+    },
+    {
+      q: "What does he think when you're warm with his kiddish moments?",
+      opts: ["That it's embarrassing", "That it's just politeness", "That you're rare — and he doesn't want to lose that", "Nothing much"],
+      correct: 2,
+      feedback: "That warmth? He holds onto it. It means more than you know. ☀️"
+    },
+    {
+      q: "What is this whole website?",
+      opts: ["A homework project", "A prank", "His way of finally saying what he's been feeling", "A random thing he built"],
+      correct: 2,
+      feedback: "Every word on every page was written thinking about you. 💛"
+    }
+  ];
 
-  const answers = {
-    movie: q1.value,
-    hangout: q2.value,
-    reels: q3.value,
-    promo: q4.value
-  };
-
+  let currentQ = 0;
   let score = 0;
-  if (answers.movie === 'yes')    score += 3;
-  else if (answers.movie === 'maybe') score += 1;
+  let answered = false;
 
-  if (answers.hangout === 'yes')    score += 3;
-  else if (answers.hangout === 'maybe') score += 1;
+  function goTo(n, response) {
+    const pages = document.querySelectorAll('.page');
+    pages[currentPage].classList.remove('visible');
+    setTimeout(() => {
+      pages[currentPage].classList.remove('active');
+      currentPage = n;
+      pages[n].classList.add('active');
+      setTimeout(() => pages[n].classList.add('visible'), 50);
+    }, 420);
 
-  if (answers.reels === 'yes')    score += 2;
-  else if (answers.reels === 'maybe') score += 1;
+    document.querySelectorAll('.page-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === n);
+    });
 
-  if (answers.promo === '100') score += 4;
-  else if (answers.promo === '50') score += 2;
-
-  let title, detail, verdict;
-
-  const movieStr   = { yes: '✅ Movie night is ON', maybe: '🤔 Movie night is maybe', no: '❌ No movie night' };
-  const hangoutStr = { yes: '✅ Hangout approved!', maybe: '🤔 Hangout under review', no: '❌ Hangout denied' };
-  const reelsStr   = { yes: '✅ Reels incoming!', maybe: '🤔 Reels maybe', no: '❌ No reels for you' };
-  const promoStr   = { '100': '🚀 100% chance of PROMOTION!', '50': '🤞 50% — keep trying!', '0': '💔 0% — bhot bura hua' };
-
-  detail = `${movieStr[answers.movie]}<br>${hangoutStr[answers.hangout]}<br>${reelsStr[answers.reels]}<br>${promoStr[answers.promo]}`;
-
-  if (score >= 10) {
-    title   = '🎉 PROMOTED! 🎉';
-    verdict = '🥳 Congrats! You are hereby PROMOTED from Demoted Friend to Best Friend! 👑❤️';
-  } else if (score >= 6) {
-    title   = '🤞 Under Consideration...';
-    verdict = '😤 Thodi aur mehnat chahiye! But hope is alive! 💪✨';
-  } else if (score >= 3) {
-    title   = '⏳ Still on Probation';
-    verdict = '🥺 Bhai teri galti zyada hai abhi. Kaam karo aur wapas aao! 😤';
-  } else {
-    title   = '😭 Still Demoted';
-    verdict = '💔 Bhai... serious ho jao. DEMOTED BF hi rahoge abhi ke liye. Fix yourself! 😡🙏';
+    if (n === 1) initQuiz();
+    if (n === 5) showFinal(response);
   }
 
-  const card = document.getElementById('result-card');
-  document.getElementById('result-title').innerHTML   = title;
-  document.getElementById('result-detail').innerHTML  = detail;
-  document.getElementById('result-verdict').innerHTML = verdict;
-  card.style.display = 'block';
-  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
+  function initQuiz() {
+    currentQ = 0; score = 0; answered = false;
+    renderProgress();
+    renderQuestion();
+  }
+
+  function renderProgress() {
+    const prog = document.getElementById('quiz-progress');
+    prog.innerHTML = questions.map((_, i) => {
+      let cls = 'quiz-dot';
+      if (i < currentQ) cls += ' done';
+      if (i === currentQ) cls += ' active';
+      return `<div class="${cls}"></div>`;
+    }).join('');
+  }
+
+  function renderQuestion() {
+    if (currentQ >= questions.length) {
+      document.getElementById('quiz-area').style.display = 'none';
+      document.getElementById('quiz-result').style.display = 'block';
+      document.getElementById('score-display').textContent = `${score}/${questions.length}`;
+      const msgs = [
+        "That's okay — keep reading. 😄",
+        "Getting there… keep going. 💛",
+        "You know him better than you let on.",
+        "Pretty much in sync. That's something.",
+        "You basically read his mind. That's not nothing. 🌸"
+      ];
+      document.getElementById('score-msg').textContent = msgs[score] || msgs[2];
+      return;
+    }
+
+    const q = questions[currentQ];
+    answered = false;
+    document.getElementById('quiz-area').innerHTML = `
+      <div class="quiz-card">
+        <div class="quiz-q">${q.q}</div>
+        <div class="quiz-options">
+          ${q.opts.map((o, i) => `<button class="quiz-opt" onclick="answer(${i})">${o}</button>`).join('')}
+        </div>
+        <div class="quiz-feedback" id="feedback">${q.feedback}</div>
+      </div>
+    `;
+    renderProgress();
+  }
+
+  function answer(idx) {
+    if (answered) return;
+    answered = true;
+    const q = questions[currentQ];
+    const opts = document.querySelectorAll('.quiz-opt');
+    opts[idx].classList.add(idx === q.correct ? 'correct' : 'wrong');
+    opts[q.correct].classList.add('correct');
+    if (idx === q.correct) score++;
+    document.getElementById('feedback').classList.add('show');
+    setTimeout(() => { currentQ++; renderQuestion(); }, 1900);
+  }
+
+  function showFinal(response) {
+    const el = document.getElementById('final-content');
+    if (response === 'yes') {
+      el.innerHTML = `
+        <div class="final-heart">🌸</div>
+        <div class="chapter-label">✦ That's all he needed</div>
+        <div class="final-msg">
+          "You said yes.<br/>
+          I'm smiling right now<br/>
+          and I can't stop.<br/><br/>
+          Thank you for being you.<br/>
+          Thank you for saying yes.<br/><br/>
+          I'll make it worth it.<br/>
+          <em>I promise.</em> 💛"
+        </div>
+        <div style="width:48px;height:2px;background:rgba(196,160,232,0.5);margin:0 auto 1.4rem;"></div>
+        <p style="font-size:0.85rem;color:rgba(196,160,232,0.7);">Now go call him. He's definitely waiting. 😄</p>
+      `;
+    } else {
+      el.innerHTML = `
+        <div class="final-heart">😄</div>
+        <div class="chapter-label">✦ Challenge accepted</div>
+        <div class="final-msg">
+          "Fair enough.<br/><br/>
+          He'll spend every call<br/>
+          trying to make you smile —<br/>
+          which honestly he already does<br/>
+          and you know it.<br/><br/>
+          So… <em>is that a yes?</em>"
+        </div>
+        <div style="margin-top:1.5rem;">
+          <button class="btn btn-gold" onclick="softYes()">
+            Okay fine… yes 💛
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  function softYes() {
+    document.getElementById('final-content').innerHTML = `
+      <div class="final-heart">💛</div>
+      <div class="final-msg">
+        "That's <em>everything.</em><br/><br/>
+        Genuinely.<br/>
+        Thank you. 🌸"
+      </div>
+    `;
+  }
+
+  // ── SNOWFALL ──
+  (function() {
+    const canvas = document.getElementById('snow-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, flakes = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function makeFlake() {
+      return {
+        x: Math.random() * W,
+        y: Math.random() * -H,
+        r: Math.random() * 3.5 + 1,
+        speed: Math.random() * 1.2 + 0.4,
+        drift: Math.random() * 0.5 - 0.25,
+        opacity: Math.random() * 0.5 + 0.2,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.015 + 0.005
+      };
+    }
+
+    // Start with flakes already on screen
+    for (let i = 0; i < 120; i++) {
+      const f = makeFlake();
+      f.y = Math.random() * H;
+      flakes.push(f);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      flakes.forEach(f => {
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220,200,255,${f.opacity})`;
+        ctx.shadowColor = 'rgba(180,126,229,0.7)';
+        ctx.shadowBlur = 4;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+    }
+
+    function update() {
+      flakes.forEach(f => {
+        f.wobble += f.wobbleSpeed;
+        f.x += f.drift + Math.sin(f.wobble) * 0.3;
+        f.y += f.speed;
+        if (f.y > H + 10) {
+          Object.assign(f, makeFlake());
+          f.y = -10;
+        }
+        if (f.x > W + 10) f.x = -10;
+        if (f.x < -10) f.x = W + 10;
+      });
+    }
+
+    // Spawn new flakes gradually
+    let spawnTimer = 0;
+    function loop() {
+      update();
+      draw();
+      spawnTimer++;
+      if (spawnTimer % 8 === 0 && flakes.length < 180) {
+        flakes.push(makeFlake());
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('page-0').classList.add('visible');
+  });
 </script>
 </body>
 </html>
