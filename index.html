@@ -3,41 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Still Us</title>
+<title>Hey You</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,400..500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 
   :root{
-    --cream: #FBF3EA;
-    --card: #FFFDF8;
-    --cocoa: #5B3A29;
-    --cocoa-soft: #7A5443;
-    --gold: #E3A05E;
-    --gold-deep: #C97F3B;
-    --rose: #D98B8B;
-    --rose-deep: #C46E6E;
-    --sage: #8A9A7E;
-    --sage-deep: #6E7F63;
-    --line: rgba(91,58,41,0.12);
+    --bg-black: #150a0b;
+    --bg-black-2: #221011;
+    --maroon: #4a1216;
+    --red: #B3222C;
+    --red-deep: #7A1620;
+    --red-bright: #D63447;
+    --rose-pink: #E8A0A8;
+    --cream: #FFF8F3;
+    --card: #FFFBF7;
+    --ink: #2E1A17;
+    --ink-soft: #5C3A35;
+    --line: rgba(179,34,44,0.18);
   }
 
   *{ box-sizing:border-box; }
-  html,body{ height:100%; }
+  html{ scroll-behavior:smooth; }
   body{
     margin:0;
-    background:var(--cream);
-    color:var(--cocoa);
+    background: radial-gradient(circle at 20% 0%, var(--maroon) 0%, var(--bg-black) 55%), var(--bg-black-2);
+    color:var(--ink);
     font-family:'Quicksand', sans-serif;
     font-weight:500;
-    line-height:1.65;
+    line-height:1.6;
     -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:28px 16px;
     position:relative;
     overflow-x:hidden;
   }
@@ -46,321 +42,470 @@
     *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
   }
 
-  .bg-texture{
-    position:fixed; inset:0; z-index:-1;
-    background-image:
-      radial-gradient(circle at 12% 15%, rgba(227,160,94,0.10) 0, transparent 45%),
-      radial-gradient(circle at 88% 80%, rgba(217,139,139,0.12) 0, transparent 45%),
-      radial-gradient(circle at 50% 50%, rgba(138,154,126,0.06) 0, transparent 60%);
+  /* ---------- SNOW ---------- */
+  #snowLayer{ position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden; }
+  .flake{ position:absolute; top:-10px; color:#fff; opacity:0.85; animation-name: fall; animation-timing-function:linear; animation-iteration-count:infinite; will-change:transform; }
+  @keyframes fall{
+    0%{ transform:translateY(-5vh) translateX(0) rotate(0deg); }
+    100%{ transform:translateY(105vh) translateX(20px) rotate(180deg); }
   }
 
-  .scene{
-    position:relative;
-    width:100%;
-    max-width:520px;
+  .wrap{ position:relative; z-index:3; max-width:1080px; margin:0 auto; padding:56px 20px 90px; }
+
+  /* ---------- HEADER (kept plain / no heart spam) ---------- */
+  header{ text-align:center; margin-bottom:46px; position:relative; }
+  .header-row{ display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
+  .pup-corner{ width:76px; height:76px; flex-shrink:0; }
+  h1.title{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:600;
+    font-size:clamp(38px,7vw,58px); color:var(--cream); margin:0;
+  }
+  .ribbon{
+    display:inline-block; background:linear-gradient(100deg, var(--red) 0%, var(--red-deep) 100%);
+    color:#fff; padding:12px 26px; border-radius:999px; font-size:15px; font-weight:600;
+    margin:20px 0 10px; box-shadow:0 12px 30px -12px rgba(179,34,44,0.6);
+  }
+  .subtext{ color:var(--rose-pink); font-family:'Fraunces', serif; font-style:italic; font-size:17px; margin:0; }
+
+  .rose-divider{ display:flex; align-items:center; justify-content:center; gap:10px; margin:56px 0 26px; opacity:0.9; }
+  .rose-divider svg{ width:22px; height:22px; }
+  .rose-divider .line{ height:1px; width:60px; background:linear-gradient(90deg, transparent, var(--red), transparent); }
+
+  /* ---------- PANELS GRID ---------- */
+  .panels{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .panel{
+    background:var(--card); border-radius:22px; padding:28px 26px;
+    box-shadow:0 20px 44px -26px rgba(0,0,0,0.55); border:1px solid rgba(179,34,44,0.08);
+    opacity:0; transform:translateY(16px); transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .panel.in-view{ opacity:1; transform:translateY(0); }
+  .panel.full{ grid-column:1 / -1; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700;
+    letter-spacing:0.06em; text-transform:uppercase; color:#fff; padding:7px 14px;
+    border-radius:999px; margin-bottom:16px;
+  }
+  .tag.c1{ background:var(--red-deep); }
+  .tag.c2{ background:var(--red); }
+  .tag.c3{ background:#8a3b3b; }
+  .tag.c4{ background:var(--red-bright); }
+  .tag.c5{ background:var(--red-deep); }
+  .tag.c6{ background:#6d2a2f; }
+  .tag.c7{ background:var(--red); }
+  .tag.c8{ background:#8a3b3b; }
+  .tag.c9{ background:var(--red-deep); }
+
+  .panel h2{ font-family:'Fraunces', serif; font-weight:600; font-size:19px; margin:0 0 14px; color:var(--ink); }
+  .panel p{ font-size:15px; color:var(--ink-soft); margin:0 0 10px; }
+  .panel p:last-child{ margin-bottom:0; }
+  .highlight{ display:inline; background:rgba(179,34,44,0.12); padding:2px 6px; border-radius:6px; color:var(--red-deep); font-weight:600; }
+
+  .panel-flex{ display:flex; align-items:flex-end; gap:16px; }
+  .panel-flex .text{ flex:1; }
+  .mini-pup{ width:96px; height:96px; flex-shrink:0; }
+
+  .check-list{ list-style:none; margin:14px 0 0; padding:0; display:grid; gap:8px; }
+  .check-list li{ display:flex; align-items:flex-start; gap:10px; font-size:15px; color:var(--ink); }
+  .check-list svg{ width:16px; height:16px; fill:var(--red); flex-shrink:0; margin-top:3px; }
+
+  .sign-card{
+    margin-top:14px; display:inline-block; background:var(--red); color:#fff; padding:12px 18px;
+    border-radius:12px; font-family:'Fraunces', serif; font-style:italic; font-size:14px;
+    box-shadow:0 10px 22px -12px rgba(179,34,44,0.7);
   }
 
-  .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:28px;
-    padding:clamp(28px,6vw,48px) clamp(24px,6vw,44px);
-    box-shadow:0 24px 60px -30px rgba(91,58,41,0.4);
+  /* icon grid */
+  .icon-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:14px; margin-top:6px; }
+  .icon-item{ text-align:center; }
+  .icon-circle{ width:52px; height:52px; margin:0 auto 10px; border-radius:50%; background:rgba(179,34,44,0.08); display:flex; align-items:center; justify-content:center; }
+  .icon-circle svg{ width:24px; height:24px; fill:var(--red); }
+  .icon-item .label{ font-weight:700; font-size:12.5px; color:var(--red-deep); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:4px; }
+  .icon-item .cap{ font-size:12.5px; color:var(--ink-soft); }
+
+  /* panel: truth (heart shape swapped for a plaque, romance saved for finale) */
+  .truth-layout{ display:grid; grid-template-columns: 1fr 1.15fr 1fr; gap:22px; align-items:center; }
+  .truth-list{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  .truth-list li{ display:flex; gap:10px; font-size:15px; color:var(--ink); align-items:flex-start; }
+  .truth-list svg{ width:16px; height:16px; fill:var(--red); flex-shrink:0; margin-top:3px; }
+
+  .plaque{
+    background:linear-gradient(160deg, var(--red-deep), var(--maroon));
+    border-radius:18px;
+    padding:26px 22px;
     text-align:center;
+    color:#fff;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:14.5px;
+    line-height:1.55;
+    box-shadow:0 16px 30px -16px rgba(0,0,0,0.5);
+  }
+
+  .sticky-stack{ display:grid; gap:14px; }
+  .sticky{ padding:16px 16px; border-radius:10px; font-family:'Fraunces', serif; font-style:italic; font-size:14.5px; box-shadow:0 10px 20px -10px rgba(0,0,0,0.3); transform:rotate(-1.5deg); }
+  .sticky.pink{ background:#F6C9CE; color:#7A1620; }
+  .sticky.dark{ background:#3a1c1e; color:#F6C9CE; transform:rotate(1.5deg); }
+
+  .thankyou{ text-align:center; margin-top:36px; font-family:'Fraunces', serif; font-style:italic; font-size:17px; color:var(--cream); }
+
+  /* ---------- CONTRACT PANEL ---------- */
+  .contract{
+    background:#FAF4EA;
+    border:2px dashed var(--red-deep);
     position:relative;
+  }
+  .contract::before{
+    content:"OFFICIAL";
+    position:absolute; top:18px; right:22px;
+    font-family:'Quicksand', sans-serif; font-weight:700; font-size:11px;
+    letter-spacing:0.14em; color:var(--red-deep); opacity:0.5;
+  }
+  .contract-title{
+    font-family:'Fraunces', serif; font-weight:700; font-size:22px; text-align:center;
+    color:var(--red-deep); margin:0 0 4px;
+  }
+  .contract-sub{ text-align:center; font-size:13px; color:var(--ink-soft); margin-bottom:22px; font-style:italic; }
+  .clause{ display:flex; gap:12px; margin-bottom:14px; font-size:14.5px; color:var(--ink); align-items:flex-start; }
+  .clause b{ color:var(--red-deep); flex-shrink:0; min-width:74px; }
+  .stamp-row{
+    display:flex; align-items:center; justify-content:center; gap:20px; margin-top:26px; flex-wrap:wrap;
+  }
+  .stamp{
+    display:inline-flex; align-items:center; gap:8px;
+    border:3px solid var(--red); color:var(--red); font-weight:800;
+    font-size:15px; letter-spacing:0.06em; padding:10px 20px; border-radius:8px;
+    transform:rotate(-6deg); text-transform:uppercase;
+  }
+  .stamp svg{ width:18px; height:18px; fill:var(--red); }
+  .sig-line{ text-align:center; }
+  .sig-line .name{ font-family:'Caveat', cursive; font-size:26px; color:var(--ink); border-bottom:1px solid var(--ink-soft); padding:0 10px 2px; }
+  .sig-line .cap{ font-size:11px; color:var(--ink-soft); margin-top:4px; text-transform:uppercase; letter-spacing:0.08em; }
+  .contract-footnote{ text-align:center; margin-top:20px; font-size:13px; color:var(--ink-soft); font-style:italic; }
+
+  /* ---------- FINALE ---------- */
+  .finale-wrap{ margin-top:60px; }
+  .finale-card{
+    background:var(--card); border-radius:26px; padding:clamp(30px,6vw,50px) clamp(26px,6vw,48px);
+    text-align:center; box-shadow:0 26px 60px -28px rgba(0,0,0,0.6); position:relative;
     transition:opacity 0.5s ease, transform 0.5s ease;
   }
+  .finale-card.hide{ opacity:0; transform:scale(0.96); position:absolute; inset:0; pointer-events:none; }
+  .finale-pup{ width:130px; height:130px; margin:0 auto 8px; }
+  .finale-card h2{ font-family:'Fraunces', serif; font-style:italic; font-weight:600; font-size:clamp(24px,5vw,32px); margin:6px 0 16px; color:var(--ink); }
+  .finale-card p{ font-size:15.5px; color:var(--ink-soft); max-width:400px; margin:0 auto 24px; }
 
-  .card.hide{
-    opacity:0;
-    transform:scale(0.96);
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-  }
+  .btn-row{ position:relative; display:flex; align-items:center; justify-content:center; gap:18px; min-height:64px; }
+  .btn{ font-family:'Quicksand', sans-serif; font-weight:700; font-size:15px; border:none; border-radius:999px; cursor:pointer; padding:14px 30px; transition:transform 0.2s ease, box-shadow 0.2s ease; }
+  .btn-yes{ background:var(--red); color:#fff; box-shadow:0 14px 30px -12px rgba(179,34,44,0.7); }
+  .btn-yes:hover{ transform:translateY(-2px); box-shadow:0 18px 34px -12px rgba(179,34,44,0.8); }
+  .btn-no{ background:transparent; color:var(--ink-soft); border:1.5px solid var(--line); position:absolute; left:calc(50% + 55px); transition:left 0.25s ease, top 0.25s ease; }
+  .no-hint{ margin-top:14px; font-size:12.5px; color:var(--ink-soft); opacity:0.75; min-height:16px; }
 
-  .pup{
-    width:130px;
-    height:130px;
-    margin:0 auto 6px;
-    display:block;
+  /* ---------- ENDING: full romance lives here ---------- */
+  .ending{ opacity:0; transform:scale(0.94); pointer-events:none; background:linear-gradient(165deg, var(--card), #fff0ee); }
+  .ending.show{ opacity:1; transform:scale(1); pointer-events:auto; }
+  .ending-pup{ width:150px; height:150px; margin:0 auto 10px; }
+  .love-text{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:700;
+    font-size:clamp(32px,7vw,46px); color:var(--red); margin:8px 0 16px;
+    text-shadow:0 6px 20px rgba(179,34,44,0.15);
   }
+  .love-sub{ font-size:15.5px; color:var(--ink-soft); max-width:400px; margin:0 auto 22px; }
+  .signature{ font-family:'Fraunces', serif; font-style:italic; font-size:16px; color:var(--red-deep); margin-top:6px; }
 
-  .eyebrow{
-    font-weight:700;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    font-size:11.5px;
-    color:var(--gold-deep);
-    margin-bottom:14px;
-  }
-
-  h1{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:500;
-    font-size:clamp(28px, 6vw, 38px);
-    margin:0 0 18px;
-    line-height:1.15;
-  }
-
-  .letter p{
-    font-size:15.5px;
-    color:#4A3226;
-    margin:0 0 14px;
-    text-align:left;
-  }
-  .letter p:last-child{ margin-bottom:0; }
-  .letter{
-    margin-bottom:26px;
-  }
-
-  .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:rgba(138,154,126,0.14);
-    border:1px solid rgba(138,154,126,0.28);
-    color:var(--sage-deep);
-    font-size:13px;
-    font-weight:700;
-    padding:8px 16px;
-    border-radius:999px;
-    margin-bottom:22px;
-  }
-  .badge svg{ width:14px; height:14px; fill:var(--sage-deep); }
-
-  .question{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:19px;
-    margin:0 0 26px;
-    color:var(--cocoa);
-  }
-
-  .btn-row{
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    min-height:64px;
-  }
-
-  .btn{
-    font-family:'Quicksand', sans-serif;
-    font-weight:700;
-    font-size:15px;
-    border:none;
-    border-radius:999px;
-    cursor:pointer;
-    padding:14px 30px;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .btn-yes{
-    background:var(--rose);
-    color:#fff;
-    box-shadow:0 14px 30px -12px rgba(217,139,139,0.7);
-  }
-  .btn-yes:hover{ transform:translateY(-2px); box-shadow:0 18px 34px -12px rgba(217,139,139,0.8); }
-
-  .btn-no{
-    background:transparent;
-    color:var(--cocoa-soft);
-    border:1.5px solid var(--line);
-    position:absolute;
-    left:calc(50% + 55px);
-    transition: left 0.25s ease, top 0.25s ease, transform 0.2s ease;
-  }
-
-  .no-hint{
-    margin-top:14px;
-    font-size:12.5px;
-    color:var(--cocoa-soft);
-    opacity:0.7;
-    min-height:16px;
-  }
-
-  /* ---------- ENDING ---------- */
-  .ending{
-    opacity:0;
-    transform:scale(0.94);
-    pointer-events:none;
-  }
-  .ending.show{
-    opacity:1;
-    transform:scale(1);
-    pointer-events:auto;
-  }
-
-  .ending .pup{ width:150px; height:150px; }
-
-  .ending h1{ margin-bottom:14px; }
-
-  .ending p.msg{
-    font-size:16px;
-    color:#4A3226;
-    max-width:400px;
-    margin:0 auto 22px;
-  }
-
-  .signature{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:17px;
-    color:var(--cocoa-soft);
-    margin-top:6px;
-  }
-
-  .hearts-float{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:5;
-  }
-  .float-heart{
-    position:absolute;
-    bottom:-30px;
-    font-size:20px;
-    opacity:0;
-    animation: rise 3.2s ease-in forwards;
-  }
+  .petals-float{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:6; }
+  .petal{ position:absolute; bottom:-30px; opacity:0; animation: rise 3.4s ease-in forwards; }
   @keyframes rise{
     0%{ opacity:0; transform:translateY(0) scale(0.6) rotate(0deg); }
     10%{ opacity:1; }
-    100%{ opacity:0; transform:translateY(-92vh) scale(1.1) rotate(20deg); }
+    100%{ opacity:0; transform:translateY(-92vh) scale(1.05) rotate(30deg); }
   }
 
+  footer{ text-align:center; color:var(--rose-pink); font-size:12px; opacity:0.6; margin-top:50px; }
+
+  @media (max-width:760px){
+    .panels{ grid-template-columns:1fr; }
+    .icon-grid{ grid-template-columns:repeat(2,1fr); }
+    .truth-layout{ grid-template-columns:1fr; }
+    .plaque{ order:-1; }
+    .panel-flex{ flex-direction:column; align-items:flex-start; }
+    .mini-pup{ align-self:center; }
+    .stamp-row{ flex-direction:column; }
+  }
   @media (max-width:420px){
-    .btn-row{ flex-direction:row; gap:14px; }
+    .btn-row{ flex-direction:column; gap:14px; }
     .btn-no{ position:static; left:auto; }
-    .btn-row.mobile-stack{ flex-direction:column; }
   }
 </style>
 </head>
 <body>
 
-<div class="bg-texture"></div>
-<div class="hearts-float" id="heartsFloat"></div>
+<div id="snowLayer"></div>
+<div class="petals-float" id="petalsFloat"></div>
 
-<div class="scene">
+<div class="wrap">
 
-  <!-- MAIN CARD -->
-  <div class="card" id="mainCard">
-    <svg class="pup" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="100" cy="150" rx="50" ry="28" fill="#E3A05E"/>
-      <ellipse cx="100" cy="110" rx="44" ry="40" fill="#EFB878"/>
-      <path d="M62 80 Q50 44 68 50 Q78 64 78 86 Z" fill="#C97F3B"/>
-      <path d="M138 80 Q150 44 132 50 Q122 64 122 86 Z" fill="#C97F3B"/>
-      <ellipse cx="82" cy="112" rx="6.5" ry="8.5" fill="#5B3A29"/>
-      <ellipse cx="118" cy="112" rx="6.5" ry="8.5" fill="#5B3A29"/>
-      <ellipse cx="100" cy="128" rx="8" ry="6.5" fill="#5B3A29"/>
-      <path d="M100 133 Q100 140 93 142" stroke="#5B3A29" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M100 133 Q100 140 107 142" stroke="#5B3A29" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="68" cy="122" r="6.5" fill="#D98B8B" opacity="0.55"/>
-      <circle cx="132" cy="122" r="6.5" fill="#D98B8B" opacity="0.55"/>
-    </svg>
+  <!-- HEADER -->
+  <header>
+    <div class="header-row">
+      <svg class="pup-corner" viewBox="0 0 200 200"><ellipse cx="100" cy="150" rx="48" ry="26" fill="#3a1c1e"/><ellipse cx="100" cy="112" rx="42" ry="38" fill="#5C3A35"/><path d="M64 82 Q54 50 70 55 Q78 68 78 88 Z" fill="#2E1A17"/><path d="M136 82 Q146 50 130 55 Q122 68 122 88 Z" fill="#2E1A17"/><ellipse cx="84" cy="114" rx="6" ry="8" fill="#150a0b"/><ellipse cx="116" cy="114" rx="6" ry="8" fill="#150a0b"/><ellipse cx="100" cy="128" rx="7" ry="6" fill="#150a0b"/><circle cx="70" cy="124" r="6" fill="#D63447" opacity="0.5"/><circle cx="130" cy="124" r="6" fill="#D63447" opacity="0.5"/></svg>
+      <h1 class="title">Hey you,</h1>
+      <svg class="pup-corner" viewBox="0 0 200 200"><ellipse cx="100" cy="150" rx="48" ry="26" fill="#B3222C"/><ellipse cx="100" cy="112" rx="42" ry="38" fill="#D63447"/><path d="M64 82 Q54 50 70 55 Q78 68 78 88 Z" fill="#7A1620"/><path d="M136 82 Q146 50 130 55 Q122 68 122 88 Z" fill="#7A1620"/><ellipse cx="84" cy="114" rx="6" ry="8" fill="#2E1A17"/><ellipse cx="116" cy="114" rx="6" ry="8" fill="#2E1A17"/><ellipse cx="100" cy="128" rx="7" ry="6" fill="#2E1A17"/><circle cx="70" cy="124" r="6" fill="#fff" opacity="0.4"/><circle cx="130" cy="124" r="6" fill="#fff" opacity="0.4"/></svg>
+    </div>
+    <div class="ribbon">I think we've been thinking too much lately...</div>
+    <p class="subtext">so I made this for you</p>
+  </header>
 
-    <div class="eyebrow">a small letter, from me to you</div>
-    <h1>Still Us.</h1>
+  <!-- PANELS -->
+  <div class="panels">
 
-    <div class="letter">
-      <p>I know our conversations got a lot more intimate right after we got engaged — and I was the one steering us there. I get why that felt like a lot, and maybe a little different from the "me" you know.</p>
-      <p>But nothing about how I feel about you has changed. We just leaned too far one way, too fast. Before anything else, I'm still your friend — the one who annoys you, laughs with you, and talks about nothing in particular.</p>
+    <div class="panel" data-panel>
+      <div class="tag c1">1 · Us, before everything changed</div>
+      <div class="panel-flex">
+        <div class="text">
+          <p>We were friends. We laughed at the stupidest things, had random talks, shared our overthinking, and felt so comfortable with each other.</p>
+          <p><span class="highlight">Those days mean a lot to me.</span></p>
+        </div>
+        <svg class="mini-pup" viewBox="0 0 200 200"><ellipse cx="100" cy="150" rx="46" ry="26" fill="#E8A0A8"/><ellipse cx="100" cy="112" rx="40" ry="38" fill="#F6C9CE"/><path d="M66 84 Q58 54 72 58 Q80 70 80 88 Z" fill="#D63447"/><path d="M134 84 Q142 54 128 58 Q120 70 120 88 Z" fill="#D63447"/><ellipse cx="84" cy="114" rx="6" ry="7.5" fill="#5C3A35"/><ellipse cx="116" cy="114" rx="6" ry="7.5" fill="#5C3A35"/><ellipse cx="100" cy="126" rx="7" ry="5.5" fill="#5C3A35"/></svg>
+      </div>
     </div>
 
-    <div class="badge">
-      <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-      the one month is fully respected — no pressure, ever
+    <div class="panel" data-panel>
+      <div class="tag c2">2 · Then something new happened</div>
+      <p>The moment we said we're official, things naturally became more intimate between us. We started talking about more personal, intimate stuff — more often than before.</p>
     </div>
 
-    <p class="question">Can we just go back to being us — no rush, at our own pace?</p>
-
-    <div class="btn-row">
-      <button class="btn btn-yes" id="yesBtn">Yes ❤️</button>
-      <button class="btn btn-no" id="noBtn">Sorry, can't click this</button>
+    <div class="panel" data-panel>
+      <div class="tag c3">3 · Maybe I talked about it too much</div>
+      <p>I realise I asked more questions, brought up intimate things more often, and maybe made it feel like something about me had changed.</p>
+      <p><span class="highlight">If that made you uncomfortable, I'm genuinely sorry.</span></p>
     </div>
-    <div class="no-hint" id="noHint">&nbsp;</div>
+
+    <div class="panel" data-panel>
+      <div class="tag c4">4 · But this is what I need you to know</div>
+      <p>I didn't stop being your friend the moment we became "us." I still want to laugh with you, annoy you, listen to you, talk about random things, and be the same person I've always been with you.</p>
+    </div>
+
+    <div class="panel full" data-panel>
+      <div class="tag c5">5 · Why I actually fell for you</div>
+      <p>Not because of any of that. I fell for you because of who you actually are — a genuine person with a big heart, who cares for me without keeping score. You're the one who listens to all my nonsense and never once made me feel stupid for it.</p>
+      <p><span class="highlight">That's it. That's everything.</span></p>
+    </div>
+
+    <div class="panel full" data-panel>
+      <div class="tag c6">6 · What I actually want</div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 21s-6.7-4.35-9.3-8.1C1 10.3 1.6 6.9 4.6 5.4c2.2-1.1 4.6-.3 6 1.5l1.4 1.8 1.4-1.8c1.4-1.8 3.8-2.6 6-1.5 3 1.5 3.6 4.9 1.9 7.5C18.7 16.65 12 21 12 21z"/></svg></div>
+          <div class="label">Your comfort</div>
+          <div class="cap">Always feel safe with me.</div>
+        </div>
+        <div class="icon-item">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.67 0-8 1.34-8 4v2h9v-2c0-1.32.63-2.4 1.6-3.24A11.5 11.5 0 0 0 8 13zm8 0c-.29 0-.62.02-.97.05A5.5 5.5 0 0 1 17 17v2h7v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="label">Our friendship</div>
+          <div class="cap">The heart of everything.</div>
+        </div>
+        <div class="icon-item">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></div>
+          <div class="label">Honest talks</div>
+          <div class="cap">Not assume. Not overthink.</div>
+        </div>
+        <div class="icon-item">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 1a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-2V6a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V6a3 3 0 0 1 3-3z"/></svg></div>
+          <div class="label">No pressure</div>
+          <div class="cap">Never. For anything.</div>
+        </div>
+        <div class="icon-item">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01z"/></svg></div>
+          <div class="label">Us</div>
+          <div class="cap">That's all I really want.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel full" data-panel>
+      <div class="tag c7">7 · The truth is...</div>
+      <div class="truth-layout">
+        <ul class="truth-list">
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Nothing is broken.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>Nothing needs to be rushed.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>I'm still here.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>I'm still me.</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>I still care about you, just as much.</li>
+        </ul>
+
+        <div class="plaque">
+          We don't have to rush anything. We can just be ourselves, talk properly, and move forward together at a pace that feels comfortable for us.
+        </div>
+
+        <div class="sticky-stack">
+          <div class="sticky pink">If something I said or did made you feel bad — please tell me. I'd rather fix it together than let you overthink alone.</div>
+          <div class="sticky dark">Come talk to me — anytime, about anything.</div>
+        </div>
+      </div>
+      <div class="thankyou">Thank you for being you. I'm lucky to have you.</div>
+    </div>
+
+    <!-- CONTRACT -->
+    <div class="panel full contract" data-panel>
+      <div class="tag c8">8 · The official agreement</div>
+      <div class="contract-title">Terms of Us</div>
+      <div class="contract-sub">A legally-unbinding but emotionally-very-binding agreement</div>
+
+      <div class="clause"><b>Article 1</b> Duration: one (1) month, zero (0) intimate chats. No exceptions, no lawyers required.</div>
+      <div class="clause"><b>Article 2</b> No pressure, no convincing, no "just this once." Silence on the topic is golden.</div>
+      <div class="clause"><b>Article 3</b> Full and immediate reinstatement of stupid jokes, random voice notes, and comfortable silences.</div>
+      <div class="clause"><b>Article 4</b> Any violation of Article 1 by the party of the first part (him) is punishable by mandatory extra cuddles, effective retroactively.</div>
+
+      <div class="stamp-row">
+        <div class="stamp">
+          <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+          Approved
+        </div>
+        <div class="sig-line">
+          <div class="name">Pratik</div>
+          <div class="cap">the overthinker</div>
+        </div>
+        <div class="sig-line">
+          <div class="name">&nbsp;</div>
+          <div class="cap">the wise one</div>
+        </div>
+      </div>
+      <div class="contract-footnote">Witnessed by one (1) very good dog. Paw-print seal considered legally sufficient.</div>
+    </div>
+
   </div>
 
-  <!-- ENDING CARD -->
-  <div class="card ending" id="endingCard">
-    <svg class="pup" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="100" cy="150" rx="54" ry="30" fill="#E3A05E"/>
-      <ellipse cx="100" cy="108" rx="48" ry="44" fill="#EFB878"/>
-      <path d="M58 76 Q44 36 66 42 Q78 60 78 84 Z" fill="#C97F3B"/>
-      <path d="M142 76 Q156 36 134 42 Q122 60 122 84 Z" fill="#C97F3B"/>
-      <ellipse cx="82" cy="108" rx="7" ry="9" fill="#5B3A29"/>
-      <ellipse cx="118" cy="108" rx="7" ry="9" fill="#5B3A29"/>
-      <ellipse cx="100" cy="124" rx="9" ry="7" fill="#5B3A29"/>
-      <path d="M100 130 Q100 138 92 140" stroke="#5B3A29" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M100 130 Q100 138 108 140" stroke="#5B3A29" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="68" cy="118" r="7" fill="#D98B8B" opacity="0.55"/>
-      <circle cx="132" cy="118" r="7" fill="#D98B8B" opacity="0.55"/>
-      <path id="beatHeart" d="M100 84 C94 74 78 76 78 90 C78 102 100 116 100 116 C100 116 122 102 122 90 C122 76 106 74 100 84 Z" fill="#D98B8B"/>
-    </svg>
-    <h1>Thank you. 🐾</h1>
-    <p class="msg">Take all the time you need — I'm not going anywhere. Same me, same us, same silly jokes and quiet comfort. I just wanted you to hear it properly, once, without any pressure attached.</p>
-    <div class="signature">— still yours, always me</div>
+  <div class="rose-divider">
+    <div class="line"></div>
+    <svg viewBox="0 0 24 24" fill="#B3222C"><circle cx="12" cy="9" r="6"/><path d="M12 15c-3 0-5 3-5 6h10c0-3-2-6-5-6z"/></svg>
+    <div class="line"></div>
   </div>
+
+  <!-- FINALE -->
+  <div class="finale-wrap">
+    <div class="finale-card" id="mainCard">
+      <svg class="finale-pup" viewBox="0 0 200 200"><ellipse cx="100" cy="150" rx="50" ry="28" fill="#3a1c1e"/><ellipse cx="100" cy="110" rx="44" ry="40" fill="#5C3A35"/><path d="M62 80 Q50 44 68 50 Q78 64 78 86 Z" fill="#2E1A17"/><path d="M138 80 Q150 44 132 50 Q122 64 122 86 Z" fill="#2E1A17"/><ellipse cx="82" cy="112" rx="6.5" ry="8.5" fill="#150a0b"/><ellipse cx="118" cy="112" rx="6.5" ry="8.5" fill="#150a0b"/><ellipse cx="100" cy="128" rx="8" ry="6.5" fill="#150a0b"/><circle cx="68" cy="122" r="6.5" fill="#D63447" opacity="0.5"/><circle cx="132" cy="122" r="6.5" fill="#D63447" opacity="0.5"/></svg>
+      <h2>So... can we just go back to being us?</h2>
+      <p>No rush, no pressure — just the same two people, same silly jokes, same comfort.</p>
+      <div class="btn-row">
+        <button class="btn btn-yes" id="yesBtn">Yes</button>
+        <button class="btn btn-no" id="noBtn">Sorry, can't click this</button>
+      </div>
+      <div class="no-hint" id="noHint">&nbsp;</div>
+    </div>
+
+    <div class="finale-card ending" id="endingCard">
+      <svg class="ending-pup" viewBox="0 0 200 200">
+        <!-- body -->
+        <ellipse cx="100" cy="154" rx="58" ry="30" fill="#E8ECEE"/>
+        <ellipse cx="100" cy="154" rx="58" ry="30" fill="none"/>
+        <!-- head base (white/grey) -->
+        <ellipse cx="100" cy="106" rx="50" ry="45" fill="#F4F6F7"/>
+        <!-- grey top-of-head marking -->
+        <path d="M56 84 Q100 54 144 84 Q140 108 100 116 Q60 108 56 84 Z" fill="#6E7679"/>
+        <!-- ears (grey outer, white inner) -->
+        <path d="M56 78 Q42 30 68 40 Q80 58 78 82 Z" fill="#6E7679"/>
+        <path d="M62 68 Q56 42 70 48 Q76 60 74 76 Z" fill="#E8ECEE"/>
+        <path d="M144 78 Q158 30 132 40 Q120 58 122 82 Z" fill="#6E7679"/>
+        <path d="M138 68 Q144 42 130 48 Q124 60 126 76 Z" fill="#E8ECEE"/>
+        <!-- face mask marking -->
+        <path d="M70 92 Q100 86 130 92 Q128 118 100 126 Q72 118 70 92 Z" fill="#F4F6F7"/>
+        <path d="M68 88 Q78 78 88 90 Q80 100 68 88 Z" fill="#6E7679"/>
+        <path d="M132 88 Q122 78 112 90 Q120 100 132 88 Z" fill="#6E7679"/>
+        <!-- blue eyes -->
+        <ellipse cx="82" cy="106" rx="7" ry="8.5" fill="#7FC4E0"/>
+        <ellipse cx="118" cy="106" rx="7" ry="8.5" fill="#7FC4E0"/>
+        <ellipse cx="82" cy="107" rx="3" ry="3.6" fill="#1a2a30"/>
+        <ellipse cx="118" cy="107" rx="3" ry="3.6" fill="#1a2a30"/>
+        <!-- nose + mouth -->
+        <ellipse cx="100" cy="122" rx="8" ry="6" fill="#1a2a30"/>
+        <path d="M100 128 Q100 135 92 137" stroke="#1a2a30" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M100 128 Q100 135 108 137" stroke="#1a2a30" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- blush -->
+        <circle cx="66" cy="118" r="6.5" fill="#D63447" opacity="0.28"/>
+        <circle cx="134" cy="118" r="6.5" fill="#D63447" opacity="0.28"/>
+        <!-- little red bandana -->
+        <path d="M62 98 Q100 112 138 98 L130 114 Q100 124 70 114 Z" fill="#B3222C"/>
+        <!-- beating heart above head -->
+        <path id="beatHeart" d="M100 58 C94 48 78 50 78 64 C78 76 100 90 100 90 C100 90 122 76 122 64 C122 50 106 48 100 58 Z" fill="#B3222C"/>
+      </svg>
+      <div class="love-text">I love you, baby.</div>
+      <p class="love-sub">Not for any of the intimate stuff. For the way you listen, the way you care, the way you're just... genuinely you. That's what I fell for, and that's what I'm not letting go of.</p>
+      <div class="signature">— always yours</div>
+    </div>
+  </div>
+
+  <footer>made with a wagging tail, a rose, and snow that never rushes</footer>
 
 </div>
 
 <script>
+  const snowLayer = document.getElementById('snowLayer');
+  const flakeChars = ['❄','❅','❆'];
+  const flakeCount = window.innerWidth < 700 ? 34 : 60;
+  for(let i=0;i<flakeCount;i++){
+    const f = document.createElement('div');
+    f.className = 'flake';
+    f.textContent = flakeChars[Math.floor(Math.random()*flakeChars.length)];
+    const size = 10 + Math.random()*16;
+    f.style.left = Math.random()*100 + 'vw';
+    f.style.fontSize = size + 'px';
+    f.style.opacity = 0.3 + Math.random()*0.5;
+    const duration = 8 + Math.random()*14;
+    f.style.animationDuration = duration + 's';
+    f.style.animationDelay = (Math.random()*duration) + 's';
+    snowLayer.appendChild(f);
+  }
+
+  const panels = document.querySelectorAll('[data-panel]');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in-view'); } });
+  }, { threshold:0.12 });
+  panels.forEach(p=>io.observe(p));
+
   const noBtn = document.getElementById('noBtn');
-  const yesBtn = document.getElementById('yesBtn');
-  const mainCard = document.getElementById('mainCard');
-  const endingCard = document.getElementById('endingCard');
   const noHint = document.getElementById('noHint');
-  const scene = document.querySelector('.scene');
-  const heartsFloat = document.getElementById('heartsFloat');
-
-  const hints = [
-    "nope 🐾",
-    "try again? still no.",
-    "this one's not clickable, sorry",
-    "he/she says only Yes works",
-    "the puppy vetoed it"
-  ];
+  const hints = ["nope", "try again? still no.", "this one's not clickable, sorry", "the dog vetoed it", "only Yes works here"];
   let hintIndex = 0;
-
   function dodge(){
-    const rowRect = noBtn.parentElement.getBoundingClientRect();
+    const row = noBtn.parentElement;
+    const rowRect = row.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
     const maxLeft = rowRect.width - btnRect.width - 8;
     const maxTop = 40;
-    const randLeft = Math.max(8, Math.min(maxLeft, Math.random() * maxLeft));
-    const randTop = (Math.random() * maxTop) - (maxTop/2);
+    const randLeft = Math.max(8, Math.min(maxLeft, Math.random()*maxLeft));
+    const randTop = (Math.random()*maxTop) - (maxTop/2);
     noBtn.style.position = 'absolute';
     noBtn.style.left = randLeft + 'px';
     noBtn.style.top = randTop + 'px';
     noHint.textContent = hints[hintIndex % hints.length];
     hintIndex++;
   }
-
   noBtn.addEventListener('mouseenter', dodge);
   noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); dodge(); }, {passive:false});
   noBtn.addEventListener('click', (e)=> e.preventDefault());
 
-  function spawnHearts(){
-    for(let i=0;i<18;i++){
-      const h = document.createElement('div');
-      h.className = 'float-heart';
-      h.textContent = ['❤️','🐾','💛','🩷'][Math.floor(Math.random()*4)];
-      h.style.left = (Math.random()*100) + 'vw';
-      h.style.animationDelay = (Math.random()*1.2) + 's';
-      h.style.fontSize = (16 + Math.random()*14) + 'px';
-      heartsFloat.appendChild(h);
-      setTimeout(()=>h.remove(), 4200);
+  const mainCard = document.getElementById('mainCard');
+  const endingCard = document.getElementById('endingCard');
+  const petalsFloat = document.getElementById('petalsFloat');
+  function spawnPetals(){
+    for(let i=0;i<24;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = ['🌹','❤','❄'][Math.floor(Math.random()*3)];
+      p.style.left = (Math.random()*100) + 'vw';
+      p.style.animationDelay = (Math.random()*1.2) + 's';
+      p.style.fontSize = (16 + Math.random()*14) + 'px';
+      petalsFloat.appendChild(p);
+      setTimeout(()=>p.remove(), 4400);
     }
   }
-
-  yesBtn.addEventListener('click', ()=>{
+  document.getElementById('yesBtn').addEventListener('click', ()=>{
     mainCard.classList.add('hide');
     endingCard.classList.add('show');
-    spawnHearts();
+    spawnPetals();
   });
 
   const heartBeat = document.getElementById('beatHeart');
@@ -371,7 +516,7 @@
     if(scale > 1.1){ growing = false; }
     if(scale < 1){ growing = true; }
     heartBeat.style.transform = `scale(${scale})`;
-    heartBeat.style.transformOrigin = '100px 100px';
+    heartBeat.style.transformOrigin = '100px 74px';
   }, 55);
 </script>
 
