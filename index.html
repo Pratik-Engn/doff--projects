@@ -1,959 +1,692 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Something I've been wanting to say 💛</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&display=swap" rel="stylesheet">
+<style>
 
-    :root {
-      --bg:     #0D0A14;
-      --bg2:    #120E1C;
-      --card:   #1A1428;
-      --card2:  #201830;
-      --purple: #9B6DCA;
-      --lilac:  #C4A0E8;
-      --violet: #6B3FA0;
-      --glow:   #B47EE5;
-      --text:   #EDE0FF;
-      --soft:   #B8A8D0;
-      --mist:   #2A1F40;
-      --white:  #F5EEFF;
-      --gold:   #C4A0E8;
-    }
+  :root{
+    --onyx:#0B0B0C;
+    --wine:#2E070D;
+    --crimson:#A31621;
+    --crimson-deep:#6E0F17;
+    --crimson-soft:#C64550;
+    --gold:#C6A15B;
+    --gold-soft:#DCC58F;
+    --ivory:#F8F2E9;
+    --paper:#FBF6EF;
+    --ink:#211512;
+    --ink-soft:#5A423C;
+    --hair:rgba(163,22,33,0.22);
+  }
 
-    html { scroll-behavior: smooth; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at 50% -10%, var(--wine) 0%, var(--onyx) 60%),
+      var(--onyx);
+    color:var(--ink);
+    font-family:'EB Garamond', serif;
+    font-weight:400;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
 
-    /* ── PAGES ── */
-    .page {
-      min-height: 100vh;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 1.5rem 5rem;
-      position: relative;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      background: var(--bg);
-    }
-    .page.active { display: flex; }
-    .page.visible { opacity: 1; }
+  /* ---------- SNOW ---------- */
+  #snowLayer{ position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden; }
+  .flake{
+    position:absolute; top:-2vh;
+    width:4px; height:4px;
+    background:radial-gradient(circle, #fff 0%, rgba(255,255,255,0) 75%);
+    border-radius:50%;
+    animation-name: fall;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+    will-change:transform;
+  }
+  @keyframes fall{
+    0%{ transform:translate(0,0); }
+    50%{ transform:translate(14px, 52vh); }
+    100%{ transform:translate(-6px, 106vh); }
+  }
 
-    /* ── BLOBS ── */
-    .paint-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .blob-1 { width: 380px; height: 380px; background: rgba(107,63,160,0.35); top: -100px; right: -100px; }
-    .blob-2 { width: 260px; height: 260px; background: rgba(155,109,202,0.2); bottom: 40px; left: -70px; }
-    .blob-3 { width: 300px; height: 300px; background: rgba(180,126,229,0.15); top: 35%; left: 25%; }
+  /* ---------- LAYOUT ---------- */
+  .wrap{ position:relative; z-index:3; max-width:660px; margin:0 auto; padding:70px 24px 110px; }
 
-    .content { position: relative; z-index: 1; max-width: 520px; width: 100%; }
+  .letter{
+    background:var(--paper);
+    border-radius:2px;
+    padding:clamp(40px,7vw,72px) clamp(30px,7vw,64px) 56px;
+    box-shadow:0 40px 90px -40px rgba(0,0,0,0.7);
+    position:relative;
+  }
+  .letter::before{
+    content:"";
+    position:absolute; inset:14px;
+    border:1px solid var(--hair);
+    pointer-events:none;
+  }
 
-    /* ── LABELS ── */
-    .chapter-label {
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--lilac);
-      margin-bottom: 1.2rem;
-    }
+  /* ---------- CREST ---------- */
+  .crest{ text-align:center; margin-bottom:8px; }
+  .crest svg{ width:86px; height:86px; }
+  .crest-ring{ }
 
-    /* ── TYPE ── */
-    h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.9rem, 5.5vw, 2.8rem);
-      font-weight: 300;
-      line-height: 1.2;
-      color: var(--white);
-      margin-bottom: 0.9rem;
-    }
-    h2 em { font-style: italic; color: var(--lilac); }
-    p {
-      font-size: 0.97rem;
-      line-height: 1.8;
-      color: var(--soft);
-      margin-bottom: 1rem;
-    }
+  header{ text-align:center; margin-bottom:40px; }
+  .kicker{
+    display:block;
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--crimson-deep);
+    margin-bottom:18px;
+    opacity:0.85;
+  }
+  h1.title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(38px,7vw,54px);
+    margin:0 0 16px;
+    color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  .lede{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:420px;
+    margin:0 auto;
+  }
 
-    /* ── HINGE CARD ── */
-    .hinge-card {
-      background: var(--card);
-      border-radius: 24px;
-      padding: 1.8rem;
-      box-shadow: 0 8px 44px rgba(107,63,160,0.3), 0 0 0 1px rgba(155,109,202,0.15);
-      margin-bottom: 1.8rem;
-      border: 1px solid rgba(155,109,202,0.2);
-    }
-    .card-avatar {
-      width: 68px; height: 68px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #6B3FA0, #C4A0E8);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.9rem;
-      margin-bottom: 0.9rem;
-      box-shadow: 0 0 20px rgba(180,126,229,0.4);
-    }
-    .card-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.55rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-    .card-meta { font-size: 0.82rem; color: var(--lilac); margin-bottom: 0.9rem; }
-    .card-tag {
-      display: inline-block;
-      background: var(--mist);
-      border-radius: 100px;
-      padding: 0.28rem 0.85rem;
-      font-size: 0.78rem;
-      color: var(--lilac);
-      margin: 0.2rem;
-      border: 1px solid rgba(155,109,202,0.2);
-    }
-    .card-prompt {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(155,109,202,0.2);
-      font-size: 0.82rem;
-      color: var(--lilac);
-      font-weight: 500;
-      margin-bottom: 0.3rem;
-    }
-    .card-prompt-answer {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      color: var(--white);
-      line-height: 1.55;
-    }
+  /* ---------- DIVIDER ---------- */
+  .divider{ display:flex; align-items:center; justify-content:center; gap:16px; margin:48px 0 38px; }
+  .divider .rule{ height:1px; flex:1; max-width:120px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .divider svg{ width:16px; height:16px; flex-shrink:0; }
 
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.9rem;
-      border-radius: 100px;
-      border: none;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.93rem;
-      font-weight: 500;
-      transition: all 0.25s ease;
-    }
-    .btn-primary { background: var(--violet); color: var(--white); }
-    .btn-primary:hover { background: var(--purple); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(155,109,202,0.5); }
-    .btn-outline { background: transparent; color: var(--lilac); border: 1.5px solid rgba(155,109,202,0.5); }
-    .btn-outline:hover { background: var(--mist); }
-    .btn-gold { background: linear-gradient(135deg, #7B4FBF, #C4A0E8); color: var(--white); }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(180,126,229,0.5); }
+  /* ---------- SECTIONS ---------- */
+  section.stanza{
+    margin-bottom:6px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  section.stanza.in-view{ opacity:1; transform:translateY(0); }
 
-    .divider { width: 48px; height: 2px; background: var(--violet); margin: 1.4rem 0; }
+  .numeral{
+    display:block;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--crimson);
+    margin-bottom:8px;
+  }
+  .stanza h2{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:clamp(22px,4vw,27px);
+    margin:0 0 16px;
+    color:var(--ink);
+  }
+  .stanza p{
+    font-size:18px;
+    color:var(--ink-soft);
+    margin:0 0 14px;
+  }
+  .stanza p:last-child{ margin-bottom:0; }
 
-    /* ── QUIZ ── */
-    .quiz-wrap { width: 100%; max-width: 520px; }
-    .quiz-progress { display: flex; gap: 6px; margin-bottom: 2rem; }
-    .quiz-dot {
-      height: 4px; flex: 1; border-radius: 4px;
-      background: var(--mist);
-      transition: background 0.4s;
-    }
-    .quiz-dot.done { background: var(--violet); }
-    .quiz-dot.active { background: var(--glow); }
+  .dropcap::first-letter{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:56px;
+    color:var(--crimson);
+    float:left;
+    line-height:0.8;
+    padding-right:10px;
+    padding-top:6px;
+  }
 
-    .quiz-card {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 1.8rem;
-      box-shadow: 0 4px 30px rgba(107,63,160,0.2);
-      border: 1px solid rgba(155,109,202,0.15);
-      margin-bottom: 1.2rem;
-    }
-    .quiz-q {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 1.2rem;
-      line-height: 1.45;
-    }
-    .quiz-options { display: flex; flex-direction: column; gap: 0.65rem; }
-    .quiz-opt {
-      padding: 0.8rem 1.15rem;
-      border-radius: 12px;
-      border: 1.5px solid rgba(155,109,202,0.2);
-      background: var(--bg2);
-      cursor: pointer;
-      font-size: 0.93rem;
-      color: var(--soft);
-      transition: all 0.2s;
-      text-align: left;
-    }
-    .quiz-opt:hover { border-color: var(--purple); background: var(--mist); color: var(--white); }
-    .quiz-opt.correct { border-color: #7CAE8D; background: rgba(124,174,141,0.15); color: #A8D5B5; }
-    .quiz-opt.wrong { border-color: #C97B7B; background: rgba(201,123,123,0.12); color: #E0A0A0; }
+  .accent{
+    color:var(--crimson-deep);
+    font-style:italic;
+  }
 
-    .quiz-feedback {
-      margin-top: 1rem;
-      padding: 0.9rem 1.1rem;
-      border-radius: 12px;
-      background: var(--mist);
-      font-size: 0.93rem;
-      color: var(--lilac);
-      line-height: 1.65;
-      display: none;
-      border: 1px solid rgba(155,109,202,0.2);
-    }
-    .quiz-feedback.show { display: block; }
-    .quiz-score {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem;
-      color: var(--lilac);
-      text-align: center;
-      margin-bottom: 0.4rem;
-    }
+  /* ---------- WANT LIST ---------- */
+  .want-list{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:0;
+    margin-top:8px;
+    border-top:1px solid var(--hair);
+    border-bottom:1px solid var(--hair);
+    padding:22px 0;
+  }
+  .want-item{
+    flex:1 1 auto;
+    min-width:110px;
+    text-align:center;
+    padding:6px 14px;
+    border-left:1px solid var(--hair);
+  }
+  .want-item:first-child{ border-left:none; }
+  .want-item .w-title{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:16.5px;
+    color:var(--crimson-deep);
+    margin-bottom:6px;
+  }
+  .want-item .w-cap{
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
 
-    /* ── THINGS I LIKE (page 2) ── */
-    .likes-list { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
-    .like-item {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 1.1rem 1.3rem;
-      border: 1px solid rgba(155,109,202,0.18);
-      box-shadow: 0 3px 14px rgba(107,63,160,0.15);
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .like-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .like-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.15rem;
-    }
-    .like-desc { font-size: 0.83rem; color: var(--soft); line-height: 1.55; }
+  /* ---------- TRUTH ---------- */
+  blockquote{
+    margin:26px 0;
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--ink);
+    line-height:1.5;
+    position:relative;
+    padding:0 20px;
+  }
+  .truth-list{ list-style:none; margin:0 0 8px; padding:0; }
+  .truth-list li{
+    font-size:18px; color:var(--ink-soft);
+    padding-left:20px;
+    position:relative;
+    margin-bottom:10px;
+  }
+  .truth-list li::before{
+    content:"—";
+    position:absolute; left:0; color:var(--crimson);
+  }
+  .ps-note{
+    margin-top:22px;
+    padding:18px 22px;
+    border-left:2px solid var(--crimson);
+    background:rgba(163,22,33,0.04);
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:16px;
+  }
+  .ps-note .ps-label{
+    display:block;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--crimson-deep);
+    margin-bottom:6px;
+  }
 
-    /* ── GROWTH TIMELINE (page 3) ── */
-    .timeline { position: relative; padding-left: 2rem; margin-bottom: 2rem; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 7px;
-      top: 8px;
-      bottom: 8px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--glow), var(--violet));
-      border-radius: 2px;
-    }
-    .timeline-item { position: relative; margin-bottom: 1.6rem; }
-    .timeline-dot {
-      position: absolute;
-      left: -1.75rem;
-      top: 5px;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: var(--glow);
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--glow), 0 0 8px rgba(180,126,229,0.6);
-    }
-    .timeline-phase {
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--lilac);
-      margin-bottom: 0.2rem;
-    }
-    .timeline-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.2rem;
-    }
-    .timeline-desc { font-size: 0.83rem; color: var(--soft); line-height: 1.6; }
+  /* ---------- CERTIFICATE ---------- */
+  .certificate{
+    margin-top:10px;
+    border:1px solid var(--gold-soft);
+    padding:36px clamp(22px,5vw,44px);
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(198,161,91,0.05), transparent 40%),
+      var(--paper);
+  }
+  .certificate::before, .certificate::after{
+    content:""; position:absolute; width:22px; height:22px;
+    border-top:1px solid var(--gold); border-left:1px solid var(--gold);
+    top:8px; left:8px;
+  }
+  .certificate::after{
+    top:auto; left:auto; bottom:8px; right:8px;
+    border-top:none; border-left:none;
+    border-bottom:1px solid var(--gold); border-right:1px solid var(--gold);
+  }
+  .cert-kicker{
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--crimson);
+    margin-bottom:6px;
+  }
+  .cert-title{
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:26px;
+    color:var(--ink);
+    margin:0 0 4px;
+  }
+  .cert-sub{
+    text-align:center;
+    font-style:italic;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin-bottom:28px;
+  }
+  .article{
+    display:flex; gap:16px; margin-bottom:16px;
+    font-size:16px; color:var(--ink-soft);
+  }
+  .article .num{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    color:var(--crimson-deep);
+    flex-shrink:0;
+    min-width:26px;
+  }
+  .seal-row{
+    display:flex; align-items:center; justify-content:center;
+    gap:34px; margin-top:32px; flex-wrap:wrap;
+  }
+  .seal{
+    width:74px; height:74px;
+    flex-shrink:0;
+  }
+  .sig-block{ text-align:center; }
+  .sig-block .name{
+    font-family:'Parisienne', cursive;
+    font-size:30px;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink-soft);
+    padding:0 12px 4px;
+  }
+  .sig-block .name.blank{ color:transparent; user-select:none; }
+  .sig-block .cap{
+    font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink-soft); margin-top:6px;
+  }
+  .cert-footnote{
+    text-align:center; margin-top:26px; font-size:13.5px;
+    font-style:italic; color:var(--ink-soft);
+  }
 
-    /* ── CONFESSION (page 4) ── */
-    .confession-wrap { text-align: center; }
-    .confession-heart {
-      font-size: 3.2rem;
-      margin-bottom: 1.4rem;
-      animation: heartbeat 1.7s ease-in-out infinite;
-      filter: drop-shadow(0 0 12px rgba(180,126,229,0.8));
-    }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    .confession-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.15rem, 3.8vw, 1.5rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.9;
-      color: var(--text);
-      margin-bottom: 2rem;
-    }
-    .response-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  /* ---------- FINALE ---------- */
+  .finale-shell{ margin-top:56px; }
+  .finale{
+    text-align:center;
+    position:relative;
+    min-height:420px;
+  }
+  .finale-card{
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .finale-card.hide{ opacity:0; transform:scale(0.97); position:absolute; inset:0; pointer-events:none; }
 
-    /* ── FINAL PAGE (page 5) ── */
-    #page-5 {
-      background-image: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=900&auto=format&fit=crop&q=60');
-      background-size: cover;
-      background-position: center;
-    }
-    #page-5::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(160deg, rgba(13,5,30,0.88) 0%, rgba(60,20,100,0.75) 100%);
-      z-index: 0;
-    }
-    #page-5 .content { position: relative; z-index: 1; text-align: center; }
-    #page-5 .chapter-label { color: var(--lilac); }
-    .final-msg {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.25rem, 4.5vw, 1.8rem);
-      font-weight: 300;
-      color: var(--white);
-      line-height: 1.85;
-      margin-bottom: 1.8rem;
-    }
-    .final-msg em { font-style: italic; color: var(--lilac); }
-    .final-heart {
-      font-size: 3rem;
-      margin-bottom: 1.2rem;
-      animation: heartbeat 1.7s ease-in-out infinite;
-      filter: drop-shadow(0 0 14px rgba(196,160,232,0.9));
-    }
+  .finale-kicker{
+    font-family:'Playfair Display', serif; font-style:italic; font-size:13px;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--crimson);
+    margin-bottom:14px;
+  }
+  .finale h2{
+    font-family:'Playfair Display', serif; font-style:italic; font-weight:600;
+    font-size:clamp(24px,5vw,30px); color:var(--ink); margin:0 0 16px;
+  }
+  .finale p.sub{ font-size:16.5px; color:var(--ink-soft); max-width:380px; margin:0 auto 30px; }
 
-    /* ── NAV DOTS ── */
-    .page-nav {
-      position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 8px; z-index: 100;
-    }
-    .page-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(155,109,202,0.3);
-      transition: all 0.3s;
-    }
-    .page-dot.active { background: var(--purple); width: 22px; border-radius: 4px; box-shadow: 0 0 8px rgba(155,109,202,0.6); }
+  .btn-row{ position:relative; display:flex; align-items:center; justify-content:center; gap:20px; min-height:70px; }
+  .btn{
+    font-family:'EB Garamond', serif;
+    font-size:15.5px;
+    letter-spacing:0.04em;
+    background:transparent;
+    cursor:pointer;
+    padding:13px 34px;
+    transition:all 0.25s ease;
+  }
+  .btn-yes{
+    border:1px solid var(--crimson);
+    color:var(--crimson-deep);
+    font-style:italic;
+  }
+  .btn-yes:hover{ background:var(--crimson); color:#fff; }
+  .btn-no{
+    border:1px solid var(--hair);
+    color:var(--ink-soft);
+    position:absolute;
+    left:calc(50% + 60px);
+    transition:left 0.25s ease, top 0.25s ease;
+  }
+  .no-hint{ margin-top:16px; font-size:13px; font-style:italic; color:var(--ink-soft); opacity:0.75; min-height:18px; }
 
-    /* ── BRUSH ACCENTS ── */
-    .brush-accent {
-      position: absolute;
-      opacity: 0.08;
-      pointer-events: none;
-    }
+  /* ---------- ENDING (romance lives here) ---------- */
+  .ending{ opacity:0; transform:scale(0.95); pointer-events:none; }
+  .ending.show{ opacity:1; transform:scale(1); pointer-events:auto; }
+  .husky{ width:190px; height:190px; margin:0 auto 6px; }
+  .love-text{
+    font-family:'Playfair Display', serif; font-style:italic; font-weight:700;
+    font-size:clamp(34px,7vw,50px); color:var(--crimson);
+    margin:6px 0 18px;
+  }
+  .love-sub{ font-size:16.5px; color:var(--ink-soft); max-width:400px; margin:0 auto 22px; }
+  .final-sig{ font-family:'Parisienne', cursive; font-size:26px; color:var(--crimson-deep); }
 
-    /* ── SNOWFALL ── */
-    #snow-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 999;
-    }
+  .petals{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:6; }
+  .petal{ position:absolute; bottom:-30px; opacity:0; animation: rise 4.2s ease-in forwards; }
+  @keyframes rise{
+    0%{ opacity:0; transform:translateY(0) rotate(0deg); }
+    12%{ opacity:0.9; }
+    100%{ opacity:0; transform:translateY(-100vh) rotate(140deg); }
+  }
 
-    /* ── LISTENING CARD ── */
-    .listen-card {
-      background: linear-gradient(135deg, rgba(107,63,160,0.2) 0%, var(--card) 100%);
-      border-radius: 20px;
-      padding: 1.4rem 1.5rem;
-      border: 1px solid rgba(155,109,202,0.3);
-      box-shadow: 0 4px 24px rgba(107,63,160,0.2);
-      margin-bottom: 0.85rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .listen-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: linear-gradient(to bottom, var(--lilac), var(--violet));
-      border-radius: 3px 0 0 3px;
-    }
-    .listen-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .listen-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.15rem;
-    }
-    .listen-desc { font-size: 0.83rem; color: var(--soft); line-height: 1.6; }
+  footer.page-footer{
+    text-align:center; color:rgba(220,197,143,0.55); font-size:12px;
+    letter-spacing:0.08em; margin-top:44px; font-style:italic;
+  }
 
-    /* ── CALL VISUAL ── */
-    .call-visual {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 1.5rem;
-      border: 1px solid rgba(155,109,202,0.2);
-      box-shadow: 0 4px 24px rgba(107,63,160,0.2);
-      margin-bottom: 1.2rem;
-      text-align: center;
-    }
-    .call-bars {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 5px;
-      height: 48px;
-      margin-bottom: 0.8rem;
-    }
-    .bar {
-      width: 8px;
-      border-radius: 4px;
-      background: var(--purple);
-      animation: wave 1.4s ease-in-out infinite;
-    }
-    .bar:nth-child(1) { height: 20%; animation-delay: 0s; background: var(--lilac); }
-    .bar:nth-child(2) { height: 60%; animation-delay: 0.15s; }
-    .bar:nth-child(3) { height: 90%; animation-delay: 0.3s; }
-    .bar:nth-child(4) { height: 45%; animation-delay: 0.45s; background: var(--lilac); }
-    .bar:nth-child(5) { height: 75%; animation-delay: 0.6s; }
-    .bar:nth-child(6) { height: 30%; animation-delay: 0.75s; background: var(--lilac); }
-    .bar:nth-child(7) { height: 55%; animation-delay: 0.9s; }
-    @keyframes wave {
-      0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
-      50% { transform: scaleY(1); opacity: 1; }
-    }
-    .call-label {
-      font-size: 0.78rem;
-      color: var(--lilac);
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .call-sublabel {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      color: var(--soft);
-      margin-top: 0.2rem;
-      font-style: italic;
-    }
-
-    @media (max-width: 480px) {
-      .response-btns { flex-direction: column; align-items: center; }
-    }
-  </style>
+  @media (max-width:600px){
+    .want-list{ flex-direction:column; padding:10px 0; }
+    .want-item{ border-left:none; border-top:1px solid var(--hair); padding:16px 8px; }
+    .want-item:first-child{ border-top:none; }
+    .seal-row{ gap:20px; }
+  }
+  @media (max-width:420px){
+    .btn-row{ flex-direction:column; gap:16px; }
+    .btn-no{ position:static; left:auto; }
+  }
+</style>
 </head>
 <body>
 
-<!-- SNOWFALL -->
-<canvas id="snow-canvas"></canvas>
+<div id="snowLayer"></div>
+<div class="petals" id="petalsLayer"></div>
 
-<div class="page-nav">
-  <div class="page-dot active" data-page="0"></div>
-  <div class="page-dot" data-page="1"></div>
-  <div class="page-dot" data-page="2"></div>
-  <div class="page-dot" data-page="3"></div>
-  <div class="page-dot" data-page="4"></div>
-  <div class="page-dot" data-page="5"></div>
-</div>
+<div class="wrap">
+  <div class="letter">
 
-<!-- ══════════════════════════════════
-     PAGE 0 — WELCOME CARD
-════════════════════════════════════ -->
-<div class="page active" id="page-0">
-  <div class="paint-blob blob-1"></div>
-  <div class="paint-blob blob-2"></div>
-  <svg class="brush-accent" style="top:8%;right:-10px;width:170px" viewBox="0 0 200 60" fill="none">
-    <path d="M10 40 Q60 10 120 30 Q160 45 195 20" stroke="#C97B63" stroke-width="18" stroke-linecap="round"/>
-  </svg>
-
-  <div class="content">
-    <div class="chapter-label">✦ Something I made just for you</div>
-
-    <div class="hinge-card">
-      <div class="card-avatar">🌸</div>
-      <div class="card-name">Someone you know</div>
-      <div class="card-meta">Has been saving something up…</div>
-      <div>
-        <span class="card-tag">📞 Those long calls</span>
-        <span class="card-tag">💛 Your warmth</span>
-        <span class="card-tag">🌱 Watching you grow</span>
-      </div>
-      <div class="card-prompt">The thing I can't stop thinking about is…</div>
-      <div class="card-prompt-answer">"You. And how rare you actually are."</div>
+    <div class="crest">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="57" fill="none" stroke="#C6A15B" stroke-width="1"/>
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#C6A15B" stroke-width="0.6" opacity="0.6"/>
+        <!-- minimalist husky line face -->
+        <path d="M40 46 Q34 22 50 30 Q58 40 56 54 Z" fill="none" stroke="#211512" stroke-width="1.4"/>
+        <path d="M80 46 Q86 22 70 30 Q62 40 64 54 Z" fill="none" stroke="#211512" stroke-width="1.4"/>
+        <path d="M40 56 Q60 42 80 56 Q78 76 60 82 Q42 76 40 56 Z" fill="none" stroke="#211512" stroke-width="1.4"/>
+        <circle cx="52" cy="60" r="2.4" fill="#A31621"/>
+        <circle cx="68" cy="60" r="2.4" fill="#A31621"/>
+        <path d="M56 70 Q60 74 64 70" stroke="#211512" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <!-- small rose sprig beneath -->
+        <path d="M50 92 Q60 86 70 92" stroke="#A31621" stroke-width="1.2" fill="none"/>
+        <circle cx="60" cy="88" r="4" fill="#A31621" opacity="0.85"/>
+      </svg>
     </div>
 
-    <p style="font-size:0.93rem;">
-      There's something I've been meaning to say for a while now.
-      So I built a little something instead of just texting it. Ready?
-    </p>
+    <header>
+      <span class="kicker">a letter, from me to you</span>
+      <h1 class="title">Hey you,</h1>
+      <p class="lede">I think we've been thinking too much lately &mdash; so I put it all down properly, for you.</p>
+    </header>
 
-    <button class="btn btn-primary" style="margin-top:1.3rem" onclick="goTo(1)">
-      Open it →
-    </button>
+    <div class="divider">
+      <div class="rule"></div>
+      <svg viewBox="0 0 24 24" fill="#A31621"><circle cx="12" cy="9" r="6"/><path d="M12 15c-3 0-5 3-5 6h10c0-3-2-6-5-6z"/></svg>
+      <div class="rule"></div>
+    </div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">I. Before Everything Changed</span>
+      <h2>We were friends, first.</h2>
+      <p class="dropcap">We laughed at the stupidest things. We had random talks, shared our overthinking, and felt so comfortable with each other that nothing needed explaining. <span class="accent">Those days mean a great deal to me.</span></p>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="none" stroke="#C6A15B" stroke-width="1.4"><path d="M12 3v18M3 12h18"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">II. Then Something New</span>
+      <h2>The moment we called ourselves "us."</h2>
+      <p>Things naturally became more intimate between us — we started talking about more personal, intimate things, more often than before. It happened quickly, and quietly, without either of us really deciding it.</p>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="none" stroke="#C6A15B" stroke-width="1.4"><path d="M12 3v18M3 12h18"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">III. A Small Confession</span>
+      <h2>I talked about it too much.</h2>
+      <p>I asked more questions, brought it up more often than I should have, and maybe made it feel like something about me had changed. <span class="accent">If that made you uncomfortable, I am genuinely sorry.</span></p>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="none" stroke="#C6A15B" stroke-width="1.4"><path d="M12 3v18M3 12h18"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">IV. What Hasn't Changed</span>
+      <h2>I didn't stop being your friend.</h2>
+      <p>Not for a single day. I still want to laugh with you, annoy you a little, listen to you, talk about nothing in particular, and be exactly the person you have always known.</p>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="#A31621"><circle cx="12" cy="9" r="6"/><path d="M12 15c-3 0-5 3-5 6h10c0-3-2-6-5-6z"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">V. Why I Actually Fell For You</span>
+      <h2>Not for any of that.</h2>
+      <p>I fell for you because of who you actually are — a genuine person, with a big heart, who cares for me without keeping score. You're the one who listens to all my nonsense and never once made me feel small for it. <span class="accent">That is everything.</span></p>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="none" stroke="#C6A15B" stroke-width="1.4"><path d="M12 3v18M3 12h18"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">VI. What I Actually Want</span>
+      <h2>Only these, really.</h2>
+      <div class="want-list">
+        <div class="want-item"><div class="w-title">Your Comfort</div><div class="w-cap">You should always feel safe with me.</div></div>
+        <div class="want-item"><div class="w-title">Our Friendship</div><div class="w-cap">The heart of everything.</div></div>
+        <div class="want-item"><div class="w-title">Honest Talks</div><div class="w-cap">Not assumed. Not overthought.</div></div>
+        <div class="want-item"><div class="w-title">No Pressure</div><div class="w-cap">Never, for anything.</div></div>
+        <div class="want-item"><div class="w-title">Us</div><div class="w-cap">That's all I really want.</div></div>
+      </div>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="none" stroke="#C6A15B" stroke-width="1.4"><path d="M12 3v18M3 12h18"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">VII. The Truth Is</span>
+      <ul class="truth-list">
+        <li>Nothing is broken.</li>
+        <li>Nothing needs to be rushed.</li>
+        <li>I'm still here, and I'm still me.</li>
+        <li>I still care about you, just as much.</li>
+      </ul>
+      <blockquote>"We don't have to rush anything. We can just be ourselves, talk properly, and move forward at whatever pace feels right for us."</blockquote>
+      <div class="ps-note">
+        <span class="ps-label">a small note</span>
+        If something I said or did made you feel bad, please tell me — I would rather sit with you and fix it together than let you carry it alone. Come talk to me, anytime, about anything.
+      </div>
+    </section>
+
+    <div class="divider"><div class="rule"></div><svg viewBox="0 0 24 24" fill="#A31621"><circle cx="12" cy="9" r="6"/><path d="M12 15c-3 0-5 3-5 6h10c0-3-2-6-5-6z"/></svg><div class="rule"></div></div>
+
+    <section class="stanza" data-stanza>
+      <span class="numeral">VIII. Put In Writing</span>
+      <div class="certificate">
+        <div class="cert-kicker">Certificate of Understanding</div>
+        <div class="cert-title">Terms of Us</div>
+        <div class="cert-sub">Signed with more sincerity than any document deserves</div>
+
+        <div class="article"><span class="num">I.</span> One month, entirely free of intimate conversation. No exceptions.</div>
+        <div class="article"><span class="num">II.</span> No pressure, no convincing, no revisiting the subject.</div>
+        <div class="article"><span class="num">III.</span> Full and immediate return of easy conversation, silly jokes, and comfortable silence.</div>
+        <div class="article"><span class="num">IV.</span> Should the first party (Pratik) falter on Article I, restitution shall be paid in full attention and patience.</div>
+
+        <div class="seal-row">
+          <svg class="seal" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" fill="#A31621"/>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#6E0F17" stroke-width="2"/>
+            <path d="M30 40 Q24 18 40 26 Q48 36 46 50 Z" fill="none" stroke="#fff" stroke-width="1.3"/>
+            <path d="M70 40 Q76 18 60 26 Q52 36 54 50 Z" fill="none" stroke="#fff" stroke-width="1.3"/>
+            <path d="M30 50 Q50 38 70 50 Q68 68 50 74 Q32 68 30 50 Z" fill="none" stroke="#fff" stroke-width="1.3"/>
+            <circle cx="42" cy="54" r="1.8" fill="#fff"/>
+            <circle cx="58" cy="54" r="1.8" fill="#fff"/>
+          </svg>
+          <div class="sig-block">
+            <div class="name">Pratik</div>
+            <div class="cap">the overthinker</div>
+          </div>
+          <div class="sig-block">
+            <div class="name blank">&nbsp;</div>
+            <div class="cap">the wise one</div>
+          </div>
+        </div>
+        <div class="cert-footnote">Witnessed, in spirit, by one very good husky.</div>
+      </div>
+    </section>
+
   </div>
-</div>
 
-<!-- ══════════════════════════════════
-     PAGE 1 — QUIZ
-════════════════════════════════════ -->
-<div class="page" id="page-1">
-  <div class="paint-blob blob-3"></div>
-  <div class="content">
-    <div class="chapter-label">✦ Chapter One — Let's see</div>
-    <h2>How well do you know <em>him?</em></h2>
-    <p style="margin-bottom:1.5rem; font-size:0.88rem;">5 questions. Each right answer unlocks a little truth. 🔑</p>
+  <!-- FINALE -->
+  <div class="finale-shell">
+    <div class="letter finale">
 
-    <div class="quiz-wrap">
-      <div class="quiz-progress" id="quiz-progress"></div>
-      <div id="quiz-area"></div>
-      <div id="quiz-result" style="display:none; text-align:center;">
-        <div class="quiz-score" id="score-display"></div>
-        <p id="score-msg" style="margin-bottom:1.5rem;"></p>
-        <button class="btn btn-primary" onclick="goTo(2)">Keep going →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     PAGE 2 — THINGS I LIKE ABOUT YOU
-════════════════════════════════════ -->
-<div class="page" id="page-2">
-  <div class="paint-blob blob-1" style="opacity:0.35"></div>
-  <div class="content">
-    <div class="chapter-label">✦ Chapter Two — What I like about you</div>
-    <h2>Not <em>love.</em> Not yet.<br/>But something close.</h2>
-    <p style="margin-bottom:1.5rem; font-size:0.88rem;">These are the things I notice. The things I like. A lot.</p>
-
-    <div class="likes-list">
-
-      <div class="like-item">
-        <div class="like-icon">🌿</div>
-        <div>
-          <div class="like-title">How genuine you are</div>
-          <div class="like-desc">There's no performance with you. What you feel, you say. What you are, you show. That's rarer than you think.</div>
+      <div class="finale-card" id="mainCard">
+        <div class="finale-kicker">one last question</div>
+        <h2>Can we just go back to being us?</h2>
+        <p class="sub">No rush, no pressure — just the same two people, the same easy comfort.</p>
+        <div class="btn-row">
+          <button class="btn btn-yes" id="yesBtn">Yes</button>
+          <button class="btn btn-no" id="noBtn">Sorry, can't click this</button>
         </div>
+        <div class="no-hint" id="noHint">&nbsp;</div>
       </div>
 
-      <div class="like-item">
-        <div class="like-icon">☀️</div>
-        <div>
-          <div class="like-title">Your warmth when I'm being kiddish</div>
-          <div class="like-desc">You never make me feel small for it. You just… go with it. That kind of warmth is something I genuinely treasure.</div>
-        </div>
+      <div class="finale-card ending" id="endingCard">
+        <svg class="husky" viewBox="0 0 200 200">
+          <ellipse cx="100" cy="156" rx="60" ry="30" fill="#EDEFEF"/>
+          <ellipse cx="100" cy="106" rx="52" ry="46" fill="#F6F7F7"/>
+          <path d="M52 82 Q100 50 148 82 Q144 108 100 118 Q56 108 52 82 Z" fill="#6E7679"/>
+          <path d="M56 76 Q40 24 68 36 Q82 56 80 82 Z" fill="#6E7679"/>
+          <path d="M64 66 Q56 38 72 46 Q78 60 76 78 Z" fill="#F6F7F7"/>
+          <path d="M144 76 Q160 24 132 36 Q118 56 120 82 Z" fill="#6E7679"/>
+          <path d="M136 66 Q144 38 128 46 Q122 60 124 78 Z" fill="#F6F7F7"/>
+          <path d="M68 92 Q100 84 132 92 Q130 120 100 128 Q70 120 68 92 Z" fill="#F6F7F7"/>
+          <path d="M66 88 Q78 76 90 90 Q80 102 66 88 Z" fill="#6E7679"/>
+          <path d="M134 88 Q122 76 110 90 Q120 102 134 88 Z" fill="#6E7679"/>
+          <ellipse cx="82" cy="107" rx="7.5" ry="9" fill="#7FC4E0"/>
+          <ellipse cx="118" cy="107" rx="7.5" ry="9" fill="#7FC4E0"/>
+          <ellipse cx="82" cy="108" rx="3.2" ry="3.8" fill="#1a2a30"/>
+          <ellipse cx="118" cy="108" rx="3.2" ry="3.8" fill="#1a2a30"/>
+          <ellipse cx="100" cy="124" rx="8.5" ry="6.5" fill="#1a2a30"/>
+          <path d="M100 130 Q100 138 91 140" stroke="#1a2a30" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M100 130 Q100 138 109 140" stroke="#1a2a30" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="66" cy="119" r="6.5" fill="#A31621" opacity="0.25"/>
+          <circle cx="134" cy="119" r="6.5" fill="#A31621" opacity="0.25"/>
+          <path d="M60 100 Q100 116 140 100 L131 118 Q100 128 69 118 Z" fill="#A31621"/>
+          <path id="beatHeart" d="M100 56 C93 45 76 47 76 62 C76 75 100 90 100 90 C100 90 124 75 124 62 C124 47 107 45 100 56 Z" fill="#A31621"/>
+        </svg>
+        <div class="love-text">I love you, baby.</div>
+        <p class="love-sub">Not for the intimate things. For the way you listen, the way you care, the way you're just genuinely, entirely you. That's what I fell for — and I'm not letting go of it.</p>
+        <div class="final-sig">always yours, Pratik</div>
       </div>
 
-      <div class="like-item">
-        <div class="like-icon">🎙️</div>
-        <div>
-          <div class="like-title">Your voice</div>
-          <div class="like-desc">I don't know how else to say this — but your voice on a call makes everything feel calmer. Warmer. Better.</div>
-        </div>
-      </div>
-
-      <div class="like-item">
-        <div class="like-icon">💪</div>
-        <div>
-          <div class="like-title">The way you show up — for yourself</div>
-          <div class="like-desc">You put in effort. You take stands. You have rules for yourself and you actually keep them. That's not common. That's character.</div>
-        </div>
-      </div>
-
-      <div class="like-item">
-        <div class="like-icon">🌙</div>
-        <div>
-          <div class="like-title">A woman with dreams — and doing something about it</div>
-          <div class="like-desc">You don't just talk about what you want. You work for it. Quietly. Steadily. That is one of the most beautiful things about you.</div>
-        </div>
-      </div>
-
-      <div class="like-item">
-        <div class="like-icon">📞</div>
-        <div>
-          <div class="like-title">Those long calls</div>
-          <div class="like-desc">Hours disappear when we talk. I never want to hang up. Honestly, talking to you is one of my favourite things.</div>
-        </div>
-      </div>
-
-      <div class="listen-card">
-        <div class="listen-icon">🎧</div>
-        <div>
-          <div class="listen-title">You listen. Really listen.</div>
-          <div class="listen-desc">I talk a lot — I know I do. And you just… listen. Every word. No interruptions, no rushing me. You make me feel like what I say actually matters. That's not small. That's everything.</div>
-        </div>
-      </div>
-
-    </div>
-
-    <button class="btn btn-primary" onclick="goTo(3)">One more thing →</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     PAGE 3 — GROWTH TIMELINE
-════════════════════════════════════ -->
-<div class="page" id="page-3">
-  <div class="paint-blob blob-2" style="opacity:0.4"></div>
-  <svg class="brush-accent" style="top:5%;right:-10px;width:180px" viewBox="0 0 200 60" fill="none">
-    <path d="M10 40 Q60 10 120 30 Q160 45 195 20" stroke="#D4A96A" stroke-width="16" stroke-linecap="round"/>
-  </svg>
-
-  <div class="content">
-    <div class="chapter-label">✦ Chapter Three — Since day one</div>
-    <h2>I've watched you <em>grow.</em></h2>
-    <p style="margin-bottom:1.8rem; font-size:0.88rem;">From the day we started talking to right now — you have become something amazing.</p>
-
-    <div class="timeline">
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-phase">When we first started talking</div>
-        <div class="timeline-title">Already herself</div>
-        <div class="timeline-desc">Even from the beginning, you had this quiet certainty about who you were. Most people spend years searching for that.</div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot" style="background:var(--purple); box-shadow: 0 0 0 2px var(--purple), 0 0 8px rgba(155,109,202,0.6);"></div>
-        <div class="timeline-phase">Along the way</div>
-        <div class="timeline-title">She started owning her space</div>
-        <div class="timeline-desc">I watched you get more comfortable taking stands, setting rules for yourself, not apologising for who you are. That shift? Quiet but powerful.</div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot" style="background:var(--lilac); box-shadow: 0 0 0 2px var(--lilac), 0 0 8px rgba(196,160,232,0.6);"></div>
-        <div class="timeline-phase">Chasing her dreams</div>
-        <div class="timeline-title">A woman with a plan</div>
-        <div class="timeline-desc">You don't just dream. You build. I've seen the effort and the late nights and the discipline, and I admire it more than I've said.</div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot" style="background:var(--violet); box-shadow: 0 0 0 2px var(--violet), 0 0 8px rgba(107,63,160,0.6);"></div>
-        <div class="timeline-phase">Right now, today</div>
-        <div class="timeline-title">An amazing, amazing woman</div>
-        <div class="timeline-desc">Genuinely. From where you started to who you are right now — it's been something to witness. I'm really glad I got to.</div>
-      </div>
-
-    </div>
-
-    <button class="btn btn-primary" onclick="goTo(4)">Okay, the real part now →</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     PAGE 4 — THE CONFESSION
-════════════════════════════════════ -->
-<div class="page" id="page-4">
-  <div class="paint-blob blob-1"></div>
-  <div class="paint-blob blob-3" style="opacity:0.12"></div>
-
-  <div class="content confession-wrap">
-    <div class="chapter-label">✦ The part I've been trying to say</div>
-
-    <div class="confession-heart">💛</div>
-
-    <div class="call-visual">
-      <div class="call-bars">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        <div class="bar"></div>
-      </div>
-      <div class="call-label">On every call</div>
-      <div class="call-sublabel">I talk a lot. You listen to all of it. 🤍</div>
-    </div>
-
-    <div class="confession-text">
-      "I'm not going to say love.<br/>
-      That's a big word and I want to be honest with you.<br/><br/>
-      But I like you.<br/>
-      A lot.<br/><br/>
-      I like your voice and your warmth<br/>
-      and the way you laugh at my kiddish stuff.<br/>
-      I like that you listen to every word I say<br/>
-      without ever making me feel like too much.<br/><br/>
-      I like who you're becoming<br/>
-      and who you already are.<br/><br/>
-      Those calls? They're the best part of my day.<br/><br/>
-      I just want to know —<br/>
-      would you want to explore this<br/>
-      with me?"
-    </div>
-
-    <div class="response-btns">
-      <button class="btn btn-gold" onclick="goTo(5, 'yes')">💛 Yes, I'd like that</button>
-      <button class="btn btn-outline" onclick="goTo(5, 'maybe')">😊 Make me smile first</button>
     </div>
   </div>
-</div>
 
-<!-- ══════════════════════════════════
-     PAGE 5 — FINAL (background photo)
-════════════════════════════════════ -->
-<div class="page" id="page-5">
-  <div class="content" id="final-content">
-    <!-- filled by JS -->
-  </div>
-</div>
+  <footer class="page-footer">made quietly, for you &mdash; with a rose, some snow, and one very good husky</footer>
 
+</div>
 
 <script>
-  let currentPage = 0;
-
-  const questions = [
-    {
-      q: "What's his favourite part of your conversations?",
-      opts: ["When the call ends quickly", "When you laugh at something random", "The silence", "When you talk about anything — he just likes hearing you"],
-      correct: 3,
-      feedback: "He genuinely never wants to hang up. Every single time. 📞"
-    },
-    {
-      q: "What does he admire most about you?",
-      opts: ["Your social media", "How genuine and real you are — no performance, just you", "That you're fun at parties", "Your fashion sense"],
-      correct: 1,
-      feedback: "Your genuineness is the first thing he noticed. And it stuck. 🌿"
-    },
-    {
-      q: "How does he feel watching you work toward your dreams?",
-      opts: ["Indifferent", "A little jealous", "Proud — genuinely, quietly proud", "Confused about what you're doing"],
-      correct: 2,
-      feedback: "Watching you build something for yourself? He finds it one of the most beautiful things about you. 🌙"
-    },
-    {
-      q: "What does he think when you're warm with his kiddish moments?",
-      opts: ["That it's embarrassing", "That it's just politeness", "That you're rare — and he doesn't want to lose that", "Nothing much"],
-      correct: 2,
-      feedback: "That warmth? He holds onto it. It means more than you know. ☀️"
-    },
-    {
-      q: "What is this whole website?",
-      opts: ["A homework project", "A prank", "His way of finally saying what he's been feeling", "A random thing he built"],
-      correct: 2,
-      feedback: "Every word on every page was written thinking about you. 💛"
-    }
-  ];
-
-  let currentQ = 0;
-  let score = 0;
-  let answered = false;
-
-  function goTo(n, response) {
-    const pages = document.querySelectorAll('.page');
-    pages[currentPage].classList.remove('visible');
-    setTimeout(() => {
-      pages[currentPage].classList.remove('active');
-      currentPage = n;
-      pages[n].classList.add('active');
-      setTimeout(() => pages[n].classList.add('visible'), 50);
-    }, 420);
-
-    document.querySelectorAll('.page-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === n);
-    });
-
-    if (n === 1) initQuiz();
-    if (n === 5) showFinal(response);
+  // elegant snowfall
+  const snowLayer = document.getElementById('snowLayer');
+  const flakeCount = window.innerWidth < 700 ? 40 : 70;
+  for(let i=0;i<flakeCount;i++){
+    const f = document.createElement('div');
+    f.className = 'flake';
+    const size = 2.5 + Math.random()*3.5;
+    f.style.width = size + 'px';
+    f.style.height = size + 'px';
+    f.style.left = Math.random()*100 + 'vw';
+    f.style.opacity = 0.25 + Math.random()*0.45;
+    const duration = 14 + Math.random()*16;
+    f.style.animationDuration = duration + 's';
+    f.style.animationDelay = (Math.random()*duration) + 's';
+    snowLayer.appendChild(f);
   }
 
-  function initQuiz() {
-    currentQ = 0; score = 0; answered = false;
-    renderProgress();
-    renderQuestion();
+  // reveal on scroll
+  const stanzas = document.querySelectorAll('[data-stanza]');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in-view'); } });
+  }, { threshold:0.15 });
+  stanzas.forEach(s=>io.observe(s));
+
+  // dodging no button
+  const noBtn = document.getElementById('noBtn');
+  const noHint = document.getElementById('noHint');
+  const hints = ["not that one", "still no, gracefully declined", "try again — still no", "the husky vetoed it", "only Yes accepts input here"];
+  let hintIndex = 0;
+  function dodge(){
+    const row = noBtn.parentElement;
+    const rowRect = row.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    const maxLeft = rowRect.width - btnRect.width - 8;
+    const maxTop = 42;
+    const randLeft = Math.max(8, Math.min(maxLeft, Math.random()*maxLeft));
+    const randTop = (Math.random()*maxTop) - (maxTop/2);
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = randLeft + 'px';
+    noBtn.style.top = randTop + 'px';
+    noHint.textContent = hints[hintIndex % hints.length];
+    hintIndex++;
   }
+  noBtn.addEventListener('mouseenter', dodge);
+  noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); dodge(); }, {passive:false});
+  noBtn.addEventListener('click', (e)=> e.preventDefault());
 
-  function renderProgress() {
-    const prog = document.getElementById('quiz-progress');
-    prog.innerHTML = questions.map((_, i) => {
-      let cls = 'quiz-dot';
-      if (i < currentQ) cls += ' done';
-      if (i === currentQ) cls += ' active';
-      return `<div class="${cls}"></div>`;
-    }).join('');
-  }
-
-  function renderQuestion() {
-    if (currentQ >= questions.length) {
-      document.getElementById('quiz-area').style.display = 'none';
-      document.getElementById('quiz-result').style.display = 'block';
-      document.getElementById('score-display').textContent = `${score}/${questions.length}`;
-      const msgs = [
-        "That's okay — keep reading. 😄",
-        "Getting there… keep going. 💛",
-        "You know him better than you let on.",
-        "Pretty much in sync. That's something.",
-        "You basically read his mind. That's not nothing. 🌸"
-      ];
-      document.getElementById('score-msg').textContent = msgs[score] || msgs[2];
-      return;
-    }
-
-    const q = questions[currentQ];
-    answered = false;
-    document.getElementById('quiz-area').innerHTML = `
-      <div class="quiz-card">
-        <div class="quiz-q">${q.q}</div>
-        <div class="quiz-options">
-          ${q.opts.map((o, i) => `<button class="quiz-opt" onclick="answer(${i})">${o}</button>`).join('')}
-        </div>
-        <div class="quiz-feedback" id="feedback">${q.feedback}</div>
-      </div>
-    `;
-    renderProgress();
-  }
-
-  function answer(idx) {
-    if (answered) return;
-    answered = true;
-    const q = questions[currentQ];
-    const opts = document.querySelectorAll('.quiz-opt');
-    opts[idx].classList.add(idx === q.correct ? 'correct' : 'wrong');
-    opts[q.correct].classList.add('correct');
-    if (idx === q.correct) score++;
-    document.getElementById('feedback').classList.add('show');
-    setTimeout(() => { currentQ++; renderQuestion(); }, 1900);
-  }
-
-  function showFinal(response) {
-    const el = document.getElementById('final-content');
-    if (response === 'yes') {
-      el.innerHTML = `
-        <div class="final-heart">🌸</div>
-        <div class="chapter-label">✦ That's all he needed</div>
-        <div class="final-msg">
-          "You said yes.<br/>
-          I'm smiling right now<br/>
-          and I can't stop.<br/><br/>
-          Thank you for being you.<br/>
-          Thank you for saying yes.<br/><br/>
-          I'll make it worth it.<br/>
-          <em>I promise.</em> 💛"
-        </div>
-        <div style="width:48px;height:2px;background:rgba(196,160,232,0.5);margin:0 auto 1.4rem;"></div>
-        <p style="font-size:0.85rem;color:rgba(196,160,232,0.7);">Now go call him. He's definitely waiting. 😄</p>
-      `;
-    } else {
-      el.innerHTML = `
-        <div class="final-heart">😄</div>
-        <div class="chapter-label">✦ Challenge accepted</div>
-        <div class="final-msg">
-          "Fair enough.<br/><br/>
-          He'll spend every call<br/>
-          trying to make you smile —<br/>
-          which honestly he already does<br/>
-          and you know it.<br/><br/>
-          So… <em>is that a yes?</em>"
-        </div>
-        <div style="margin-top:1.5rem;">
-          <button class="btn btn-gold" onclick="softYes()">
-            Okay fine… yes 💛
-          </button>
-        </div>
-      `;
+  // yes reveal
+  const mainCard = document.getElementById('mainCard');
+  const endingCard = document.getElementById('endingCard');
+  const petalsLayer = document.getElementById('petalsLayer');
+  function spawnPetals(){
+    for(let i=0;i<22;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const w = 8 + Math.random()*8;
+      p.style.left = (Math.random()*100) + 'vw';
+      p.style.animationDelay = (Math.random()*1.4) + 's';
+      p.innerHTML = `<svg width="${w}" height="${w*1.2}" viewBox="0 0 20 24"><path d="M10 0C4 4 0 10 2 16c1 4 5 7 8 8 3-1 7-4 8-8 2-6-2-12-8-16z" fill="#A31621" opacity="0.85"/></svg>`;
+      petalsLayer.appendChild(p);
+      setTimeout(()=>p.remove(), 4600);
     }
   }
-
-  function softYes() {
-    document.getElementById('final-content').innerHTML = `
-      <div class="final-heart">💛</div>
-      <div class="final-msg">
-        "That's <em>everything.</em><br/><br/>
-        Genuinely.<br/>
-        Thank you. 🌸"
-      </div>
-    `;
-  }
-
-  // ── SNOWFALL ──
-  (function() {
-    const canvas = document.getElementById('snow-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, flakes = [];
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    function makeFlake() {
-      return {
-        x: Math.random() * W,
-        y: Math.random() * -H,
-        r: Math.random() * 3.5 + 1,
-        speed: Math.random() * 1.2 + 0.4,
-        drift: Math.random() * 0.5 - 0.25,
-        opacity: Math.random() * 0.5 + 0.2,
-        wobble: Math.random() * Math.PI * 2,
-        wobbleSpeed: Math.random() * 0.015 + 0.005
-      };
-    }
-
-    // Start with flakes already on screen
-    for (let i = 0; i < 120; i++) {
-      const f = makeFlake();
-      f.y = Math.random() * H;
-      flakes.push(f);
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      flakes.forEach(f => {
-        ctx.beginPath();
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(220,200,255,${f.opacity})`;
-        ctx.shadowColor = 'rgba(180,126,229,0.7)';
-        ctx.shadowBlur = 4;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-    }
-
-    function update() {
-      flakes.forEach(f => {
-        f.wobble += f.wobbleSpeed;
-        f.x += f.drift + Math.sin(f.wobble) * 0.3;
-        f.y += f.speed;
-        if (f.y > H + 10) {
-          Object.assign(f, makeFlake());
-          f.y = -10;
-        }
-        if (f.x > W + 10) f.x = -10;
-        if (f.x < -10) f.x = W + 10;
-      });
-    }
-
-    // Spawn new flakes gradually
-    let spawnTimer = 0;
-    function loop() {
-      update();
-      draw();
-      spawnTimer++;
-      if (spawnTimer % 8 === 0 && flakes.length < 180) {
-        flakes.push(makeFlake());
-      }
-      requestAnimationFrame(loop);
-    }
-    loop();
-  })();
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('page-0').classList.add('visible');
+  document.getElementById('yesBtn').addEventListener('click', ()=>{
+    mainCard.classList.add('hide');
+    endingCard.classList.add('show');
+    spawnPetals();
   });
+
+  // beating heart
+  const heartBeat = document.getElementById('beatHeart');
+  let scale = 1, growing = true;
+  setInterval(()=>{
+    if(!heartBeat) return;
+    scale = growing ? scale + 0.012 : scale - 0.012;
+    if(scale > 1.1){ growing = false; }
+    if(scale < 1){ growing = true; }
+    heartBeat.style.transform = `scale(${scale})`;
+    heartBeat.style.transformOrigin = '100px 68px';
+  }, 55);
 </script>
+
 </body>
 </html>
