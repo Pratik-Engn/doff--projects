@@ -675,7 +675,23 @@ document.getElementById('startBtn').addEventListener('click', (e) => {
   // play the song only now, on her actual tap, so the browser allows sound
   const audio = document.getElementById('songAudio');
   audio.volume = 0.6;
-  audio.play().catch(() => {});
+
+  function showDebug(msg){
+    const dbg = document.createElement('div');
+    dbg.style.cssText = 'position:fixed;bottom:6px;left:6px;z-index:9999;background:#000;color:#fff;font-size:11px;line-height:1.4;padding:6px 10px;border-radius:8px;opacity:0.9;max-width:260px;font-family:monospace;';
+    dbg.textContent = msg;
+    document.body.appendChild(dbg);
+  }
+
+  audio.addEventListener('error', () => {
+    const codes = {1:'aborted',2:'network error',3:'decode error - file may be corrupt or not a valid mp3',4:'source not found - check filename/path'};
+    const code = audio.error ? audio.error.code : 0;
+    showDebug('audio load error: ' + (codes[code] || 'unknown, code ' + code));
+  });
+
+  audio.play().catch((err) => {
+    showDebug('play blocked: ' + err.message);
+  });
 });
 
 function heartBurst(x, y){
