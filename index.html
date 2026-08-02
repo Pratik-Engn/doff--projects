@@ -370,10 +370,8 @@ nav::-webkit-scrollbar-thumb{ background: var(--thread); border-radius:4px; }
 
 /* ---------- SOUND CONTROL ---------- */
 #soundbar{
-  position:fixed; bottom:1rem; right:1rem; z-index:30;
-  background: var(--panel); border:1px solid var(--accent);
-  border-radius:14px; padding:0.5rem 0.6rem; max-width:150px;
-  transition: all var(--transition-speed) ease; backdrop-filter: blur(8px);
+  position:fixed; bottom:0; right:0; z-index:30;
+  width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;
 }
 #soundbar .caption{ display:none; }
 .sound-row{ display:flex; align-items:center; gap:0.5rem; }
@@ -595,9 +593,7 @@ footer .big{ font-size:1.3rem; color: var(--accent-strong); display:block; margi
 <div id="soundbar">
   <div class="caption">her song, playing quietly underneath all of this</div>
   <div class="sound-row">
-    <iframe id="spotifyFrame" style="border-radius:10px" width="130" height="80" frameborder="0"
-      src="about:blank"
-      allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    <audio id="songAudio" src="Songs.mp3" loop preload="auto"></audio>
   </div>
 </div>
 
@@ -676,10 +672,10 @@ function advance(){
 document.getElementById('startBtn').addEventListener('click', (e) => {
   e.stopPropagation();
   gate.classList.add('hidden');
-  // load + autoplay the song only now, on her actual tap, so the browser allows sound
-  const spotifyId = '3gixnmepHSsyAuho34rprN';
-  document.getElementById('spotifyFrame').src =
-    `https://open.spotify.com/embed/track/${spotifyId}?utm_source=generator&autoplay=1`;
+  // play the song only now, on her actual tap, so the browser allows sound
+  const audio = document.getElementById('songAudio');
+  audio.volume = 0.6;
+  audio.play().catch(() => {});
 });
 
 function heartBurst(x, y){
