@@ -370,13 +370,12 @@ nav::-webkit-scrollbar-thumb{ background: var(--thread); border-radius:4px; }
 
 /* ---------- SOUND CONTROL ---------- */
 #soundbar{
-  position:fixed; bottom:0; right:0; z-index:30;
-  width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;
+  position:fixed; bottom:1rem; right:1rem; z-index:30;
+  background: var(--panel); border:1px solid var(--accent);
+  border-radius:14px; padding:0.5rem 0.6rem; max-width:150px;
+  transition: all var(--transition-speed) ease; backdrop-filter: blur(8px);
 }
-#soundbar .caption{
-  font-family: var(--font-display); color: var(--accent-strong); font-size:0.75rem;
-  margin-bottom:0.35rem; letter-spacing:0.5px;
-}
+#soundbar .caption{ display:none; }
 .sound-row{ display:flex; align-items:center; gap:0.5rem; }
 
 /* ---------- MAIN CONTENT ---------- */
@@ -596,7 +595,7 @@ footer .big{ font-size:1.3rem; color: var(--accent-strong); display:block; margi
 <div id="soundbar">
   <div class="caption">her song, playing quietly underneath all of this</div>
   <div class="sound-row">
-    <iframe id="spotifyFrame" style="border-radius:10px" width="220" height="80" frameborder="0"
+    <iframe id="spotifyFrame" style="border-radius:10px" width="130" height="80" frameborder="0"
       src="about:blank"
       allow="autoplay; encrypted-media" loading="lazy"></iframe>
   </div>
