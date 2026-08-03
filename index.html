@@ -593,9 +593,44 @@ footer .big{ font-size:1.3rem; color: var(--accent-strong); display:block; margi
 <div id="soundbar">
   <div class="caption">her song, playing quietly underneath all of this</div>
   <div class="sound-row">
-    <audio id="songAudio" src="songs.mp3" loop preload="auto"></audio>
+    <div id="ytPlayer"></div>
   </div>
 </div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+/*
+  Her song lives here. To change it, swap the videoId below
+  for the ID from any YouTube URL: youtube.com/watch?v=THIS_PART
+*/
+let ytPlayer = null;
+let ytReady = false;
+let pendingPlay = false;
+
+function onYouTubeIframeAPIReady(){
+  ytPlayer = new YT.Player('ytPlayer', {
+    height: '1',
+    width: '1',
+    videoId: 'LUgpPmj6nR8',
+    playerVars: { 'rel': 0, 'start': 18, 'loop': 1, 'playlist': 'LUgpPmj6nR8' },
+    events: {
+      onReady: function(){
+        ytReady = true;
+        if (pendingPlay) { ytPlayer.playVideo(); }
+      }
+    }
+  });
+}
+
+function playHerSong(){
+  if (ytReady && ytPlayer) {
+    ytPlayer.seekTo(18, true);
+    ytPlayer.playVideo();
+  } else {
+    pendingPlay = true;
+  }
+}
+</script>
 
 <script>
 const stages = document.querySelectorAll('.stage');
@@ -673,36 +708,7 @@ document.getElementById('startBtn').addEventListener('click', (e) => {
   e.stopPropagation();
   gate.classList.add('hidden');
   // play the song only now, on her actual tap, so the browser allows sound
-  const audio = document.getElementById('songAudio');
-  audio.volume = 0.6;
-  const startAt = 18;
-
-  function beginPlayback(){
-    try{ audio.currentTime = startAt; }catch(e){}
-    audio.play().catch((err) => {
-      showDebug('play blocked: ' + err.message);
-    });
-  }
-
-  function showDebug(msg){
-    const dbg = document.createElement('div');
-    dbg.style.cssText = 'position:fixed;bottom:6px;left:6px;z-index:9999;background:#000;color:#fff;font-size:11px;line-height:1.4;padding:6px 10px;border-radius:8px;opacity:0.9;max-width:260px;font-family:monospace;';
-    dbg.textContent = msg;
-    document.body.appendChild(dbg);
-  }
-
-  audio.addEventListener('error', () => {
-    const codes = {1:'aborted',2:'network error',3:'decode error - file may be corrupt or not a valid mp3',4:'source not found - check filename/path'};
-    const code = audio.error ? audio.error.code : 0;
-    showDebug('audio load error: ' + (codes[code] || 'unknown, code ' + code));
-  });
-
-  if (audio.readyState >= 1){
-    beginPlayback();
-  } else {
-    audio.addEventListener('loadedmetadata', beginPlayback, { once: true });
-    audio.play().catch((err) => { showDebug('play blocked: ' + err.message); });
-  }
+  playHerSong();
 });
 
 function heartBurst(x, y){
