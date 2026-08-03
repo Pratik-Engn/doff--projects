@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>One Month — Our Story</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;700&family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;700&family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Fredoka:wght@400;500;600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 
 /* ============================================================
-   OUR STORY — an eight-stage timeline whose whole page changes
+   OUR STORY — a five-stage timeline whose whole page changes
    costume as you move through it: grainy monochrome memory at
    the start, full color and gold by the end.
    ============================================================ */
@@ -48,34 +48,26 @@ body[data-theme="begin"]{
   --grain: 0.22;
   --sat: 0.15;
   --thread: #8a8371;
-}
-
-body[data-theme="talk"]{
-  --bg: radial-gradient(ellipse at top, #2f4a3a, #101e18 75%);
-  --panel: rgba(255,255,255,0.045);
-  --text: #f3f7ee;
-  --muted: #bcdcc2;
-  --accent: #ffb6c9;
-  --accent-strong: #ffe0e9;
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Space Grotesk', sans-serif;
-  --grain: 0.1;
-  --sat: 0.5;
-  --thread: #ffb6c9;
+  --snow: 205,201,190;
+  --mtn-back: #2a2822;
+  --mtn-front: #17150f;
 }
 
 body[data-theme="friends"]{
-  --bg: radial-gradient(ellipse at top, #6b3f16, #2b1c0a 78%);
+  --bg: radial-gradient(ellipse at top, #6b4416, #2b1c0a 78%);
   --panel: rgba(255,255,255,0.06);
   --text: #fff3df;
   --muted: #ffcf8a;
   --accent: #ffb347;
-  --accent-strong: #ff8c42;
-  --font-display: 'Caveat', cursive;
-  --font-body: 'Space Grotesk', sans-serif;
+  --accent-strong: #ffd27a;
+  --font-display: 'Fredoka', sans-serif;
+  --font-body: 'Nunito Sans', sans-serif;
   --grain: 0.04;
   --sat: 0.9;
   --thread: #ffb347;
+  --snow: 255,224,170;
+  --mtn-back: #6e4a1c;
+  --mtn-front: #35230d;
 }
 
 body[data-theme="games"]{
@@ -85,49 +77,49 @@ body[data-theme="games"]{
   --muted: #9fd4ff;
   --accent: #ffca3a;
   --accent-strong: #ff595e;
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Fredoka', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
   --grain: 0.02;
   --sat: 1;
   --thread: #ff595e;
+  --snow: 234,244,255;
+  --mtn-back: #223258;
+  --mtn-front: #0e1730;
+}
+
+body[data-theme="falling"]{
+  --bg: radial-gradient(ellipse at top, #6b1d3f, #2b0e1c 82%);
+  --panel: rgba(255,255,255,0.06);
+  --text: #ffeaf1;
+  --muted: #ff9fc0;
+  --accent: #ff7aa2;
+  --accent-strong: #ffb0c9;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Fraunces', serif;
+  --grain: 0.015;
+  --sat: 1;
+  --thread: #ff7aa2;
+  --snow: 255,224,235;
+  --mtn-back: #7a2848;
+  --mtn-front: #340f1f;
 }
 
 body[data-theme="us"]{
-  --bg: #ffffff;
-  --panel: rgba(217,79,140,0.08);
-  --text: #3a2a35;
-  --muted: #9a6f82;
-  --accent: #ff6fa5;
-  --accent-strong: #c93f7c;
+  --bg: radial-gradient(ellipse at top, #5c1626, #200a10 82%);
+  --panel: rgba(255,215,150,0.07);
+  --text: #fdf1e7;
+  --muted: #e8c98a;
+  --accent: #d4af37;
+  --accent-strong: #f3d878;
   --font-display: 'Playfair Display', serif;
   --font-body: 'Fraunces', serif;
-  --grain: 0;
+  --grain: 0.01;
   --sat: 1;
-  --thread: #ff6fa5;
+  --thread: #d4af37;
+  --snow: 255,231,168;
+  --mtn-back: #611b2c;
+  --mtn-front: #260a12;
 }
-body[data-theme="us"] .vignette{
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0) 45%, rgba(180,110,140,0.12) 100%);
-}
-body[data-theme="us"] .meadow-bg{ opacity:1; }
-body[data-theme="us"] header{
-  background: linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,255,255,0));
-}
-
-body[data-theme="ending"]{
-  --bg: radial-gradient(ellipse at top, #7a1f3d, #240b18 85%);
-  --panel: rgba(255,200,220,0.08);
-  --text: #fff0f5;
-  --muted: #ffb6c9;
-  --accent: #ff8fab;
-  --accent-strong: #ffd1dc;
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Caveat', cursive;
-  --grain: 0.008;
-  --sat: 1;
-  --thread: #ff8fab;
-}
-body[data-theme="ending"] .stage p{ font-size:1.25rem; line-height:1.7; }
-body[data-theme="ending"] .stage h2{ font-style: italic; }
 
 /* ---------- FILM GRAIN OVERLAY ---------- */
 .grain{
@@ -142,168 +134,18 @@ body[data-theme="ending"] .stage h2{ font-style: italic; }
   background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 100%);
 }
 
-/* ---------- AMBIENT WEATHER LAYER — a different "sky" for every chapter ---------- */
-.weather-layer{
-  position:fixed; inset:0; pointer-events:none; z-index:3; overflow:hidden;
+/* ---------- MOUNTAINS, because she loves them ---------- */
+.mountains{
+  position:fixed; left:0; right:0; bottom:0; height:38vh; min-height:220px;
+  pointer-events:none; z-index:1; overflow:hidden;
 }
-body[data-theme="begin"] .weather-layer{ filter: grayscale(1) contrast(1.1); }
+.mountains svg{ width:100%; height:100%; display:block; }
+.mtn-back{ fill: var(--mtn-back); transition: fill var(--transition-speed) ease; opacity:0.75; }
+.mtn-front{ fill: var(--mtn-front); transition: fill var(--transition-speed) ease; }
+.mtn-cap{ fill: rgba(255,255,255,0.9); transition: opacity var(--transition-speed) ease; }
 
-.meadow-bg{
-  position:fixed; left:0; right:0; bottom:0; height:40vh; z-index:1;
-  opacity:0; transition: opacity 700ms ease; pointer-events:none;
-}
-.meadow-bg svg{ width:100%; height:100%; display:block; }
-
-.p{ position:absolute; top:-8vh; will-change: transform, opacity; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.18)); }
-
-/* Reel 01 — rain, old film */
-.p-rain{
-  width:1px; height:70px;
-  background: linear-gradient(to bottom, transparent, rgba(230,230,225,0.55));
-  animation-name: fallRain; animation-timing-function: linear; animation-iteration-count: infinite;
-}
-@keyframes fallRain{ from{ transform: translateY(-10vh); } to{ transform: translateY(112vh); } }
-
-/* Reel 02 — spring blossom petals drifting down, growing friendship */
-.p-blossom{
-  width:8px; height:8px; border-radius:0 70% 0 70%; opacity:0.9;
-  animation-name: fallSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
-}
-
-/* Reel 03 — autumn leaves drifting down, becoming close */
-.p-leaf{
-  width:11px; height:11px; border-radius:0 60% 0 60%;
-  animation-name: fallSway; animation-timing-function: linear; animation-iteration-count: infinite;
-}
-@keyframes fallSway{
-  from{ transform: translateY(-10vh) translateX(0) rotate(0deg); }
-  to{ transform: translateY(112vh) translateX(40px) rotate(340deg); }
-}
-
-/* Reel 04 — playful confetti / popcorn, games & movie nights */
-.p-confetti{
-  width:7px; height:11px; border-radius:2px;
-  animation-name: fallBounce; animation-timing-function: ease-in; animation-iteration-count: infinite;
-}
-@keyframes fallBounce{
-  0%{ transform: translateY(-10vh) translateX(0) rotate(0deg); }
-  50%{ transform: translateY(50vh) translateX(-18px) rotate(180deg); }
-  100%{ transform: translateY(112vh) translateX(18px) rotate(360deg); }
-}
-
-/* Reel 05 — rose petals, how everything started */
-.p-petal{
-  width:9px; height:9px; border-radius:0 70% 0 70%;
-  background: var(--accent);
-  animation-name: fallSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
-}
-.p-fl2{
-  width:9px; height:9px; border-radius:50% 0 50% 0;
-  animation-name: fallSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
-}
-.p-fl3{
-  width:8px; height:8px; border-radius:50%;
-  animation-name: fallSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
-}
-.p-flstar{
-  width:12px; height:12px;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  animation-name: fallSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
-}
-
-/* Reel 06 — snowfall, our favorite season */
-.p-snow{
-  width:6px; height:6px; border-radius:50%;
-  background:#fff; box-shadow: 0 0 5px rgba(255,255,255,0.85);
-  animation-name: fallSnow; animation-timing-function: linear; animation-iteration-count: infinite;
-}
-@keyframes fallSnow{
-  from{ transform: translateY(-10vh) translateX(0); }
-  to{ transform: translateY(112vh) translateX(22px); }
-}
-
-.gif-frame img{ max-width:100%; border-radius:10px; display:block; margin:0 auto; }
-.gif-frame p{ margin: 0.7rem 0 0; font-size:0.8rem; max-width:none; }
-
-/* ---------- FINAL REVEAL — "one more thing, love" ---------- */
-.final-gate{ text-align:center; margin-top:2.2rem; }
-.reveal-btn{
-  display:inline-flex; align-items:center; gap:0.5rem;
-  padding:0.85rem 1.8rem; border-radius:999px; border:1px solid var(--accent);
-  background:transparent; color: var(--accent-strong); font-family: var(--font-display);
-  font-size:1rem; letter-spacing:0.3px; cursor:pointer;
-  transition: all 350ms ease; animation: pulseHint 2600ms ease-in-out infinite;
-}
-.reveal-btn:hover{ background: var(--accent); color:#2a0e1a; }
-.reveal-btn .doodle{ stroke:none; }
-
-.final-message{
-  display:none; opacity:0; text-align:center; margin-top:1.6rem;
-  padding: 2.2rem 1.5rem; border-radius:18px; border:1px solid var(--accent);
-  background: var(--panel); transition: opacity 900ms ease;
-}
-.final-message.show{ display:block; opacity:1; animation: fadein 900ms ease; }
-.final-message h3{
-  font-family: var(--font-display); font-style:italic; color: var(--accent-strong);
-  font-size: clamp(1.6rem, 5vw, 2.3rem); margin:0 0 1rem;
-}
-.final-message p{ max-width:56ch; margin:0 auto 0.8rem; }
-.final-message p.sign{ font-style:italic; color: var(--accent-strong); margin-bottom:0; }
-
-.heart-burst{ position:fixed; z-index:60; pointer-events:none; }
-.heart-burst .hb{
-  position:absolute; width:12px; height:12px; border-radius:0 70% 0 70%;
-  background: var(--accent); animation: burstUp 1500ms ease-out forwards;
-}
-@keyframes burstUp{ to{ transform: translateY(-150px) rotate(25deg); opacity:0; } }
-
-/* ---------- OLD-FILM TREATMENT (opening stage only) ---------- */
-#content{
-  transition: filter 700ms ease;
-}
-body[data-theme="begin"] #content{
-  filter: grayscale(1) contrast(1.15) brightness(0.93);
-  animation: filmFlicker 5s infinite;
-}
-@keyframes filmFlicker{
-  0%, 100%{ filter: grayscale(1) contrast(1.15) brightness(0.93); }
-  41%{ filter: grayscale(1) contrast(1.15) brightness(0.93); }
-  42%{ filter: grayscale(1) contrast(1.25) brightness(0.82); }
-  44%{ filter: grayscale(1) contrast(1.1) brightness(0.98); }
-  45%{ filter: grayscale(1) contrast(1.15) brightness(0.93); }
-  77%{ filter: grayscale(1) contrast(1.15) brightness(0.93); }
-  78%{ filter: grayscale(1) contrast(1.3) brightness(0.85); }
-  80%{ filter: grayscale(1) contrast(1.15) brightness(0.93); }
-}
-
-.scratches{
-  position:fixed; inset:0; pointer-events:none; z-index:6;
-  opacity:0; transition: opacity 700ms ease;
-  mix-blend-mode: screen;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='400'><filter id='sc'><feTurbulence type='fractalNoise' baseFrequency='0.85 0.015' numOctaves='2'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23sc)'/></svg>");
-  animation: reelRun 1.6s linear infinite;
-}
-body[data-theme="begin"] .scratches{ opacity:0.22; }
-@keyframes reelRun{ from{ background-position-y:0; } to{ background-position-y:400px; } }
-
-/* silent-film title card for the opening reel */
-.title-card{
-  border: 1px solid var(--accent);
-  padding: 2.4rem 1.4rem;
-  text-align:center;
-  background: rgba(0,0,0,0.4);
-  position:relative;
-  margin-bottom: 2rem;
-}
-.title-card::before, .title-card::after{
-  content:""; position:absolute; left:14px; right:14px; height:1px;
-  background: var(--accent); opacity:0.55;
-}
-.title-card::before{ top:10px; }
-.title-card::after{ bottom:10px; }
-.title-card .eyebrow{ justify-content:center; text-align:center; }
-.title-card h2{ margin: 0 0 0.5rem; letter-spacing:1px; }
-.title-card .date{ display:block; margin-bottom:0; }
+/* ---------- SNOW ---------- */
+#snow{ position:fixed; inset:0; z-index:2; pointer-events:none; }
 
 /* ---------- ENTRY GATE ---------- */
 #gate{
@@ -341,40 +183,73 @@ header{
   transition: color var(--transition-speed) ease;
 }
 nav{
-  display:flex; gap:0.4rem; overflow-x:auto; padding-bottom:0.6rem;
-  scrollbar-width: thin; justify-content:flex-start;
+  display:flex; gap:1.3rem; overflow-x:auto; padding-bottom:0.5rem;
+  scrollbar-width: none; justify-content:flex-start;
 }
-nav::-webkit-scrollbar{ height:4px; }
-nav::-webkit-scrollbar-thumb{ background: var(--thread); border-radius:4px; }
+nav::-webkit-scrollbar{ display:none; }
 
-/* tap-to-continue hint, shown at the foot of every stage except the last */
-.tap-hint{
-  display:flex; align-items:center; justify-content:center; gap:0.5rem;
-  margin: 2rem 0 0.5rem; font-family: var(--font-body); color: var(--muted);
-  font-size:0.75rem; letter-spacing:1.5px; text-transform:uppercase;
-  opacity:0.75; animation: pulseHint 2600ms ease-in-out infinite; user-select:none;
+.tab{
+  flex: 0 0 auto;
+  display:flex; align-items:baseline; gap:0.4rem;
+  padding:0.3rem 0.1rem; cursor:pointer;
+  border:none; border-bottom:1px solid transparent; background:transparent;
+  font-family: var(--font-display); color: var(--muted);
+  transition: color 400ms ease, border-color 400ms ease, transform 250ms ease;
+  text-align:left; position:relative;
 }
-.tap-hint .arrow{ display:inline-block; animation: nudge 1600ms ease-in-out infinite; }
-@keyframes pulseHint{ 0%,100%{opacity:0.4;} 50%{opacity:0.9;} }
-@keyframes nudge{ 0%,100%{ transform:translateX(0);} 50%{ transform:translateX(5px);} }
+.tab .num{
+  font-size:0.62rem; letter-spacing:1.5px; opacity:0.55; font-family: 'Space Grotesk', sans-serif;
+  transition: opacity 400ms ease;
+}
+.tab .label{ font-size:0.85rem; font-weight:400; white-space:nowrap; letter-spacing:0.2px; }
+.tab:hover{ color: var(--text); transform: translateY(-1px); }
+.tab:hover .num{ opacity:0.85; }
+.tab.active{
+  color: var(--accent-strong);
+  border-bottom-color: var(--accent);
+}
+.tab.active .num{ opacity:1; color:var(--accent); }
+
+/* a small hand-drawn-feeling mark that only appears beside the active chapter —
+   a quiet nod to her being a little bit of a kid at heart */
+.tab.active::after{
+  content:"✶";
+  position:absolute; right:-0.95rem; top:-0.1rem;
+  font-size:0.7rem; color: var(--accent);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{ opacity:0.4; transform: scale(0.85) rotate(0deg); }
+  50%{ opacity:1; transform: scale(1.05) rotate(8deg); }
+}
 
 .thread{
-  height:2px; background: rgba(255,255,255,0.12); border-radius:2px; position:relative; margin: 0 0.2rem;
-  overflow:hidden;
+  height:1px; background: rgba(255,255,255,0.14); position:relative; margin: 0.4rem 0.1rem 0;
+  overflow:visible;
 }
 .thread-fill{
-  position:absolute; left:0; top:0; bottom:0; background: var(--thread);
+  position:absolute; left:0; top:-1px; height:3px; border-radius:3px; background: var(--thread);
   transition: width var(--transition-speed) ease, background var(--transition-speed) ease;
-  box-shadow: 0 0 8px var(--thread);
+  box-shadow: 0 0 10px var(--thread);
 }
 
 /* ---------- SOUND CONTROL ---------- */
 #soundbar{
-  position:fixed; bottom:0; right:0; z-index:30;
-  width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;
+  position:fixed; bottom:1rem; right:1rem; z-index:30;
+  background: var(--panel); border:1px solid var(--accent);
+  border-radius:14px; padding:0.6rem 0.8rem; max-width:280px;
+  transition: all var(--transition-speed) ease; backdrop-filter: blur(8px);
 }
-#soundbar .caption{ display:none; }
-.sound-row{ display:flex; align-items:center; gap:0.5rem; }
+#soundbar .caption{
+  font-family: var(--font-display); color: var(--accent-strong); font-size:0.75rem;
+  margin-bottom:0.35rem; letter-spacing:0.5px;
+}
+#ytPlayer{ width:264px; height:149px; border-radius:10px; overflow:hidden; }
+#ytPlayer iframe{ border-radius:10px; }
+@media (max-width:480px){
+  #soundbar{ max-width: 220px; }
+  #ytPlayer{ width:204px; height:115px; }
+}
 
 /* ---------- MAIN CONTENT ---------- */
 main{ max-width: 780px; margin: 0 auto; padding: 2.5rem 1.4rem 6rem; position:relative; z-index:2; }
@@ -383,17 +258,6 @@ main{ max-width: 780px; margin: 0 auto; padding: 2.5rem 1.4rem 6rem; position:re
 .stage.active{ display:block; }
 @keyframes fadein{ from{ opacity:0; transform: translateY(14px);} to{opacity:1; transform:none;} }
 
-.eyebrow{
-  font-family: var(--font-body); color: var(--accent); letter-spacing:2px;
-  text-transform:uppercase; font-size:0.72rem; margin-bottom:0.6rem;
-  display:flex; align-items:center; gap:0.45rem;
-}
-.doodle{
-  width:22px; height:22px; flex-shrink:0; opacity:0.9;
-  stroke: var(--accent); fill: none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;
-}
-.doodle.filled{ fill: var(--accent); stroke:none; }
-.mini-star{ width:16px; height:16px; vertical-align:middle; margin:0 6px; opacity:0.85; fill:var(--accent-strong); position:relative; top:-3px; }
 .stage h2{
   font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.8rem);
   margin: 0 0 1rem; color: var(--accent-strong); line-height:1.15;
@@ -432,32 +296,19 @@ footer .big{ font-size:1.3rem; color: var(--accent-strong); display:block; margi
 
 <div class="grain"></div>
 <div class="vignette"></div>
-<div class="meadow-bg" id="meadowBg">
-  <svg viewBox="0 0 800 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,190 C120,120 260,230 400,160 C540,90 660,190 800,150 L800,320 L0,320 Z" fill="#ffe3ee"/>
-    <path d="M0,235 C160,180 340,270 520,210 C640,170 720,215 800,200 L800,320 L0,320 Z" fill="#fff0e0" opacity="0.9"/>
-    <path d="M0,270 C220,235 420,290 620,250 C700,235 750,265 800,255 L800,320 L0,320 Z" fill="#f6e4ff" opacity="0.85"/>
-    <g fill="#ff6fa5">
-      <circle cx="40" cy="205" r="4"/><circle cx="95" cy="190" r="3"/><circle cx="150" cy="212" r="4"/>
-      <circle cx="230" cy="178" r="3.5"/><circle cx="300" cy="200" r="4"/><circle cx="365" cy="170" r="3"/>
-      <circle cx="440" cy="185" r="4"/><circle cx="510" cy="160" r="3.5"/><circle cx="580" cy="182" r="4"/>
-      <circle cx="650" cy="158" r="3"/><circle cx="710" cy="172" r="4"/><circle cx="770" cy="155" r="3.5"/>
-    </g>
-    <g fill="#ffd93d">
-      <circle cx="70" cy="222" r="3"/><circle cx="180" cy="200" r="3.5"/><circle cx="265" cy="215" r="3"/>
-      <circle cx="335" cy="188" r="3.5"/><circle cx="410" cy="205" r="3"/><circle cx="480" cy="175" r="3.5"/>
-      <circle cx="555" cy="198" r="3"/><circle cx="620" cy="170" r="3.5"/><circle cx="690" cy="188" r="3"/>
-      <circle cx="750" cy="165" r="3.5"/>
-    </g>
-    <g fill="#b46fe0">
-      <circle cx="20" cy="240" r="3"/><circle cx="120" cy="225" r="3.5"/><circle cx="210" cy="245" r="3"/>
-      <circle cx="280" cy="222" r="3.5"/><circle cx="380" cy="238" r="3"/><circle cx="460" cy="215" r="3.5"/>
-      <circle cx="540" cy="235" r="3"/><circle cx="605" cy="210" r="3.5"/><circle cx="675" cy="230" r="3"/>
-      <circle cx="740" cy="205" r="3.5"/><circle cx="800" cy="222" r="3"/>
-    </g>
+
+<!-- her mountains, quietly holding up every stage of the story -->
+<div class="mountains" aria-hidden="true">
+  <svg viewBox="0 0 1000 260" preserveAspectRatio="none">
+    <path class="mtn-back" d="M0,180 L120,90 L230,160 L340,60 L470,150 L560,80 L680,170 L800,70 L900,140 L1000,100 L1000,260 L0,260 Z"></path>
+    <path class="mtn-cap" d="M340,60 L365,85 L318,88 Z"></path>
+    <path class="mtn-cap" d="M800,70 L822,92 L780,94 Z"></path>
+    <path class="mtn-front" d="M0,230 L150,140 L260,200 L400,120 L540,205 L650,150 L780,215 L900,160 L1000,200 L1000,260 L0,260 Z"></path>
+    <path class="mtn-cap" d="M400,120 L420,142 L380,144 Z" opacity="0.85"></path>
+    <path class="mtn-cap" d="M150,140 L170,160 L132,162 Z" opacity="0.85"></path>
   </svg>
 </div>
-<div class="weather-layer" id="weatherLayer"></div>
+<canvas id="snow" aria-hidden="true"></canvas>
 
 <!-- ============ ENTRY GATE ============ -->
 <div id="gate">
@@ -466,270 +317,190 @@ footer .big{ font-size:1.3rem; color: var(--accent-strong); display:block; margi
   <button id="startBtn">Begin our story</button>
 </div>
 
-<div class="scratches"></div>
-
-<div id="content">
 <!-- ============ HEADER / NAV ============ -->
 <header>
   <div class="brand">one month, and everything before it</div>
-  <div class="thread"><div class="thread-fill" id="threadFill" style="width:16.6%"></div></div>
+  <nav id="tabs">
+    <button class="tab active" data-theme="begin" data-index="0"><span class="num">01</span><span class="label">Where It Began</span></button>
+    <button class="tab" data-theme="friends" data-index="1"><span class="num">02</span><span class="label">Becoming Friends</span></button>
+    <button class="tab" data-theme="games" data-index="2"><span class="num">03</span><span class="label">Movies & Game Nights</span></button>
+    <button class="tab" data-theme="falling" data-index="3"><span class="num">04</span><span class="label">Falling</span></button>
+    <button class="tab" data-theme="us" data-index="4"><span class="num">05</span><span class="label">Us, Now</span></button>
+  </nav>
+  <div class="thread"><div class="thread-fill" id="threadFill" style="width:6%"></div></div>
 </header>
 
 <!-- ============ MAIN STAGES ============ -->
 <main>
 
   <section class="stage active" data-stage="begin">
-    <div class="title-card">
-      <div class="eyebrow">Reel 01 · Grainy, Half-Remembered</div>
-      <h2>Where It All Began</h2>
-      <span class="date">2024 – 2025</span>
-    </div>
-    <p>Every journey has a starting point, and this is ours.</p>
-    <p>Back in 2024, we would occasionally see each other in a YouTube live chat. Our conversations were nothing more than simple "hello" and "hi" messages. At the time, they felt ordinary, and neither of us knew those small interactions would eventually lead us here.</p>
-    <p><em>Everything changed in December 2024.</em></p>
-    <p>At 9:16 PM, during a YouTube membership gifting event, I noticed that you weren't able to receive a gifted membership. I thought it might be because you were using an iPhone, so I decided to message you and help. It was a small conversation with a simple intention, but it became the moment that started our journey.</p>
-    <p>A month later, on 19 January 2025, we had our first proper conversation. We talked about how things were going, what was happening around us, and mostly about roleplay scenarios and the server. There was nothing extraordinary about those conversations, but they were honest, comfortable, and effortless.</p>
-    <p>As days turned into weeks, we continued talking. Message by message, we got to know each other a little better. Without realizing it, a genuine friendship was beginning to grow.</p>
-    <p>Looking back now, it's amazing how one small message, sent with the intention of helping someone, became the first chapter of a story that means so much to both of us.</p>
+    <h2>Where It Began</h2>
+    <span class="date">[ month, year ]</span>
+    <p>[ Tell me the scene: where were you, what were you doing, what made you notice her — or her notice you? Even one sentence of the real memory will make this page unmistakably yours. ]</p>
+    <p>[ Was there a first conversation, a first impression she probably doesn't know she made? This is the frame everything else in your story rewinds back to. ]</p>
     <div class="frame">a photo or a single line she'll recognize belongs here</div>
     <p class="note">This stage is deliberately black-and-white and a little grainy — memory before it had color.</p>
   </section>
 
-  <section class="stage" data-stage="talk">
-    <div class="eyebrow">
-      <svg class="doodle" viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4V4z"/></svg>
-      Reel 02 · Spring, Blooming
-    </div>
-    <h2>Growing Friendship</h2>
+  <section class="stage" data-stage="friends">
+    <h2>Becoming Friends</h2>
     <span class="date">[ month, year ]</span>
-    <p>[ How did the talking start turning into something more regular? A text that went on too long, a call that wasn't supposed to happen, a question one of you finally worked up the nerve to ask. ]</p>
-    <p>[ What did you learn about her early on that told you she was worth paying attention to? ]</p>
-    <p>[ How did things settle into a rhythm — a daily good morning, a running joke, a habit neither of you planned? Less butterflies, more the comfort of knowing someone will be there. ]</p>
+    <p>[ How did the talking start? A text that went on too long, a call that wasn't supposed to happen, a question one of you finally worked up the nerve to ask. What did you learn about her early on that told you she was worth paying attention to? ]</p>
+    <p>[ How did things settle into a rhythm? What became normal between you two — a daily good morning, a running joke, a habit neither of you planned? ]</p>
+    <p>[ What did friendship look like? The version of her you got to see when nothing was at stake yet — funny, unguarded, just herself. Was there a moment you remember thinking "I really like spending time with this person," even if it was still simple? ]</p>
     <p class="note">Notice the grain lightening and the palette warming — this is the part where a stranger starts becoming someone.</p>
   </section>
 
-  <section class="stage" data-stage="friends">
-    <div class="eyebrow">
-      <svg class="doodle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-      Reel 03 · Autumn, Golden
-    </div>
-    <h2>Becoming Close</h2>
+  <section class="stage" data-stage="games">
+    <h2>Movies &amp; Game Nights</h2>
     <span class="date">[ month, year ]</span>
-    <p>[ What did friendship look like once it was real — the version of her you got to see when nothing was at stake, funny, unguarded, just herself? ]</p>
-    <p>[ When did she stop being just someone you talked to, and start being the good friend who was always around — the one you checked in with, the one who checked in on you? ]</p>
+    <p>[ What did you two watch together — a show you both got hooked on, a movie one of you made the other sit through? ]</p>
+    <p>[ What did you two play? Was she competitive, a sore loser, secretly terrible, secretly amazing? This stage should sound like the two of you laughing too hard over something that didn't matter. ]</p>
+    <p>[ Any running scores, inside jokes, or rivalries worth naming here? ]</p>
   </section>
 
-  <section class="stage" data-stage="games">
-    <div class="eyebrow">
-      <svg class="doodle" viewBox="0 0 24 24"><path d="M4 7h16a2 2 0 012 2v6a2 2 0 01-2 2h-1l-2-3H9l-2 3H6a2 2 0 01-2-2V9a2 2 0 012-2z"/><path d="M6 9v4M4 11h4M15.5 9.5h.01M18 11h.01"/></svg>
-      Reel 04 · Bright, Loud, Silly
-    </div>
-    <h2>Games &amp; Movie Nights</h2>
+  <section class="stage" data-stage="falling">
+    <h2>Falling</h2>
     <span class="date">[ month, year ]</span>
-    <p>[ What did you two play? Was she competitive, a sore loser, secretly terrible, secretly amazing? This stage should sound like the two of you laughing too hard over something that didn't matter. ]</p>
-    <p>[ And the movie nights — what did you watch curled up in? Was it background noise while you talked, or did you actually watch, shoulder to shoulder? ]</p>
-    <p>[ Any running scores, inside jokes, or rivalries worth naming here? ]</p>
-    <div class="frame gif-frame">
-      <!-- Replace the src below with your GIF's filename or a hosted URL once you have it -->
-      <img src="your-gif-here.gif" alt="the two of you, playing together">
-      <p>[ swap the src above for your GIF — the two of you, playing together ]</p>
-    </div>
+    <p>[ When did the conversations start going deeper — family, fears, the things you don't say to just anyone? What did she trust you with, and what did you trust her with? This is the stage where "friend" stopped being the whole truth. ]</p>
+    <p>[ How did it become clear this was more than friendship — for you, and for her? Was there a moment you said it out loud, or a moment you both just knew? ]</p>
+    <p>[ This is the closest thing this page has to a climax. Give it the real moment. ]</p>
   </section>
 
   <section class="stage" data-stage="us">
-    <div class="eyebrow">
-      <svg class="doodle" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8 3 4 7 4c2 0 4 1.5 5 3 1-1.5 3-3 5-3 4 0 6.5 4 4.5 8.5C19 16.65 12 21 12 21z"/></svg>
-      Reel 05 · Spring Garden, In Bloom
-    </div>
-    <h2>How Everything Started</h2>
+    <h2>Us, Now</h2>
     <span class="date">One month in</span>
-    <p>[ When did the conversations start going deeper — family, fears, the things you don't say to just anyone? This is the stage where "friend" stopped being the whole truth. ]</p>
-    <p>[ How did it become clear this was more than friendship, for both of you? Was there a moment you said it out loud, or a moment you both just knew? ]</p>
     <p>[ This last month has been its own new dynamic — say what's actually changed since you made it official. What does it feel like to be hers, and have her, in this new way? ]</p>
+    <p>[ End on something forward-looking — not just what's happened, but what you're hoping for next. ]</p>
     <div class="frame">a line only she would understand goes here</div>
-    <p class="note">Picture a garden bursting with color, every kind of flower blooming and falling at once. This is the stage where things stopped being quiet and started being unmistakable.</p>
   </section>
-
-  <section class="stage" data-stage="ending">
-    <div class="eyebrow">
-      <svg class="doodle filled" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8 3 4 7 4c2 0 4 1.5 5 3 1-1.5 3-3 5-3 4 0 6.5 4 4.5 8.5C19 16.65 12 21 12 21z"/></svg>
-      Reel 06 · Just Us
-    </div>
-    <h2><svg class="mini-star" viewBox="0 0 24 24"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z"/></svg> One Month, and Still Falling <svg class="mini-star" viewBox="0 0 24 24"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z"/></svg></h2>
-    <span class="date">Today</span>
-    <p>A month ago, this was just a story about how we started. Now it's harder to write, only because there's so much I want to say and none of it feels like enough.</p>
-    <p>This one month with you has been beautiful in a way I didn't expect. Not loud, not dramatic, just steady, warm, and completely yours. You've become my favorite person to talk to, my favorite person to laugh with, and somehow, my biggest support system too. On the days I doubt myself, you're the one who reminds me I don't have to.</p>
-    <p>And the strange, wonderful thing is this: the more days go by, the more I fall for you. Not less. Not the same. More.</p>
-    <p>So here's to you, baby: for every "hello" that turned into something none of us saw coming, for choosing me, and for every page still left to write.</p>
-    <p class="note">I love you. Happy one month.</p>
-
-    <div class="final-gate" id="finalGate">
-      <button id="revealBtn" class="reveal-btn">
-        <svg class="doodle filled" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M12 21s-7-4.35-9.5-8.5C.5 8 3 4 7 4c2 0 4 1.5 5 3 1-1.5 3-3 5-3 4 0 6.5 4 4.5 8.5C19 16.65 12 21 12 21z"/></svg>
-        one more thing, love
-      </button>
-    </div>
-
-    <div class="final-message" id="finalMessage">
-      <h3>I love you, baby.</h3>
-      <p>Every reel, every rewind, every "hello" that turned into today. It all led here, to you. However this month started, I already know I want a hundred more just like it.</p>
-      <p class="sign">Happy one month. I love you, baby.</p>
-    </div>
-  </section>
-
-  <div class="tap-hint" id="tapHint">
-    <span>tap anywhere to continue</span><span class="arrow">→</span>
-  </div>
 
 </main>
 
 <footer>
-  <span class="big">I love you, baby.</span>
-  Happy one month. Here's to every page still unwritten.
+  <span class="big">Happy one month, love.</span>
+  Here's to every reel still left to shoot.
 </footer>
-</div><!-- /#content -->
 
 <!-- ============ SOUND ============ -->
 <div id="soundbar">
-  <div class="caption">her song, playing quietly underneath all of this</div>
-  <div class="sound-row">
-    <audio id="songAudio" src="songs.mp3" loop preload="auto"></audio>
-  </div>
+  <div class="caption">her song, starting the moment our story begins</div>
+  <div id="ytPlayer"></div>
 </div>
 
+<!-- ============ YOUTUBE IFRAME API ============ -->
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
+/*
+  Her song lives here. To change it, swap the videoId below
+  for the ID from any YouTube URL: youtube.com/watch?v=THIS_PART
+*/
+let ytPlayer = null;
+let ytReady = false;
+let pendingPlay = false;
+
+function onYouTubeIframeAPIReady(){
+  ytPlayer = new YT.Player('ytPlayer', {
+    height: '149',
+    width: '264',
+    videoId: 'LUgpPmj6nR8',
+    playerVars: { 'rel': 0, 'start': 18 },
+    events: {
+      onReady: function(){
+        ytReady = true;
+        if (pendingPlay) { ytPlayer.playVideo(); }
+      }
+    }
+  });
+}
+
+function playHerSong(){
+  if (ytReady && ytPlayer) {
+    ytPlayer.seekTo(18, true);
+    ytPlayer.playVideo();
+  } else {
+    pendingPlay = true;
+  }
+}
+</script>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
 const stages = document.querySelectorAll('.stage');
 const body = document.body;
 const threadFill = document.getElementById('threadFill');
-const tapHint = document.getElementById('tapHint');
-const gate = document.getElementById('gate');
-const weatherLayer = document.getElementById('weatherLayer');
-
-// the order the story moves through — no visible tabs, just this sequence
-const order = ['begin','talk','friends','games','us','ending'];
-const total = order.length;
-let current = 0;
-
-// a different "sky" for every chapter — particle class + count + colors (colors unused for css-driven types)
-const weatherByTheme = {
-  begin:   { cls: 'p-rain',     count: 45 },
-  talk:    { cls: 'p-blossom',  count: 24, colors: ['#ffd6e8','#ffffff','#ffc2d9'] },
-  friends: { cls: 'p-leaf',     count: 20, colors: ['#ffb347','#ff8c42','#c1440e','#e0a458'] },
-  games:   { cls: 'p-confetti', count: 26, colors: ['#ffca3a','#ff595e','#9fd4ff','#eaf4ff'] },
-  us:      { cls: 'p-petal', shapes: ['p-petal','p-fl2','p-fl3','p-flstar'], count: 34,
-             colors: ['#ff9fc0','#d9a6ff','#ffe28a','#ff7a7a','#9ad6ff','#ff6fa5'] },
-  ending:  { cls: 'p-snow',     count: 36 }
-};
-
-function spawnWeather(theme){
-  weatherLayer.innerHTML = '';
-  const w = weatherByTheme[theme];
-  if (!w) return;
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < w.count; i++){
-    const el = document.createElement('div');
-    const shapeCls = w.shapes ? w.shapes[Math.floor(Math.random()*w.shapes.length)] : w.cls;
-    el.className = 'p ' + shapeCls;
-    const left = Math.random() * 100;
-    const duration = w.cls === 'p-rain' ? (0.6 + Math.random()*0.6)
-                    : w.cls === 'p-snow' ? (6 + Math.random()*6)
-                    : w.cls === 'p-blossom' ? (5 + Math.random()*5)
-                    : (4 + Math.random()*4);
-    const delay = Math.random() * duration;
-    el.style.left = left + 'vw';
-    el.style.animationDuration = duration + 's';
-    el.style.animationDelay = '-' + delay + 's';
-    if (w.colors){
-      el.style.background = w.colors[Math.floor(Math.random()*w.colors.length)];
-    }
-    if (w.shapes){
-      const size = 6 + Math.random()*9;
-      el.style.width = size + 'px';
-      el.style.height = size + 'px';
-    }
-    frag.appendChild(el);
-  }
-  weatherLayer.appendChild(frag);
-}
+const total = tabs.length;
 
 function goTo(theme){
+  tabs.forEach(t => t.classList.toggle('active', t.dataset.theme === theme));
   stages.forEach(s => s.classList.toggle('active', s.dataset.stage === theme));
   body.setAttribute('data-theme', theme);
-  const idx = order.indexOf(theme);
+  const idx = [...tabs].findIndex(t => t.dataset.theme === theme);
   threadFill.style.width = ((idx+1)/total*100) + '%';
-  tapHint.style.display = (idx === total-1) ? 'none' : 'flex';
-  spawnWeather(theme);
-  window.scrollTo({top:0, behavior:'smooth'});
+  document.querySelector(`.tab[data-theme="${theme}"]`).scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
 }
 
-function advance(){
-  if (current < total - 1){
-    current++;
-    goTo(order[current]);
-  }
-}
-
-document.getElementById('startBtn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  gate.classList.add('hidden');
-  // play the song only now, on her actual tap, so the browser allows sound
-  const audio = document.getElementById('songAudio');
-  audio.volume = 0.6;
-
-  function showDebug(msg){
-    const dbg = document.createElement('div');
-    dbg.style.cssText = 'position:fixed;bottom:6px;left:6px;z-index:9999;background:#000;color:#fff;font-size:11px;line-height:1.4;padding:6px 10px;border-radius:8px;opacity:0.9;max-width:260px;font-family:monospace;';
-    dbg.textContent = msg;
-    document.body.appendChild(dbg);
-  }
-
-  audio.addEventListener('error', () => {
-    const codes = {1:'aborted',2:'network error',3:'decode error - file may be corrupt or not a valid mp3',4:'source not found - check filename/path'};
-    const code = audio.error ? audio.error.code : 0;
-    showDebug('audio load error: ' + (codes[code] || 'unknown, code ' + code));
-  });
-
-  audio.play().catch((err) => {
-    showDebug('play blocked: ' + err.message);
-  });
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => goTo(tab.dataset.theme));
 });
 
-function heartBurst(x, y){
-  const wrap = document.createElement('div');
-  wrap.className = 'heart-burst';
-  wrap.style.left = x + 'px';
-  wrap.style.top = y + 'px';
-  for (let i = 0; i < 14; i++){
-    const h = document.createElement('div');
-    h.className = 'hb';
-    h.style.left = (Math.random()*60 - 30) + 'px';
-    h.style.animationDelay = (Math.random()*0.3) + 's';
-    wrap.appendChild(h);
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('gate').classList.add('hidden');
+  playHerSong();
+});
+
+/* ---------- gentle continuous snow — she loves the mountains and the snow ---------- */
+(function(){
+  const canvas = document.getElementById('snow');
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w, h, flakes;
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
   }
-  document.body.appendChild(wrap);
-  setTimeout(() => wrap.remove(), 1800);
-}
+  function makeFlakes(){
+    const count = Math.round((w*h)/22000);
+    flakes = Array.from({length: count}, () => ({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*2 + 0.6,
+      speed: Math.random()*0.6 + 0.25,
+      drift: Math.random()*0.6 - 0.3,
+      sway: Math.random()*Math.PI*2
+    }));
+  }
+  function currentSnowColor(){
+    const raw = getComputedStyle(document.body).getPropertyValue('--snow').trim() || '255,255,255';
+    return raw;
+  }
 
-document.getElementById('revealBtn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  const rect = e.currentTarget.getBoundingClientRect();
-  heartBurst(rect.left + rect.width/2, rect.top);
-  document.getElementById('finalGate').style.display = 'none';
-  document.getElementById('finalMessage').classList.add('show');
-});
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    const rgb = currentSnowColor();
+    flakes.forEach(f => {
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${rgb},0.75)`;
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fill();
+      if(!reduceMotion){
+        f.y += f.speed;
+        f.sway += 0.01;
+        f.x += f.drift + Math.sin(f.sway)*0.25;
+        if(f.y > h + 4){ f.y = -4; f.x = Math.random()*w; }
+        if(f.x > w + 4) f.x = -4;
+        if(f.x < -4) f.x = w + 4;
+      }
+    });
+    requestAnimationFrame(draw);
+  }
 
-// tapping/clicking anywhere on the page (once the gate is open) moves
-// the story forward and shifts the whole page's theme with it
-document.addEventListener('click', (e) => {
-  if (!gate.classList.contains('hidden')) return; // ignore taps before "begin our story"
-  if (e.target.closest('#gate')) return;
-  if (e.target.closest('#soundbar')) return; // don't advance when using the player
-  advance();
-});
-
-// set the rain going for the opening chapter right away
-spawnWeather(order[0]);
-
+  window.addEventListener('resize', () => { resize(); makeFlakes(); });
+  resize();
+  makeFlakes();
+  requestAnimationFrame(draw);
+})();
 </script>
 
 </body>
