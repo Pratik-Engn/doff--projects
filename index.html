@@ -408,6 +408,8 @@ nav::-webkit-scrollbar-thumb{ background: var(--thread); border-radius:4px; }
   opacity:0.75; animation: pulseHint 2600ms ease-in-out infinite; user-select:none;
 }
 .tap-hint .arrow{ display:inline-block; animation: nudge 1600ms ease-in-out infinite; }
+.tap-hint.locked{ opacity:0.35; animation:none; }
+.tap-hint.locked .arrow{ animation:none; opacity:0; }
 @keyframes pulseHint{ 0%,100%{opacity:0.4;} 50%{opacity:0.9;} }
 @keyframes nudge{ 0%,100%{ transform:translateX(0);} 50%{ transform:translateX(5px);} }
 
@@ -710,6 +712,34 @@ const order = ['begin','friends','games','us','ending','secret'];
 const total = order.length;
 let current = 0;
 
+// her song is 4:23 — split that across every tab but the last, so the
+// final "secret" tab arrives exactly as the song finishes
+const SONG_DURATION = 4*60 + 23; // seconds
+const SLOT = SONG_DURATION / (total - 1);
+let storyStartTime = null;
+let hintTimer = null;
+
+function updateTapHint(){
+  if (current >= total - 1){ tapHint.style.display = 'none'; return; }
+  tapHint.style.display = 'flex';
+  const hintText = tapHint.querySelector('span');
+  if (storyStartTime === null){
+    hintText.textContent = 'tap anywhere to continue';
+    tapHint.classList.remove('locked');
+    return;
+  }
+  const elapsed = (Date.now() - storyStartTime) / 1000;
+  const required = (current + 1) * SLOT;
+  const remaining = required - elapsed;
+  if (remaining > 0.5){
+    hintText.textContent = 'next chapter in ' + Math.ceil(remaining) + 's';
+    tapHint.classList.add('locked');
+  } else {
+    hintText.textContent = 'tap anywhere to continue';
+    tapHint.classList.remove('locked');
+  }
+}
+
 // a different "sky" for every chapter — particle class + count + colors (colors unused for css-driven types)
 const weatherByTheme = {
   begin:   { cls: 'p-rain',     count: 45 },
@@ -758,21 +788,30 @@ function goTo(theme){
   body.setAttribute('data-theme', theme);
   const idx = order.indexOf(theme);
   threadFill.style.width = ((idx+1)/total*100) + '%';
-  tapHint.style.display = (idx === total-1) ? 'none' : 'flex';
   spawnWeather(theme);
+  updateTapHint();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function advance(){
-  if (current < total - 1){
-    current++;
-    goTo(order[current]);
+  if (current >= total - 1) return;
+  if (storyStartTime !== null){
+    const elapsed = (Date.now() - storyStartTime) / 1000;
+    const required = (current + 1) * SLOT;
+    if (elapsed < required) return; // her time slot for this chapter isn't up yet
   }
+  current++;
+  goTo(order[current]);
 }
 
 document.getElementById('startBtn').addEventListener('click', (e) => {
   e.stopPropagation();
   gate.classList.add('hidden');
+  // the timer starts the moment her song does, so every tab's slot
+  // stays locked to the song's actual runtime
+  storyStartTime = Date.now();
+  updateTapHint();
+  hintTimer = setInterval(updateTapHint, 1000);
   // play the song only now, on her actual tap, so the browser allows sound
   playHerSong();
 });
