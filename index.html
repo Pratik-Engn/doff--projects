@@ -186,7 +186,10 @@
 </head>
 <body>
 
-<a id="music-btn" class="music-btn" href="https://www.youtube.com/watch?v=GxldQ9eX2wo&t=33s" target="_blank" rel="noopener">🎵 play our song</a>
+<a id="music-btn" class="music-btn" href="#" onclick="return false;">🔈 sound on</a>
+<div id="yt-player-holder" style="position:fixed; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;">
+  <div id="yt-player"></div>
+</div>
 
 <div class="app">
 
@@ -344,6 +347,69 @@
     group.appendChild(frag);
   })();
 
+  // background music: loads muted immediately, unmutes on the visitor's first tap
+  // (browsers block audible autoplay until there's been a user interaction —
+  // this site is tap-to-advance already, so the first tap doubles as that interaction)
+  let ytPlayer = null;
+  let audioUnlocked = false;
+
+  window.onYouTubeIframeAPIReady = function () {
+    ytPlayer = new YT.Player('yt-player', {
+      height: '1',
+      width: '1',
+      videoId: 'GxldQ9eX2wo',
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        start: 33,
+        loop: 1,
+        playlist: 'GxldQ9eX2wo',
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        modestbranding: 1,
+        rel: 0
+      },
+      events: {
+        onReady: function (e) {
+          e.target.mute();
+          e.target.playVideo();
+          updateMusicBtn();
+        }
+      }
+    });
+  };
+
+  const ytApiScript = document.createElement('script');
+  ytApiScript.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(ytApiScript);
+
+  function updateMusicBtn() {
+    const btn = document.getElementById('music-btn');
+    if (!btn || !ytPlayer || typeof ytPlayer.isMuted !== 'function') return;
+    btn.textContent = ytPlayer.isMuted() ? '🔈 sound on' : '🔊 sound on';
+  }
+
+  function unlockAudio() {
+    if (audioUnlocked || !ytPlayer || typeof ytPlayer.unMute !== 'function') return;
+    ytPlayer.unMute();
+    ytPlayer.playVideo();
+    audioUnlocked = true;
+    updateMusicBtn();
+  }
+
+  document.getElementById('music-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!ytPlayer) return;
+    if (ytPlayer.isMuted() || !audioUnlocked) {
+      unlockAudio();
+    } else {
+      ytPlayer.mute();
+      audioUnlocked = false;
+      updateMusicBtn();
+    }
+  });
+
   // falling white rose petals, reused on both the letter slide and the bouquet slide
   function scatterPetals(elementId, count) {
     const wrap = document.getElementById(elementId);
@@ -371,6 +437,7 @@
     let current = 0;
     document.body.addEventListener('click', (e) => {
       if (e.target.closest('#music-btn')) return;
+      unlockAudio();
       if (current < slides.length - 1) {
         slides[current].classList.remove('active');
         current += 1;
