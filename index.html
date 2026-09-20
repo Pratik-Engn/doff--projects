@@ -28,7 +28,7 @@
     --ribbon: #e0aa54;
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; overscroll-behavior: none; }
+  html, body { height: 100%; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   body {
     margin: 0;
     background: var(--night-mid);
@@ -367,6 +367,7 @@
         controls: 0,
         disablekb: 1,
         fs: 0,
+        playsinline: 1,
         modestbranding: 1,
         rel: 0
       },
