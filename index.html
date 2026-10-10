@@ -3,453 +3,358 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Good Morning, My Love</title>
+<meta name="theme-color" content="#ffd9e2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="A small good morning rose garden. Pick roses and make a bouquet.">
+<title>Good Morning Baby - Your Rose Bouquet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --night-top: #140c22;
-    --night-mid: #241636;
-    --night-low: #3a2140;
-    --card: #22162c;
-    --moon: #f6efe0;
-    --ink: #f4e9e4;
-    --ink-soft: #cdb2c4;
-    --rose-d: #e0435a;
-
-    --letter-top: #071b24;
-    --letter-low: #0f2c37;
-    --letter-card: #0c2530;
-    --letter-accent: #85dcd0;
-    --letter-ink: #eaf6f3;
-    --letter-ink-soft: #a9c9c3;
-
-    --ribbon: #e0aa54;
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0;
-    background: var(--night-mid);
-    color: var(--ink);
-    font-family: 'Jost', sans-serif;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    overflow: hidden;
-    cursor: pointer;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
-  .serif { font-family: 'Cormorant Garamond', serif; }
-
-  .app { position: relative; width: 100%; height: 100svh; overflow: hidden; }
-
-  .slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: 100vh;
+    height: 100dvh;
+    display: flex; flex-direction: column;
+    overflow-x: hidden; overflow-y: hidden;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.15rem;
+    color: #5b1a33;
     text-align: center;
-    padding: 8vh 6vw;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.7s ease;
+    background:
+      radial-gradient(circle at 50% 0%, #fff4ee 0%, rgba(255,244,238,0) 55%),
+      linear-gradient(180deg, #ffd9e2 0%, #f7b6c8 60%, #e89bb3 100%);
+    background-attachment: fixed;
+    padding: calc(env(safe-area-inset-top) + 16px) calc(env(safe-area-inset-right) + 10px)
+             calc(env(safe-area-inset-bottom) + 28px) calc(env(safe-area-inset-left) + 10px);
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
   }
-  .slide.active { opacity: 1; pointer-events: auto; }
+  #stage { position: relative; z-index: 1; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+  h1, #hint, #bouquetBox, #message { flex: none; }
+  /* once the bouquet is finished the page may scroll on small phones */
+  body.done { height: auto; min-height: 100vh; min-height: 100dvh; overflow-y: auto; }
+  body.done #stage { justify-content: center; }
 
-  /* ---------------- SLIDE 1 : HERO ---------------- */
-  #slide-hero { background: radial-gradient(ellipse at 50% 100%, var(--night-low) 0%, var(--night-top) 70%); overflow: hidden; }
-  .stars { position: absolute; inset: 0; }
-  .stars span { position: absolute; width: 2px; height: 2px; background: var(--moon); border-radius: 50%; opacity: 0.6; animation: twinkle 3.4s ease-in-out infinite; }
-  @keyframes twinkle { 0%,100% { opacity: 0.15; } 50% { opacity: 0.85; } }
-
-  .horizon-glow {
-    position: absolute; bottom: -10vh; left: 50%;
-    width: min(70vw, 480px); height: min(70vw, 480px);
-    transform: translateX(-50%); border-radius: 50%;
-    background: radial-gradient(circle at 50% 40%, rgba(232,189,130,0.55) 0%, rgba(224,131,154,0.25) 45%, transparent 75%);
-    filter: blur(2px);
+  h1 {
+    font-family: "Great Vibes", "Snell Roundhand", cursive;
+    font-weight: 400;
+    font-size: 3rem;
+    line-height: 1.1;
+    color: #b0173f;
+    text-shadow: 0 2px 10px rgba(255,255,255,.7);
   }
+  #hint { margin: 2px 0 8px; font-style: italic; font-size: 1.1rem; }
 
-  .hero-content { position: relative; z-index: 3; }
-  .eyebrow { font-size: clamp(13px, 1.6vw, 15px); color: var(--ink-soft); margin: 0 0 0.5em; }
-  #slide-hero h1 { font-weight: 600; font-size: clamp(2.3rem, 7vw, 4.2rem); line-height: 1.05; margin: 0 0 0.4em; color: var(--rose-d); }
-  #slide-hero p.lead { max-width: 38ch; margin: 0 auto; font-size: clamp(0.95rem, 1.3vw, 1.05rem); color: var(--ink-soft); line-height: 1.6; }
-
-  .critters { position: relative; z-index: 3; display: flex; align-items: flex-end; justify-content: center; gap: clamp(26px, 7vw, 80px); margin: clamp(16px, 3.5vh, 34px) 0 0; }
-  .critter { position: relative; width: clamp(80px, 16vw, 128px); }
-  .critter svg { width: 100%; height: auto; display: block; }
-
-  .critter.fox { animation: danceInFox 2.3s ease-out both; }
-  .critter.panda { animation: danceInPanda 2.3s ease-out 0.3s both; }
-  @keyframes danceInFox {
-    0%   { transform: translate(-150px, 30px) rotate(-10deg); opacity: 0; }
-    10%  { opacity: 1; }
-    25%  { transform: translate(-85px, -18px) rotate(8deg); }
-    40%  { transform: translate(-115px, 6px) rotate(-6deg); }
-    55%  { transform: translate(-48px, -14px) rotate(6deg); }
-    70%  { transform: translate(-65px, 4px) rotate(-4deg); }
-    85%  { transform: translate(-14px, -6px) rotate(2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  /* the garden */
+  #garden {
+    --w: clamp(50px, 15vw, 66px);
+    display: flex; flex-wrap: wrap; justify-content: center;
+    align-content: flex-start;
+    width: 100%; max-width: 440px; max-height: 800px;
+    flex: 1 1 auto; min-height: 0;
+    overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    margin: 0 auto; padding: 0 6px calc(var(--w) * .85);
+    transition: max-height .9s ease, opacity .7s ease, padding .9s ease;
   }
-  @keyframes danceInPanda {
-    0%   { transform: translate(150px, 30px) rotate(10deg); opacity: 0; }
-    10%  { opacity: 1; }
-    25%  { transform: translate(85px, -18px) rotate(-8deg); }
-    40%  { transform: translate(115px, 6px) rotate(6deg); }
-    55%  { transform: translate(48px, -14px) rotate(-6deg); }
-    70%  { transform: translate(65px, 4px) rotate(4deg); }
-    85%  { transform: translate(14px, -6px) rotate(-2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  #garden.done { flex: 0 0 0; max-height: 0; opacity: 0; padding-bottom: 0; overflow: hidden; pointer-events: none; }
+  .rose {
+    width: var(--w); margin-bottom: calc(var(--w) * -.85);
+    background: none; border: 0; cursor: pointer;
+    transition: transform .35s ease, opacity .35s ease;
   }
+  .rose svg { width: 100%; height: auto; display: block; transform-origin: 50% 100%; animation: sway 3.2s ease-in-out infinite alternate; }
+  .rose.gone { transform: scale(0); opacity: 0; pointer-events: none; }
+  @media (hover: hover) { .rose:hover { transform: scale(1.12); } }
+  @keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
 
-  .paw { transform-origin: var(--pivot, 50% 50%); animation: wave 1s ease-in-out 2.3s 3; }
-  .critter.panda .paw { animation-delay: 2.6s; }
-  @keyframes wave { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-30deg); } }
-
-  .bubble {
-    position: absolute; top: -2.4em; left: 50%; transform: translateX(-50%) scale(0.85);
-    background: var(--card); color: var(--ink); border: 1px solid rgba(232,189,130,0.35);
-    padding: 0.32em 0.75em; border-radius: 14px; font-size: clamp(0.68rem, 1.5vw, 0.82rem);
-    white-space: nowrap; opacity: 0; animation: popIn 0.5s ease-out 2.3s both;
+  /* the bouquet */
+  #bouquetBox { position: relative; width: 100%; height: 255px; transition: height 1s ease, margin 1s ease; }
+  #bouquetBox.done { height: 390px; margin: 16px 0; }
+  #bouquet {
+    position: absolute; left: 50%; bottom: 0; width: 340px; height: 340px; margin-left: -170px;
+    transform-origin: 50% 100%; transform: scale(.72);
+    transition: transform 1s ease;
   }
-  .critter.panda .bubble { animation-delay: 2.6s; }
-  @keyframes popIn { from { opacity: 0; transform: translateX(-50%) scale(0.6); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
-
-  .tap-hint {
-    position: absolute; bottom: max(3.5vh, env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%);
-    font-size: 0.78rem; color: var(--ink-soft); opacity: 0.7; z-index: 3;
-    animation: hintPulse 2s ease-in-out infinite;
+  #bouquet.done { transform: scale(1.1); }
+  .picked {
+    position: absolute; left: 50%; bottom: 100px; width: 56px; margin-left: -28px;
+    display: flex; flex-direction: column; align-items: center;
+    transform-origin: 50% 100%; transform: rotate(0deg) scale(0);
+    transition: transform .8s cubic-bezier(.2, 1.4, .4, 1);
   }
-  @keyframes hintPulse { 0%,100% { opacity: 0.35; } 50% { opacity: 0.85; } }
+  .picked svg { width: 56px; height: 56px; display: block; }
+  .stem {
+    display: block; width: 4px; height: var(--len, 40px); border-radius: 2px;
+    background: linear-gradient(90deg, #2f6b34, #4d9a50);
+    transition: height .8s ease;
+  }
+  .wrap {
+    position: absolute; left: 50%; bottom: 0; width: 124px; height: 92px; margin-left: -62px; z-index: 5;
+    background: linear-gradient(135deg, #ffffff 0%, #f9cdd9 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
+    clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
+  }
+  .ribbon { position: absolute; left: 50%; bottom: 32px; margin-left: -18px; z-index: 6; font-size: 2rem; line-height: 1; }
 
-  /* shared falling-petal layer */
-  .petals-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
-  .petal { position: absolute; top: -8%; width: 10px; height: 13px; border-radius: 50% 50% 50% 0; opacity: 0.9; animation: fall linear infinite; }
-  @keyframes fall { 0% { transform: translateY(-10vh) translateX(0) rotate(0deg); } 100% { transform: translateY(115vh) translateX(var(--drift, 20px)) rotate(360deg); } }
-
-  /* floating music button, visible on every slide */
-  .music-btn {
-    position: fixed;
-    top: calc(env(safe-area-inset-top, 0px) + 16px);
-    right: 16px;
-    z-index: 50;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0,0,0,0.35);
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.25);
-    backdrop-filter: blur(6px);
+  /* final message */
+  #message { max-height: 0; opacity: 0; overflow: hidden; transition: opacity 1.6s ease .4s; }
+  #message.show { max-height: 400px; opacity: 1; }
+  #message h2 {
+    font-family: "Great Vibes", "Snell Roundhand", cursive; font-weight: 400;
+    font-size: 3.2rem; color: #b0173f; margin-bottom: 4px;
+  }
+  #message p { font-size: 1.4rem; font-style: italic; }
+  #again {
+    margin-top: 18px; min-height: 44px; padding: 8px 26px; border: 0; border-radius: 22px;
+    background: #b0173f; color: #fff; font: inherit; font-size: 1.1rem; cursor: pointer;
   }
 
-  /* ---------------- SLIDE 2 : LETTER (cool contrasting palette) ---------------- */
-  #slide-letter { background: linear-gradient(180deg, var(--letter-low), var(--letter-top)); overflow: hidden; }
-  .note-card { position: relative; z-index: 2; max-width: 540px; width: 100%; background: var(--letter-card); border-radius: 4px; padding: clamp(26px, 5vw, 44px); border: 1px solid rgba(133,220,208,0.22); }
-  .note-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.2rem, 2.1vw, 1.55rem); color: var(--letter-accent); margin: 0 0 0.9em; }
-  .note-body p { font-size: clamp(0.94rem, 1.25vw, 1.02rem); line-height: 1.85; color: var(--letter-ink); margin: 0 0 1.1em; }
-  .note-body p:last-child { margin-bottom: 0; }
-  .note-signoff { text-align: right; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--letter-ink-soft); margin-top: 1.2em; }
-
-  /* ---------------- SLIDE 3 : PROMISE ---------------- */
-  #slide-promise { background: radial-gradient(ellipse at 50% 40%, var(--night-low) 0%, var(--night-top) 75%); }
-  #slide-promise h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(2rem, 6vw, 3.4rem); color: var(--rose-d); margin: 0 0 0.4em; }
-  #slide-promise p { max-width: 38ch; margin: 0 auto; color: var(--ink-soft); font-size: clamp(0.95rem, 1.3vw, 1.05rem); line-height: 1.7; }
-
-  /* ---------------- SLIDE 4 : BOUQUET (bright, high-contrast finale) ---------------- */
-  #slide-bouquet {
-    background: linear-gradient(160deg, #ff9bad 0%, #ff5c78 45%, #d81e46 100%);
-    gap: clamp(14px, 2.6vh, 26px);
-    overflow: hidden;
+  /* falling petals */
+  #petals { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .petal {
+    position: absolute; top: 0;
+    width: var(--s); height: calc(var(--s) * 1.3);
+    background: radial-gradient(circle at 30% 30%, #ffe3ea, var(--pc));
+    border-radius: 150% 0 150% 0; opacity: .85; will-change: transform;
+    animation: fall var(--t) linear var(--delay, 0s) forwards;
   }
-  #slide-bouquet .petal { box-shadow: 0 0 4px rgba(255,255,255,0.5); }
-
-  .bouquet-wrap, .reveal-text { position: relative; z-index: 2; }
-  .bouquet-wrap { width: clamp(300px, 62vw, 520px); }
-  .bouquet-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
-  #bloomGroup { transform-origin: 130px 140px; animation: bouquetBloom 1.8s cubic-bezier(.2,.85,.3,1.1) both; }
-  @keyframes bouquetBloom { 0% { transform: scale(0.35); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-  .reveal-text h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(1.6rem, 4.3vw, 2.5rem); color: #fff8f5; text-shadow: 0 2px 14px rgba(120,0,20,0.35); margin: 0 0 0.4em; opacity: 0; animation: fadeUp 1s ease-out 1.4s forwards; }
-  .reveal-text p { max-width: 40ch; margin: 0 auto; font-size: clamp(0.95rem, 1.3vw, 1.05rem); line-height: 1.75; color: #ffe9ec; opacity: 0; animation: fadeUp 1s ease-out 1.75s forwards; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fall {
+    0%   { transform: translate3d(0, -30px, 0) rotate(0deg); }
+    50%  { transform: translate3d(var(--dx), 50vh, 0) rotate(var(--r1)); }
+    100% { transform: translate3d(0, 105vh, 0) rotate(var(--r2)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .petal, .rose svg { animation: none; } }
 </style>
 </head>
 <body>
+<div id="petals" aria-hidden="true"></div>
 
-<a id="music-btn" class="music-btn" href="#" onclick="return false;">🔈 sound on</a>
-<div id="yt-player-holder" style="position:fixed; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;">
-  <div id="yt-player"></div>
-</div>
+<main id="stage">
+  <h1>Good Morning</h1>
+  <p id="hint">Pick 25 roses for your bouquet (<span id="count">0</span>/25)</p>
 
-<div class="app">
+  <section id="garden" aria-label="Rose garden"></section>
 
-  <section class="slide active" id="slide-hero">
-    <div class="stars" id="stars"></div>
-    <div class="horizon-glow"></div>
+  <div id="bouquetBox">
+    <section id="bouquet" aria-label="Your bouquet">
+      <div id="fan"></div>
+      <div class="wrap"></div>
+      <div class="ribbon">🎀</div>
+    </section>
+  </div>
 
-    <div class="hero-content">
-      <p class="eyebrow">a small good morning</p>
-      <h1 class="serif">Good Morning,<br>My Love ❤️</h1>
-      <p class="lead">Someone stopped by early to say it before I could.</p>
-    </div>
-
-    <div class="critters">
-      <div class="critter fox">
-        <div class="bubble">Good morning!! 🦊</div>
-        <svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="70" cy="105" rx="34" ry="18" fill="#c9672f"/>
-          <circle cx="70" cy="62" r="34" fill="#d97a3a"/>
-          <path d="M40 40 L30 12 L54 34 Z" fill="#d97a3a"/>
-          <path d="M100 40 L110 12 L86 34 Z" fill="#d97a3a"/>
-          <path d="M42 36 L36 20 L52 32 Z" fill="#2e1c1c"/>
-          <path d="M98 36 L104 20 L88 32 Z" fill="#2e1c1c"/>
-          <path d="M70 62 m-16 6 c0 12 32 12 32 0 c0 -10 -32 -10 -32 0 Z" fill="#fbe6cf"/>
-          <circle cx="58" cy="56" r="4" fill="#241a14"/>
-          <circle cx="82" cy="56" r="4" fill="#241a14"/>
-          <circle cx="70" cy="68" r="3" fill="#241a14"/>
-          <g class="paw" style="--pivot:104px 92px">
-            <ellipse cx="104" cy="92" rx="10" ry="16" fill="#d97a3a" transform="rotate(20 104 92)"/>
-          </g>
-        </svg>
-      </div>
-
-      <div class="critter panda">
-        <div class="bubble">Rise and shine 🐼</div>
-        <svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="70" cy="106" rx="36" ry="18" fill="#f4f1ea"/>
-          <circle cx="70" cy="62" r="34" fill="#faf8f2"/>
-          <circle cx="38" cy="34" r="13" fill="#241f1f"/>
-          <circle cx="102" cy="34" r="13" fill="#241f1f"/>
-          <ellipse cx="55" cy="58" rx="11" ry="13" fill="#241f1f"/>
-          <ellipse cx="85" cy="58" rx="11" ry="13" fill="#241f1f"/>
-          <circle cx="55" cy="60" r="4" fill="#faf8f2"/>
-          <circle cx="85" cy="60" r="4" fill="#faf8f2"/>
-          <circle cx="70" cy="70" r="4" fill="#241f1f"/>
-          <path d="M62 78 Q70 84 78 78" stroke="#241f1f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <g class="paw" style="--pivot:36px 92px">
-            <ellipse cx="36" cy="92" rx="10" ry="16" fill="#f4f1ea" transform="rotate(-20 36 92)"/>
-            <ellipse cx="36" cy="100" rx="9" ry="7" fill="#241f1f" transform="rotate(-20 36 92)"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-
-    <div class="tap-hint">tap to continue</div>
+  <section id="message">
+    <h2>I love you ❤️</h2>
+    <p>Good morning. Have a nice day.</p>
+    <button id="again" type="button">Pick again</button>
   </section>
-
-  <section class="slide" id="slide-letter">
-    <div class="petals-layer" id="petals-letter"></div>
-    <div class="note-card">
-      <p class="note-title serif">just a little something about yesterday</p>
-      <div class="note-body">
-        <p>I was honestly extremely tired, and if I said something that came out wrong or made you feel bad in that moment, I'm really sorry. I never meant to hurt you, it simply came out differently than what I actually felt.</p>
-        <p>Please don't hold onto those few words or let them make you question how much you mean to me. What I feel for you is so much bigger than one tired moment.</p>
-        <p>I'll be honest, it isn't always easy for me to stick to my word. But when it comes to your happiness and our future together, I will always try my best to keep it.</p>
-        <p>So this morning, I just want your heart to feel light again.</p>
-      </div>
-      <p class="note-signoff">with all my love</p>
-    </div>
-    <div class="tap-hint">tap to continue</div>
-  </section>
-
-  <section class="slide" id="slide-promise">
-    <h2 class="serif">This will not happen again.</h2>
-    <p>I promise you that. Not because I have to say it, but because I mean it.</p>
-    <div class="tap-hint">tap to continue</div>
-  </section>
-
-  <section class="slide" id="slide-bouquet">
-    <div class="petals-layer" id="petals"></div>
-
-    <div class="bouquet-wrap">
-      <svg id="bouquetSvg" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <symbol id="miniRose" viewBox="0 0 10 10">
-            <circle cx="5" cy="5" r="1.6" fill="currentColor"/>
-            <path d="M5 5 C2.5 4 2 1.5 4 0.8 C5.5 0.3 6.5 1.5 5.6 3 Z" fill="currentColor" opacity="0.92"/>
-            <path d="M5 5 C7.5 4 8 1.5 6 0.8 C4.5 0.3 3.5 1.5 4.4 3 Z" fill="currentColor" opacity="0.85" transform="rotate(90 5 5)"/>
-            <path d="M5 5 C7.5 4 8 1.5 6 0.8 C4.5 0.3 3.5 1.5 4.4 3 Z" fill="currentColor" opacity="0.8" transform="rotate(180 5 5)"/>
-            <path d="M5 5 C7.5 4 8 1.5 6 0.8 C4.5 0.3 3.5 1.5 4.4 3 Z" fill="currentColor" opacity="0.85" transform="rotate(270 5 5)"/>
-          </symbol>
-        </defs>
-
-        <g id="bow">
-          <rect x="110" y="222" width="40" height="17" rx="7" fill="var(--ribbon)" transform="rotate(-2 130 230)"/>
-          <path d="M130 228 C112 214 98 226 110 236 C120 242 127 234 130 228 Z" fill="var(--ribbon)"/>
-          <path d="M130 228 C148 214 162 226 150 236 C140 242 133 234 130 228 Z" fill="var(--ribbon)"/>
-          <circle cx="130" cy="228" r="5" fill="#c07f36"/>
-          <path d="M122 234 L112 262 L124 254 Z" fill="var(--ribbon)"/>
-          <path d="M138 234 L148 262 L136 254 Z" fill="var(--ribbon)"/>
-        </g>
-
-        <g id="bloomGroup"></g>
-      </svg>
-    </div>
-
-    <div class="reveal-text">
-      <h2 class="serif">1000 roses.<br>One reason: I love you.</h2>
-      <p>Out of this whole wide world, it's you, today, and every ordinary morning after this one.</p>
-    </div>
-  </section>
-
-</div>
+</main>
 
 <script>
-  // background stars (hero)
-  (function(){
-    const wrap = document.getElementById('stars');
-    let html = '';
-    for (let i = 0; i < 60; i++) {
-      const x = Math.random()*100, y = Math.random()*70, d = (Math.random()*3+2).toFixed(1);
-      html += `<span style="left:${x}%; top:${y}%; animation-duration:${d}s; animation-delay:${(Math.random()*3).toFixed(1)}s;"></span>`;
+  var TOTAL = 25;      // roses needed for the bouquet
+  var IN_GARDEN = 39;  // roses growing in the garden
+
+  // her three favourites: red, pink and black (colours repeat on purpose)
+  var reds   = ["#d81b3c", "#b3122f", "#e63950"];
+  var pinks  = ["#ff8fb1", "#f2658a", "#ffb6c8"];
+  var blacks = ["#2a2230", "#221b29"];
+  var garden = document.getElementById("garden");
+  var fan = document.getElementById("fan");
+  var bouquet = document.getElementById("bouquet");
+  var box = document.getElementById("bouquetBox");
+  var message = document.getElementById("message");
+  var hint = document.getElementById("hint");
+  var picked = 0;
+
+  // lighten (p > 0) or darken (p < 0) a hex colour
+  function shade(hex, p) {
+    var n = parseInt(hex.slice(1), 16);
+    var r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+    var t = p < 0 ? 0 : 255, k = Math.abs(p);
+    r = Math.round(r + (t - r) * k);
+    g = Math.round(g + (t - g) * k);
+    b = Math.round(b + (t - b) * k);
+    return "rgb(" + r + "," + g + "," + b + ")";
+  }
+
+  // colour set for one rose; very dark roses get lifted shades so the petals still show
+  function palette(base) {
+    var n = parseInt(base.slice(1), 16);
+    var lum = 0.3 * (n >> 16) + 0.59 * ((n >> 8) & 255) + 0.11 * (n & 255);
+    if (lum < 70) {
+      return { dark: shade(base, -0.55), mid: base, base: shade(base, 0.1), light: shade(base, 0.26), edge: "#000000" };
     }
-    wrap.innerHTML = html;
-  })();
+    return { dark: shade(base, -0.38), mid: shade(base, -0.16), base: base, light: shade(base, 0.2), edge: shade(base, -0.55) };
+  }
 
-  // big, dense, stem-free red rose bouquet
-  (function(){
-    const NS = 'http://www.w3.org/2000/svg';
-    const group = document.getElementById('bloomGroup');
-    const colors = ['#7a0d20', '#9c162f', '#c32b44', '#e0435a', '#a81f34'];
-    const cx = 130, cy = 138, rx = 118, ry = 96;
-    const count = 1500;
-    const frag = document.createDocumentFragment();
-
-    for (let i = 0; i < count; i++) {
-      const radiusFactor = Math.sqrt(Math.random());
-      const angle = Math.random() * Math.PI * 2;
-      const ex = cx + Math.cos(angle) * rx * radiusFactor;
-      const ey = cy - Math.abs(Math.sin(angle)) * ry * radiusFactor * 0.92 - (1 - radiusFactor) * 10;
-      const depth = radiusFactor;
-      const scale = (0.6 + (1 - depth) * 0.95 + Math.random() * 0.3).toFixed(2);
-      const rot = Math.floor(Math.random() * 360);
-      const color = colors[Math.floor(Math.random() * colors.length)];
-
-      const use = document.createElementNS(NS, 'use');
-      use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#miniRose');
-      use.setAttribute('href', '#miniRose');
-      use.setAttribute('width', 18);
-      use.setAttribute('height', 18);
-      use.setAttribute('transform', `translate(${ex.toFixed(1)} ${ey.toFixed(1)}) scale(${scale}) rotate(${rot} 5 5) translate(-5 -5)`);
-      use.setAttribute('style', `color:${color}`);
-      frag.appendChild(use);
-    }
-    group.appendChild(frag);
-  })();
-
-  // background music: loads muted immediately, unmutes on the visitor's first tap
-  // (browsers block audible autoplay until there's been a user interaction —
-  // this site is tap-to-advance already, so the first tap doubles as that interaction)
-  let ytPlayer = null;
-  let audioUnlocked = false;
-
-  window.onYouTubeIframeAPIReady = function () {
-    ytPlayer = new YT.Player('yt-player', {
-      height: '1',
-      width: '1',
-      videoId: 'GxldQ9eX2wo',
-      playerVars: {
-        autoplay: 1,
-        mute: 1,
-        start: 33,
-        loop: 1,
-        playlist: 'GxldQ9eX2wo',
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        playsinline: 1,
-        modestbranding: 1,
-        rel: 0
-      },
-      events: {
-        onReady: function (e) {
-          e.target.mute();
-          e.target.playVideo();
-          updateMusicBtn();
-        }
+  // the rose head is built from layers of petals turned around the centre
+  function roseHead(base) {
+    var P = palette(base);
+    var petal = "M50 52C25 45 22 16 40 11Q50 6 60 11C78 16 75 45 50 52Z";
+    function layer(count, scale, offset, fill, stroke) {
+      var out = "";
+      for (var i = 0; i < count; i++) {
+        var angle = offset + i * (360 / count);
+        out += '<path d="' + petal + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1" ' +
+               'transform="rotate(' + angle + ' 50 50) translate(50 50) scale(' + scale + ') translate(-50 -50)"/>';
       }
-    });
-  };
-
-  const ytApiScript = document.createElement('script');
-  ytApiScript.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(ytApiScript);
-
-  function updateMusicBtn() {
-    const btn = document.getElementById('music-btn');
-    if (!btn || !ytPlayer || typeof ytPlayer.isMuted !== 'function') return;
-    btn.textContent = ytPlayer.isMuted() ? '🔈 sound on' : '🔊 sound on';
-  }
-
-  function unlockAudio() {
-    if (audioUnlocked || !ytPlayer || typeof ytPlayer.unMute !== 'function') return;
-    ytPlayer.unMute();
-    ytPlayer.playVideo();
-    audioUnlocked = true;
-    updateMusicBtn();
-  }
-
-  document.getElementById('music-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (!ytPlayer) return;
-    if (ytPlayer.isMuted() || !audioUnlocked) {
-      unlockAudio();
-    } else {
-      ytPlayer.mute();
-      audioUnlocked = false;
-      updateMusicBtn();
+      return out;
     }
-  });
-
-  // falling white rose petals, reused on both the letter slide and the bouquet slide
-  function scatterPetals(elementId, count) {
-    const wrap = document.getElementById(elementId);
-    if (!wrap) return;
-    const colors = ['#ffffff', '#fff7f8', '#fdf1f2'];
-    let html = '';
-    for (let i = 0; i < count; i++) {
-      const left = Math.random() * 100;
-      const dur = (Math.random() * 6 + 7).toFixed(1);
-      const delay = (Math.random() * 10).toFixed(1);
-      const drift = (Math.random() * 60 - 30).toFixed(0) + 'px';
-      const size = (Math.random() * 5 + 8).toFixed(0);
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const rot = Math.random() > 0.5 ? '0deg' : '180deg';
-      html += `<span class="petal" style="left:${left}%; width:${size}px; height:${(size*1.3).toFixed(0)}px; background:${color}; --drift:${drift}; animation-duration:${dur}s; animation-delay:${delay}s; transform:rotate(${rot});"></span>`;
-    }
-    wrap.innerHTML = html;
+    return layer(7, 1.0, 0, P.dark, P.edge) +
+           layer(6, 0.82, 25, P.mid, P.dark) +
+           layer(5, 0.62, 10, P.base, P.dark) +
+           layer(4, 0.42, 40, P.light, P.mid) +
+           '<path d="M50 50m-3 0a3 3 0 1 1 6 0a6 6 0 1 1-12 0" fill="none" stroke="' + P.dark + '" stroke-width="1.5" stroke-linecap="round"/>';
   }
-  scatterPetals('petals-letter', 26);
-  scatterPetals('petals', 50);
 
-  // tap-to-advance navigation (ignores taps on the music button)
-  (function(){
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    let current = 0;
-    document.body.addEventListener('click', (e) => {
-      if (e.target.closest('#music-btn')) return;
-      unlockAudio();
-      if (current < slides.length - 1) {
-        slides[current].classList.remove('active');
-        current += 1;
-        slides[current].classList.add('active');
-        if (current === slides.length - 1) {
-          document.body.style.cursor = 'default';
-        }
-      }
+  // just the head, used in the bouquet (the stem there is plain CSS so it can grow)
+  function headSVG(base) {
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + roseHead(base) + '</svg>';
+  }
+
+  function roseSVG(base) {
+    return '<svg viewBox="0 0 100 190" aria-hidden="true">' +
+      '<path d="M50 88C49 120 51 150 50 190" stroke="#3b7d3f" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+      '<path d="M50 140C72 136 84 122 86 108C66 110 54 122 50 140Z" fill="#4d9a50"/>' +
+      '<path d="M50 160C30 158 18 146 15 134C34 134 46 144 50 160Z" fill="#3f8a45"/>' +
+      roseHead(base) + '</svg>';
+  }
+
+  function shuffle(list) {
+    for (var i = list.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = list[i]; list[i] = list[j]; list[j] = tmp;
+    }
+    return list;
+  }
+
+  function plant() {
+    var groups = [reds, pinks, blacks];
+    var order = [];
+    for (var i = 0; i < IN_GARDEN; i++) {
+      var group = groups[i % 3];
+      order.push(group[Math.floor(i / 3) % group.length]);
+    }
+    shuffle(order);
+
+    garden.innerHTML = "";
+    fan.innerHTML = "";
+    picked = 0;
+    garden.classList.remove("done");
+    bouquet.classList.remove("done");
+    box.classList.remove("done");
+    document.body.classList.remove("done");
+    garden.scrollTop = 0;
+    message.classList.remove("show");
+    hint.style.display = "";
+    hint.innerHTML = 'Pick ' + TOTAL + ' roses for your bouquet (<span id="count">0</span>/' + TOTAL + ')';
+
+    order.forEach(function (color, i) {
+      var btn = document.createElement("button");
+      btn.className = "rose";
+      btn.type = "button";
+      btn.setAttribute("aria-label", "Pick a rose");
+      btn.dataset.color = color;
+      btn.innerHTML = roseSVG(color);
+      btn.querySelector("svg").style.animationDelay = (i % 7) * 0.3 + "s";
+      btn.addEventListener("click", pick);
+      garden.appendChild(btn);
     });
-  })();
+  }
+
+  function pick(e) {
+    if (picked >= TOTAL) return;
+    var btn = e.currentTarget;
+    btn.disabled = true;
+    btn.classList.add("gone");
+
+    var item = document.createElement("div");
+    item.className = "picked";
+    item.dataset.tier = (picked % 4);
+    item.innerHTML = headSVG(btn.dataset.color) + '<i class="stem"></i>';
+    fan.appendChild(item);
+    picked++;
+    document.getElementById("count").textContent = picked;
+
+    // wait one frame so the pop-in animation can run
+    requestAnimationFrame(function () { requestAnimationFrame(arrange); });
+
+    if (picked === TOTAL) finish();
+  }
+
+  // Lay the roses out like a round bouquet. Four rows: short stems spread wide
+  // at the front, long stems stay near the middle at the back. As more roses
+  // are added the stems grow a little so the roses spread out and stay visible.
+  // The holder stays fixed below the flowers.
+  var spread = [74, 60, 44, 26];     // half-angle of each row, in degrees
+  var stemLen = [34, 64, 94, 124];   // stem length of each row, in px
+
+  function arrange() {
+    var items = fan.children;
+    var n = items.length;
+    var progress = n / TOTAL;
+    var grow = 0.8 + 0.4 * progress;
+
+
+    for (var t = 0; t < 4; t++) {
+      var row = [];
+      for (var i = 0; i < n; i++) if (+items[i].dataset.tier === t) row.push(items[i]);
+      row.forEach(function (el, k) {
+        var angle;
+        if (row.length === 1) angle = (t % 2 ? -1 : 1) * spread[t] * 0.3;
+        else angle = -spread[t] + k * (2 * spread[t] / (row.length - 1));
+        el.style.transform = "rotate(" + angle + "deg)";
+        el.style.setProperty("--len", Math.round(stemLen[t] * grow) + "px");
+        el.style.zIndex = 4 - t;
+      });
+    }
+  }
+
+  function finish() {
+    setTimeout(function () {
+      garden.classList.add("done");
+      bouquet.classList.add("done");
+      box.classList.add("done");
+      document.body.classList.add("done");
+      hint.style.display = "none";
+      message.classList.add("show");
+      for (var i = 0; i < 30; i++) dropPetal(i * 0.12);
+    }, 900);
+  }
+
+  // petals drifting down the screen
+  var petalColors = ["#f48fb1", "#ff8fb1", "#ec407a", "#f8bbd0", "#e91e63"];
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function dropPetal(delay) {
+    var p = document.createElement("i");
+    p.className = "petal";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.setProperty("--s", 10 + Math.random() * 10 + "px");
+    p.style.setProperty("--t", 8 + Math.random() * 6 + "s");
+    p.style.setProperty("--dx", Math.random() * 120 - 60 + "px");
+    p.style.setProperty("--r1", Math.random() * 360 + "deg");
+    p.style.setProperty("--r2", 360 + Math.random() * 360 + "deg");
+    p.style.setProperty("--pc", petalColors[Math.floor(Math.random() * petalColors.length)]);
+    p.style.setProperty("--delay", (delay || 0) + "s");
+    p.addEventListener("animationend", function () { p.remove(); });
+    document.getElementById("petals").appendChild(p);
+  }
+
+  if (!reduceMotion) {
+    for (var k = 0; k < 8; k++) dropPetal(k * 0.8);
+    setInterval(function () {
+      if (document.getElementById("petals").children.length < 22) dropPetal(0);
+    }, 700);
+  }
+
+  document.getElementById("again").addEventListener("click", plant);
+  plant();
 </script>
-
 </body>
 </html>
