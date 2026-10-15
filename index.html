@@ -39,7 +39,7 @@ main{position:relative;z-index:2;width:100%;height:100%;margin:0 auto;display:fl
 .away .tap{opacity:1}
 @keyframes ring{from{transform:scale(.6);opacity:.9}to{transform:scale(1.7);opacity:0}}
 .tap{left:26px;top:30px}
-.say{position:absolute;left:50%;top:-38px;transform:translateX(-50%) scale(.6);transform-origin:50% 100%;background:#fff;color:#2a1633;font:700 15px 'Nunito',system-ui,sans-serif;padding:8px 14px;border-radius:16px;white-space:nowrap;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:4}
+.say{position:absolute;left:50%;bottom:calc(100% - 2px);transform:translateX(-50%) scale(.6);transform-origin:50% 100%;background:#fff;color:#2a1633;font:700 15px 'Nunito',system-ui,sans-serif;padding:8px 14px;border-radius:16px;width:max-content;max-width:176px;white-space:normal;text-align:center;line-height:1.25;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:4}
 .say::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#fff}
 .say.on{opacity:1;transform:translateX(-50%) scale(1)}
 #gsay{background:var(--rose);color:#fff}#gsay::after{border-top-color:var(--rose)}
@@ -135,7 +135,7 @@ boy.insertAdjacentHTML('afterbegin',person({girl:false})+'<b class="say" id="bsa
 document.getElementById('bq').innerHTML=bouquet();
 document.getElementById('pair').innerHTML='<div style="display:flex;justify-content:center;gap:4px"><div style="width:50%">'+person({girl:false}).replace('<svg','<svg style="width:100%"')+'</div><div style="width:50%">'+person({girl:true}).replace('<svg','<svg style="width:100%"')+'</div></div>';
 
-var lines=["I'm going to sleep.","Good night.","I'm going to sleep."],bsay=document.getElementById('bsay'),gsay=document.getElementById('gsay');
+var lines=["I am sleepy.","I am sleepy.","I am sleepy."],bsay=document.getElementById('bsay'),gsay=document.getElementById('gsay');
 var found=0,isAway=false,raf=0,pos={x:0,y:0,vx:0,vy:0},timer=0,started=false;
 
 function home(){boy.style.left='calc(50% - 128px)';boy.style.top='';boy.style.bottom='8%'}
@@ -152,7 +152,7 @@ function leave(){
     if(!isAway)return;
     pos.x+=pos.vx;pos.y+=pos.vy;
     if(pos.x<0||pos.x>maxX){pos.vx*=-1;pos.x=Math.max(0,Math.min(maxX,pos.x))}
-    if(pos.y<44||pos.y>maxY){pos.vy*=-1;pos.y=Math.max(44,Math.min(maxY,pos.y))}
+    if(pos.y<66||pos.y>maxY){pos.vy*=-1;pos.y=Math.max(66,Math.min(maxY,pos.y))}
     boy.style.left=pos.x+'px';boy.style.top=pos.y+'px';
     raf=requestAnimationFrame(step);
   })();
@@ -169,7 +169,7 @@ function burst(){
 }
 function back(){
   if(!isAway)return;
-  isAway=false;cancelAnimationFrame(raf);bsay.classList.remove('on');gsay.textContent='Kya hua?';gsay.classList.add('on');setTimeout(function(){gsay.classList.remove('on')},1500);setTimeout(function(){bsay.textContent='Baby, are you good?';bsay.classList.add('on')},1800);setTimeout(function(){bsay.classList.remove('on')},3600);setTimeout(function(){gsay.textContent="Yes, I'm good.";gsay.classList.add('on')},3900);setTimeout(function(){gsay.classList.remove('on')},5500);
+  isAway=false;cancelAnimationFrame(raf);bsay.classList.remove('on');var last=found===2;gsay.textContent=last?'Kya hua, baby?':'Kya hua?';gsay.classList.add('on');setTimeout(function(){gsay.classList.remove('on')},1600);setTimeout(function(){bsay.textContent=last?'I want to tell you something.':'Kuch nahi.';bsay.classList.add('on')},2000);setTimeout(function(){bsay.classList.remove('on')},4000);if(!last){setTimeout(function(){bsay.textContent='Are you good, baby?';bsay.classList.add('on')},6500);setTimeout(function(){bsay.classList.remove('on')},8300);setTimeout(function(){gsay.textContent="Yes, I'm good.";gsay.classList.add('on')},8600);setTimeout(function(){gsay.classList.remove('on')},10300);}
   boy.classList.remove('away');boy.classList.add('bob');
   boy.style.transition='';
   boy.style.left='calc(50% - 128px)';boy.style.top=(stage.clientHeight-stage.clientHeight*.08-150)+'px';
@@ -178,10 +178,10 @@ function back(){
   hearts[found].classList.add('on');found++;
   if(found>=3){
     hint.textContent="Tap him to bring him back.";
-    setTimeout(function(){document.getElementById('vow').classList.add('on')},6100);setTimeout(function(){document.getElementById('vow').classList.remove('on')},14600);setTimeout(function(){final.classList.add('show')},15300);
+    setTimeout(function(){document.getElementById('vow').classList.add('on')},4800);setTimeout(function(){document.getElementById('vow').classList.remove('on')},13300);setTimeout(function(){final.classList.add('show')},14000);
   }else{
     hint.textContent="Tap him to bring him back.";
-    timer=setTimeout(leave,6100+Math.random()*1500);
+    timer=setTimeout(leave,11100+Math.random()*1000);
   }
 }
 boy.addEventListener('pointerdown',function(e){e.preventDefault();back()});
