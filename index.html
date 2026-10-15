@@ -1,360 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#ffd9e2">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="description" content="A small good morning rose garden. Pick roses and make a bouquet.">
-<title>Good Morning Baby - Your Rose Bouquet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0c0d1f">
+<meta name="format-detection" content="telephone=no">
+<title>Good morning, baby</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;700&display=swap">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    height: 100vh;
-    height: 100dvh;
-    display: flex; flex-direction: column;
-    overflow-x: hidden; overflow-y: hidden;
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.15rem;
-    color: #5b1a33;
-    text-align: center;
-    background:
-      radial-gradient(circle at 50% 0%, #fff4ee 0%, rgba(255,244,238,0) 55%),
-      linear-gradient(180deg, #ffd9e2 0%, #f7b6c8 60%, #e89bb3 100%);
-    background-attachment: fixed;
-    padding: calc(env(safe-area-inset-top) + 16px) calc(env(safe-area-inset-right) + 10px)
-             calc(env(safe-area-inset-bottom) + 28px) calc(env(safe-area-inset-left) + 10px);
-    -webkit-user-select: none;
-    user-select: none;
-    touch-action: manipulation;
-  }
-  #stage { position: relative; z-index: 1; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
-  h1, #hint, #bouquetBox, #message { flex: none; }
-  /* once the bouquet is finished the page may scroll on small phones */
-  body.done { height: auto; min-height: 100vh; min-height: 100dvh; overflow-y: auto; }
-  body.done #stage { justify-content: center; }
-
-  h1 {
-    font-family: "Great Vibes", "Snell Roundhand", cursive;
-    font-weight: 400;
-    font-size: 2.7rem;
-    line-height: 1.1;
-    color: #b0173f;
-    text-shadow: 0 2px 10px rgba(255,255,255,.7);
-  }
-  #hint { margin: 2px 0 8px; font-style: italic; font-size: 1.1rem; }
-
-  /* the garden */
-  #garden {
-    --w: clamp(50px, 15vw, 66px);
-    display: flex; flex-wrap: wrap; justify-content: center;
-    align-content: flex-start;
-    width: 100%; max-width: 440px; max-height: 800px;
-    flex: 1 1 auto; min-height: 0;
-    overflow-y: auto; overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
-    margin: 0 auto; padding: 0 6px calc(var(--w) * .85);
-    transition: max-height .9s ease, opacity .7s ease, padding .9s ease;
-  }
-  #garden.done { flex: 0 0 0; max-height: 0; opacity: 0; padding-bottom: 0; overflow: hidden; pointer-events: none; }
-  .rose {
-    width: var(--w); margin-bottom: calc(var(--w) * -.85);
-    background: none; border: 0; cursor: pointer;
-    transition: transform .35s ease, opacity .35s ease;
-  }
-  .rose svg { width: 100%; height: auto; display: block; transform-origin: 50% 100%; animation: sway 3.2s ease-in-out infinite alternate; }
-  .rose.gone { transform: scale(0); opacity: 0; pointer-events: none; }
-  @media (hover: hover) { .rose:hover { transform: scale(1.12); } }
-  @keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
-
-  /* the bouquet */
-  #bouquetBox { position: relative; width: 100%; height: 255px; transition: height 1s ease, margin 1s ease; }
-  #bouquetBox.done { height: 390px; margin: 16px 0; }
-  #bouquet {
-    position: absolute; left: 50%; bottom: 0; width: 340px; height: 340px; margin-left: -170px;
-    transform-origin: 50% 100%; transform: scale(.72);
-    transition: transform 1s ease;
-  }
-  #bouquet.done { transform: scale(1.1); }
-  .picked {
-    position: absolute; left: 50%; bottom: 100px; width: 56px; margin-left: -28px;
-    display: flex; flex-direction: column; align-items: center;
-    transform-origin: 50% 100%; transform: rotate(0deg) scale(0);
-    transition: transform .8s cubic-bezier(.2, 1.4, .4, 1);
-  }
-  .picked svg { width: 56px; height: 56px; display: block; }
-  .stem {
-    display: block; width: 4px; height: var(--len, 40px); border-radius: 2px;
-    background: linear-gradient(90deg, #2f6b34, #4d9a50);
-    transition: height .8s ease;
-  }
-  .wrap {
-    position: absolute; left: 50%; bottom: 0; width: 124px; height: 92px; margin-left: -62px; z-index: 5;
-    background: linear-gradient(135deg, #ffffff 0%, #f9cdd9 100%);
-    -webkit-clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
-    clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
-  }
-  .ribbon { position: absolute; left: 50%; bottom: 32px; margin-left: -18px; z-index: 6; font-size: 2rem; line-height: 1; }
-
-  /* final message */
-  #message { max-height: 0; opacity: 0; overflow: hidden; transition: opacity 1.6s ease .4s; }
-  #message.show { max-height: 400px; opacity: 1; }
-  #message h2 {
-    font-family: "Great Vibes", "Snell Roundhand", cursive; font-weight: 400;
-    font-size: 3.2rem; color: #b0173f; margin-bottom: 4px;
-  }
-  #message p { font-size: 1.4rem; font-style: italic; }
-  #again {
-    margin-top: 18px; min-height: 44px; padding: 8px 26px; border: 0; border-radius: 22px;
-    background: #b0173f; color: #fff; font: inherit; font-size: 1.1rem; cursor: pointer;
-  }
-
-  /* falling petals */
-  #petals { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-  .petal {
-    position: absolute; top: 0;
-    width: var(--s); height: calc(var(--s) * 1.3);
-    background: radial-gradient(circle at 30% 30%, #ffe3ea, var(--pc));
-    border-radius: 150% 0 150% 0; opacity: .85; will-change: transform;
-    animation: fall var(--t) linear var(--delay, 0s) forwards;
-  }
-  @keyframes fall {
-    0%   { transform: translate3d(0, -30px, 0) rotate(0deg); }
-    50%  { transform: translate3d(var(--dx), 50vh, 0) rotate(var(--r1)); }
-    100% { transform: translate3d(0, 105vh, 0) rotate(var(--r2)); }
-  }
-  @media (prefers-reduced-motion: reduce) { .petal, .rose svg { animation: none; } }
+:root{--bg1:#0c0d1f;--bg2:#1b1535;--ink:#f6f1ff;--soft:#b9b0d6;--rose:#ff8fb1;--gold:#ffd9a0;--skin:#f2c9a5}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;background:#0c0d1f}
+html,body{height:100%;margin:0}
+body{position:fixed;inset:0;height:100vh;height:100dvh;overscroll-behavior:none}
+body{background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg1) 70%);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;overflow:hidden;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-font-smoothing:antialiased}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+main{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;padding:18px 16px}
+.hearts{display:flex;gap:10px;font-size:26px;height:34px}
+.hearts span{color:#3a3458;transition:color .4s,transform .4s}
+.hearts span.on{color:var(--rose);transform:scale(1.25)}
+#hint{font-family:'Fraunces',Georgia,serif;font-size:19px;text-align:center;margin:10px 0 0;min-height:56px;max-width:300px;line-height:1.35;color:var(--soft)}
+#stage{position:relative;flex:1;width:100%;max-width:420px;margin-top:6px}
+.char{position:absolute;width:124px}
+.char svg{width:100%;height:auto;display:block;overflow:visible}
+#girl{left:calc(50% - 56px);bottom:8%}
+#boy{left:calc(50% - 178px);bottom:8%;cursor:pointer;touch-action:manipulation;transition:left .9s cubic-bezier(.3,1.3,.5,1),top .9s cubic-bezier(.3,1.3,.5,1),bottom .9s}
+#boy.away{transition:none}
+#boy::before{content:"";position:absolute;inset:-22px}
+.sad{display:none}.away .sad{display:inline}.away .happy{display:none}
+.away svg{animation:sulk 2.4s ease-in-out infinite}
+@keyframes sulk{50%{transform:translateY(-8px) rotate(-4deg)}}
+.bob svg{animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.tap{position:absolute;width:60px;height:60px;border-radius:50%;border:2px solid var(--gold);pointer-events:none;animation:ring 1.4s ease-out infinite;opacity:0}
+.away .tap{opacity:1}
+@keyframes ring{from{transform:scale(.6);opacity:.9}to{transform:scale(1.7);opacity:0}}
+.tap{left:26px;top:30px}
+.say{position:absolute;left:50%;top:-38px;transform:translateX(-50%) scale(.6);transform-origin:50% 100%;background:#fff;color:#2a1633;font:700 15px 'Nunito',system-ui,sans-serif;padding:8px 14px;border-radius:16px;white-space:nowrap;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:4}
+.say::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#fff}
+.say.on{opacity:1;transform:translateX(-50%) scale(1)}
+#gsay{background:var(--rose);color:#fff}#gsay::after{border-top-color:var(--rose)}
+.pop{position:absolute;font-size:22px;pointer-events:none;animation:pop 1s ease-out forwards;z-index:3}
+@keyframes pop{to{transform:translate(var(--x),-90px) scale(1.4);opacity:0}}
+button#start{min-height:52px;cursor:pointer;-webkit-appearance:none;appearance:none;margin-top:auto;margin-bottom:16px;font:700 18px 'Nunito',sans-serif;color:#2a1633;background:linear-gradient(135deg,var(--gold),var(--rose));border:0;border-radius:999px;padding:15px 34px;box-shadow:0 8px 28px rgba(255,143,177,.35)}
+button#start:focus-visible,#boy:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+#final{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:safe center;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;text-align:center;padding:max(24px,env(safe-area-inset-top,0px)) max(28px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(28px,env(safe-area-inset-left,0px));background:radial-gradient(90% 60% at 50% 40%,rgba(60,35,90,.88),rgba(10,10,28,.96));opacity:0;pointer-events:none;transition:opacity 1.6s}
+#final.show{opacity:1;pointer-events:auto}
+#final h1{font:600 clamp(38px,12vw,58px)/1.05 'Fraunces',Georgia,serif;margin:10px 0 10px;color:var(--gold)}
+#final p{font:400 italic 19px/1.4 'Fraunces',Georgia,serif;margin:6px 0;max-width:300px}
+#final .love{font-size:30px;color:var(--rose);margin-top:14px}
+#final .pair{width:min(250px,36vh);width:min(250px,36dvh)}
+#final .pair svg{width:100%;display:block}
+#final .bq{width:min(230px,30vh);width:min(230px,30dvh);margin-top:-20px;opacity:0}#final.show .bq{animation:rise 2.2s ease-out .8s both}#final .bq svg{width:100%;display:block;filter:drop-shadow(0 8px 18px rgba(224,24,45,.35))}
+@keyframes rise{from{transform:translateY(30px) scale(.85);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
 </style>
 </head>
 <body>
-<div id="petals" aria-hidden="true"></div>
-
-<main id="stage">
-  <h1>Good Morning Baby</h1>
-  <p id="hint">Pick 25 roses for your bouquet (<span id="count">0</span>/25)</p>
-
-  <section id="garden" aria-label="Rose garden"></section>
-
-  <div id="bouquetBox">
-    <section id="bouquet" aria-label="Your bouquet">
-      <div id="fan"></div>
-      <div class="wrap"></div>
-      <div class="ribbon">🎀</div>
-    </section>
+<canvas id="petals" aria-hidden="true"></canvas>
+<main>
+  <div class="hearts" id="hearts" aria-label="Progress"><span>&#10084;</span><span>&#10084;</span><span>&#10084;</span></div>
+  <p id="hint">A little game, just for you.</p>
+  <div id="stage">
+    <div class="char bob" id="girl"></div>
+    <div class="char bob" id="boy" role="button" tabindex="0" aria-label="Bring him back"><i class="tap"></i></div>
   </div>
-
-  <section id="message">
-    <h2>I love you ❤️</h2>
-    <p>Good morning. Have a nice day.</p>
-    <button id="again" type="button">Pick again</button>
-  </section>
+  <button id="start">Start</button>
 </main>
+<section id="final" aria-live="polite">
+  <div class="pair" id="pair"></div>
+  <div class="bq" id="bq"></div>
+  <h1>Good morning</h1>
+  <p>I know I get childish sometimes, and I'm sorry. I'm learning, and I'm growing into a better person for you.</p>
+  <p>Thank you for staying by my side. You are the person of my life.</p>
+  <p class="love">I love you so much, baby</p>
+</section>
 
 <script>
-  var TOTAL = 25;      // roses needed for the bouquet
-  var IN_GARDEN = 39;  // roses growing in the garden
+(function(){
+function person(o){
+  var g=o.girl, hair=g?'#4a2a52':'#2b2238', frame=g?'#ffb3d1':'#1f2a4d';
+  var back=g?'<path d="M10 62C0 102 10 132 30 140L70 140C90 132 100 102 90 62Z" fill="'+hair+'"/>':'<ellipse cx="15" cy="66" rx="5" ry="8" fill="#f1caa8"/><ellipse cx="85" cy="66" rx="5" ry="8" fill="#f1caa8"/>';
+  var body=g
+   ?'<path d="M30 118Q50 106 70 118L77 146H23Z" fill="#ff9fc0"/><path d="M40 114Q50 124 60 114" fill="#fff"/><circle cx="50" cy="124" r="3" fill="#ff6f9f"/>'
+   :'<path d="M24 118Q50 102 76 118L82 146H18Z" fill="#3f66c4"/><path d="M40 111Q50 121 60 111" fill="#dfe8ff"/><path d="M45 118v10M55 118v10" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="38" y="130" width="24" height="10" rx="4" fill="#33559f"/>';
+  var top=g
+   ?'<path d="M14 58C10 24 30 12 50 12S90 24 86 58C76 48 66 38 58 28C50 42 32 52 14 58Z" fill="'+hair+'"/><path d="M14 58C12 76 16 90 22 96C22 80 20 68 14 58ZM86 58C88 76 84 90 78 96C78 80 80 68 86 58Z" fill="'+hair+'"/>'
+     +'<g transform="translate(74 20) rotate(18)"><ellipse cx="-9" cy="0" rx="9" ry="6" fill="#ff7fae"/><ellipse cx="9" cy="0" rx="9" ry="6" fill="#ff7fae"/><circle r="4" fill="#ffc2d9"/></g>'
+   :'<path d="M14 58C8 22 30 8 52 9C74 8 92 22 86 58C82 46 76 38 66 33C54 38 38 36 28 29C22 38 17 48 14 58Z" fill="'+hair+'"/><path d="M30 14L26 4L40 10L44 1L54 9L64 3L66 12Z" fill="'+hair+'"/>';
+  var lash=g?'<path d="M27 55l-4-3M29 51l-2-4M73 55l4-3M71 51l2-4" stroke="#2b1a3a" stroke-width="2" stroke-linecap="round"/>':'<path class="happy" d="M27 46q10-6 19-1M73 46q-10-6-19-1" fill="none" stroke="'+hair+'" stroke-width="3.4" stroke-linecap="round"/>';
+  var cheek=g?'<ellipse cx="25" cy="74" rx="7" ry="4.5" fill="#ff8fb1" opacity=".6"/><ellipse cx="75" cy="74" rx="7" ry="4.5" fill="#ff8fb1" opacity=".6"/>':'<ellipse cx="26" cy="74" rx="5" ry="3" fill="#ff9a8a" opacity=".25"/><ellipse cx="74" cy="74" rx="5" ry="3" fill="#ff9a8a" opacity=".25"/>';
+  var lens=g?'<circle cx="37" cy="62" r="13"/><circle cx="63" cy="62" r="13"/>':'<rect x="23" y="51" width="28" height="23" rx="8"/><rect x="49" y="51" width="28" height="23" rx="8"/>';
+  var mouthH=g?'<path class="happy" d="M43 76Q50 85 57 76Z" fill="#c4505f" stroke="#c4505f" stroke-width="2" stroke-linejoin="round"/>'
+    :'<path class="happy" d="M41 77Q50 85 59 77" fill="none" stroke="#8a4a3a" stroke-width="3" stroke-linecap="round"/>';
+  return '<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">'+back+body
+   +'<circle cx="50" cy="60" r="35" fill="#ffdcc2"/>'+top+cheek
+   +'<ellipse cx="37" cy="62" rx="6.5" ry="8.5" fill="#2b1a3a"/><ellipse cx="63" cy="62" rx="6.5" ry="8.5" fill="#2b1a3a"/>'
+   +'<circle cx="34.5" cy="58.5" r="2.8" fill="#fff"/><circle cx="60.5" cy="58.5" r="2.8" fill="#fff"/><circle cx="39.5" cy="66" r="1.4" fill="#fff"/><circle cx="65.5" cy="66" r="1.4" fill="#fff"/>'
+   +lash
+   +'<g fill="rgba(255,255,255,.12)" stroke="'+frame+'" stroke-width="3">'+lens+'</g><path d="M48 60q2-2 4 0" stroke="'+frame+'" stroke-width="2.6" fill="none"/>'
+   +'<path d="M23 58l-8-3M77 58l8-3" stroke="'+frame+'" stroke-width="2.6" stroke-linecap="round"/>'
+   +mouthH
+   +'<path class="sad" d="M43 81Q50 74 57 81" fill="none" stroke="#8a4a3a" stroke-width="2.8" stroke-linecap="round"/>'
+   +'<path class="sad" d="M28 78q-3 6 0 9q3-3 0-9Z" fill="#8fd3ff"/><path class="sad" d="M27 42q9-5 18 0M73 42q-9-5-18 0" fill="none" stroke="'+hair+'" stroke-width="2.6" stroke-linecap="round"/>'
+   +'</svg>';
+}
+function bouquet(){
+  var s=7,R=function(){s=(s*9301+49297)%233280;return s/233280},o='';
+  for(var i=0;i<26;i++){var a=R()*Math.PI-Math.PI,r=70+R()*70;o+='<ellipse cx="'+(150+Math.cos(a)*r).toFixed(1)+'" cy="'+(115+Math.sin(a)*r*.7).toFixed(1)+'" rx="15" ry="7" transform="rotate('+(a*57+90).toFixed(0)+' '+(150+Math.cos(a)*r).toFixed(1)+' '+(115+Math.sin(a)*r*.7).toFixed(1)+')" fill="#2f7a4b"/>'}
+  var P=[];
+  for(var n=0;n<100;n++){var t=R()*Math.PI*2,d=Math.sqrt(R());P.push([150+Math.cos(t)*d*112,108+Math.sin(t)*d*88])}
+  P.sort(function(a,b){return a[1]-b[1]});
+  var cols=['#e0182d','#c70f26','#ef3446','#b90d22'];
+  P.forEach(function(p,i){var c=cols[i%4],k=13+R()*4;
+    o+='<g transform="translate('+p[0].toFixed(1)+' '+p[1].toFixed(1)+')"><circle r="'+k.toFixed(1)+'" fill="'+c+'" stroke="#7d0716" stroke-width="1"/><circle r="'+(k*.62).toFixed(1)+'" fill="none" stroke="#7d0716" stroke-width="1.2" opacity=".7"/><path d="M-3 1a3 3 0 1 1 4 -3" fill="none" stroke="#7d0716" stroke-width="1.2"/></g>'});
+  o+='<path d="M96 188L204 188L158 258L142 258Z" fill="#f3d9c2"/><path d="M96 188L204 188L190 204L110 204Z" fill="#ffb3c8"/><path d="M150 210q-12 6 0 10q12-6 0-10Z" fill="#ff6f9f"/>';
+  return '<svg viewBox="0 0 300 262" xmlns="http://www.w3.org/2000/svg" aria-label="A big bouquet of red roses">'+o+'</svg>';
+}
+var girl=document.getElementById('girl'),boy=document.getElementById('boy'),
+    hint=document.getElementById('hint'),hearts=[].slice.call(document.querySelectorAll('#hearts span')),
+    stage=document.getElementById('stage'),start=document.getElementById('start'),
+    final=document.getElementById('final');
+girl.innerHTML=person({girl:true})+'<b class="say" id="gsay">Kya hua?</b>';
+boy.insertAdjacentHTML('afterbegin',person({girl:false})+'<b class="say" id="bsay"></b>');
+document.getElementById('bq').innerHTML=bouquet();
+document.getElementById('pair').innerHTML='<div style="display:flex;justify-content:center;gap:4px"><div style="width:50%">'+person({girl:false}).replace('<svg','<svg style="width:100%"')+'</div><div style="width:50%">'+person({girl:true}).replace('<svg','<svg style="width:100%"')+'</div></div>';
 
-  // her three favourites: red, pink and black (colours repeat on purpose)
-  var reds   = ["#d81b3c", "#b3122f", "#e63950"];
-  var pinks  = ["#ff8fb1", "#f2658a", "#ffb6c8"];
-  var blacks = ["#2a2230", "#221b29"];
-  var garden = document.getElementById("garden");
-  var fan = document.getElementById("fan");
-  var bouquet = document.getElementById("bouquet");
-  var box = document.getElementById("bouquetBox");
-  var message = document.getElementById("message");
-  var hint = document.getElementById("hint");
-  var picked = 0;
+var lines=["I'm going to sleep.","Good night.","I'm going to sleep."],bsay=document.getElementById('bsay'),gsay=document.getElementById('gsay');
+var found=0,isAway=false,raf=0,pos={x:0,y:0,vx:0,vy:0},timer=0,started=false;
 
-  // lighten (p > 0) or darken (p < 0) a hex colour
-  function shade(hex, p) {
-    var n = parseInt(hex.slice(1), 16);
-    var r = n >> 16, g = (n >> 8) & 255, b = n & 255;
-    var t = p < 0 ? 0 : 255, k = Math.abs(p);
-    r = Math.round(r + (t - r) * k);
-    g = Math.round(g + (t - g) * k);
-    b = Math.round(b + (t - b) * k);
-    return "rgb(" + r + "," + g + "," + b + ")";
+function home(){boy.style.left='calc(50% - 178px)';boy.style.top='';boy.style.bottom='8%'}
+function leave(){
+  isAway=true;boy.classList.remove('bob');boy.classList.add('away');
+  hint.textContent="Tap him to bring him back.";bsay.textContent=lines[found]||lines[0];bsay.classList.add('on');gsay.classList.remove('on');
+  var r=stage.getBoundingClientRect();
+  pos.x=boy.offsetLeft;pos.y=boy.offsetTop;
+  boy.style.bottom='auto';boy.style.top=pos.y+'px';
+  var a=Math.random()*Math.PI*2,s=.6+Math.random()*.5;
+  pos.vx=Math.cos(a)*s;pos.vy=Math.sin(a)*s;
+  var maxX=r.width-124,maxY=r.height-150;
+  (function step(){
+    if(!isAway)return;
+    pos.x+=pos.vx;pos.y+=pos.vy;
+    if(pos.x<0||pos.x>maxX){pos.vx*=-1;pos.x=Math.max(0,Math.min(maxX,pos.x))}
+    if(pos.y<44||pos.y>maxY){pos.vy*=-1;pos.y=Math.max(44,Math.min(maxY,pos.y))}
+    boy.style.left=pos.x+'px';boy.style.top=pos.y+'px';
+    raf=requestAnimationFrame(step);
+  })();
+}
+function burst(){
+  var b=boy.getBoundingClientRect(),s=stage.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var h=document.createElement('div');h.className='pop';h.textContent=i%2?'\u2764':'\u2728';
+    h.style.left=(b.left-s.left+40)+'px';h.style.top=(b.top-s.top+20)+'px';
+    h.style.setProperty('--x',(Math.random()*120-60)+'px');
+    h.style.color=i%2?'#ff8fb1':'#ffd9a0';
+    stage.appendChild(h);setTimeout(function(e){e.remove()}.bind(null,h),1100);
   }
-
-  // colour set for one rose; very dark roses get lifted shades so the petals still show
-  function palette(base) {
-    var n = parseInt(base.slice(1), 16);
-    var lum = 0.3 * (n >> 16) + 0.59 * ((n >> 8) & 255) + 0.11 * (n & 255);
-    if (lum < 70) {
-      return { dark: shade(base, -0.55), mid: base, base: shade(base, 0.1), light: shade(base, 0.26), edge: "#000000" };
-    }
-    return { dark: shade(base, -0.38), mid: shade(base, -0.16), base: base, light: shade(base, 0.2), edge: shade(base, -0.55) };
+}
+function back(){
+  if(!isAway)return;
+  isAway=false;cancelAnimationFrame(raf);bsay.classList.remove('on');gsay.classList.add('on');setTimeout(function(){gsay.classList.remove('on')},1700);
+  boy.classList.remove('away');boy.classList.add('bob');
+  boy.style.transition='';
+  boy.style.left='calc(50% - 178px)';boy.style.top=(stage.clientHeight-stage.clientHeight*.08-150)+'px';
+  setTimeout(home,950);
+  burst();
+  hearts[found].classList.add('on');found++;
+  if(found>=3){
+    hint.textContent="You always bring me back.";
+    setTimeout(function(){final.classList.add('show')},1400);
+  }else{
+    hint.textContent=found===1?"Thank you. He's back, for now...":"Back again. Let's see how long...";
+    timer=setTimeout(leave,1800+Math.random()*2800);
   }
+}
+boy.addEventListener('pointerdown',function(e){e.preventDefault();back()});
+boy.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();back()}});
+start.addEventListener('click',function(){
+  if(started)return;started=true;start.style.display='none';
+  hint.textContent="Look closely. Something is about to happen...";
+  timer=setTimeout(leave,2200);
+});
 
-  // the rose head is built from layers of petals turned around the centre
-  function roseHead(base) {
-    var P = palette(base);
-    var petal = "M50 52C25 45 22 16 40 11Q50 6 60 11C78 16 75 45 50 52Z";
-    function layer(count, scale, offset, fill, stroke) {
-      var out = "";
-      for (var i = 0; i < count; i++) {
-        var angle = offset + i * (360 / count);
-        out += '<path d="' + petal + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1" ' +
-               'transform="rotate(' + angle + ' 50 50) translate(50 50) scale(' + scale + ') translate(-50 -50)"/>';
-      }
-      return out;
-    }
-    return layer(7, 1.0, 0, P.dark, P.edge) +
-           layer(6, 0.82, 25, P.mid, P.dark) +
-           layer(5, 0.62, 10, P.base, P.dark) +
-           layer(4, 0.42, 40, P.light, P.mid) +
-           '<path d="M50 50m-3 0a3 3 0 1 1 6 0a6 6 0 1 1-12 0" fill="none" stroke="' + P.dark + '" stroke-width="1.5" stroke-linecap="round"/>';
-  }
-
-  // just the head, used in the bouquet (the stem there is plain CSS so it can grow)
-  function headSVG(base) {
-    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + roseHead(base) + '</svg>';
-  }
-
-  function roseSVG(base) {
-    return '<svg viewBox="0 0 100 190" aria-hidden="true">' +
-      '<path d="M50 88C49 120 51 150 50 190" stroke="#3b7d3f" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M50 140C72 136 84 122 86 108C66 110 54 122 50 140Z" fill="#4d9a50"/>' +
-      '<path d="M50 160C30 158 18 146 15 134C34 134 46 144 50 160Z" fill="#3f8a45"/>' +
-      roseHead(base) + '</svg>';
-  }
-
-  function shuffle(list) {
-    for (var i = list.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = list[i]; list[i] = list[j]; list[j] = tmp;
-    }
-    return list;
-  }
-
-  function plant() {
-    var groups = [reds, pinks, blacks];
-    var order = [];
-    for (var i = 0; i < IN_GARDEN; i++) {
-      var group = groups[i % 3];
-      order.push(group[Math.floor(i / 3) % group.length]);
-    }
-    shuffle(order);
-
-    garden.innerHTML = "";
-    fan.innerHTML = "";
-    picked = 0;
-    garden.classList.remove("done");
-    bouquet.classList.remove("done");
-    box.classList.remove("done");
-    document.body.classList.remove("done");
-    garden.scrollTop = 0;
-    message.classList.remove("show");
-    hint.style.display = "";
-    hint.innerHTML = 'Pick ' + TOTAL + ' roses for your bouquet (<span id="count">0</span>/' + TOTAL + ')';
-
-    order.forEach(function (color, i) {
-      var btn = document.createElement("button");
-      btn.className = "rose";
-      btn.type = "button";
-      btn.setAttribute("aria-label", "Pick a rose");
-      btn.dataset.color = color;
-      btn.innerHTML = roseSVG(color);
-      btn.querySelector("svg").style.animationDelay = (i % 7) * 0.3 + "s";
-      btn.addEventListener("click", pick);
-      garden.appendChild(btn);
-    });
-  }
-
-  function pick(e) {
-    if (picked >= TOTAL) return;
-    var btn = e.currentTarget;
-    btn.disabled = true;
-    btn.classList.add("gone");
-
-    var item = document.createElement("div");
-    item.className = "picked";
-    item.dataset.tier = (picked % 4);
-    item.innerHTML = headSVG(btn.dataset.color) + '<i class="stem"></i>';
-    fan.appendChild(item);
-    picked++;
-    document.getElementById("count").textContent = picked;
-
-    // wait one frame so the pop-in animation can run
-    requestAnimationFrame(function () { requestAnimationFrame(arrange); });
-
-    if (picked === TOTAL) finish();
-  }
-
-  // Lay the roses out like a round bouquet. Four rows: short stems spread wide
-  // at the front, long stems stay near the middle at the back. As more roses
-  // are added the stems grow a little so the roses spread out and stay visible.
-  // The holder stays fixed below the flowers.
-  var spread = [74, 60, 44, 26];     // half-angle of each row, in degrees
-  var stemLen = [34, 64, 94, 124];   // stem length of each row, in px
-
-  function arrange() {
-    var items = fan.children;
-    var n = items.length;
-    var progress = n / TOTAL;
-    var grow = 0.8 + 0.4 * progress;
-
-
-    for (var t = 0; t < 4; t++) {
-      var row = [];
-      for (var i = 0; i < n; i++) if (+items[i].dataset.tier === t) row.push(items[i]);
-      row.forEach(function (el, k) {
-        var angle;
-        if (row.length === 1) angle = (t % 2 ? -1 : 1) * spread[t] * 0.3;
-        else angle = -spread[t] + k * (2 * spread[t] / (row.length - 1));
-        el.style.transform = "rotate(" + angle + "deg)";
-        el.style.setProperty("--len", Math.round(stemLen[t] * grow) + "px");
-        el.style.zIndex = 4 - t;
-      });
-    }
-  }
-
-  function finish() {
-    setTimeout(function () {
-      garden.classList.add("done");
-      bouquet.classList.add("done");
-      box.classList.add("done");
-      document.body.classList.add("done");
-      hint.style.display = "none";
-      message.classList.add("show");
-      for (var i = 0; i < 30; i++) dropPetal(i * 0.12);
-    }, 900);
-  }
-
-  // petals drifting down the screen
-  var petalColors = ["#f48fb1", "#ff8fb1", "#ec407a", "#f8bbd0", "#e91e63"];
-  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function dropPetal(delay) {
-    var p = document.createElement("i");
-    p.className = "petal";
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.setProperty("--s", 10 + Math.random() * 10 + "px");
-    p.style.setProperty("--t", 8 + Math.random() * 6 + "s");
-    p.style.setProperty("--dx", Math.random() * 120 - 60 + "px");
-    p.style.setProperty("--r1", Math.random() * 360 + "deg");
-    p.style.setProperty("--r2", 360 + Math.random() * 360 + "deg");
-    p.style.setProperty("--pc", petalColors[Math.floor(Math.random() * petalColors.length)]);
-    p.style.setProperty("--delay", (delay || 0) + "s");
-    p.addEventListener("animationend", function () { p.remove(); });
-    document.getElementById("petals").appendChild(p);
-  }
-
-  if (!reduceMotion) {
-    for (var k = 0; k < 8; k++) dropPetal(k * 0.8);
-    setInterval(function () {
-      if (document.getElementById("petals").children.length < 22) dropPetal(0);
-    }, 700);
-  }
-
-  document.getElementById("again").addEventListener("click", plant);
-  plant();
+// white petals
+var c=document.getElementById('petals'),x=c.getContext('2d'),W,H,P=[],still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function size(){var d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0)}
+size();addEventListener('resize',size);
+for(var i=0;i<34;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:5+Math.random()*7,v:.4+Math.random()*.8,s:Math.random()*6,a:Math.random()*6,w:.01+Math.random()*.02,o:.5+Math.random()*.5});
+function draw(){
+  x.clearRect(0,0,W,H);
+  P.forEach(function(p){
+    p.y+=p.v;p.s+=p.w*2;p.a+=p.w;p.x+=Math.sin(p.s)*.6;
+    if(p.y>H+20){p.y=-20;p.x=Math.random()*W}
+    x.save();x.translate(p.x,p.y);x.rotate(p.a);x.scale(1,.6+.4*Math.abs(Math.cos(p.s)));
+    x.globalAlpha=p.o;x.fillStyle='#fff';
+    x.beginPath();x.moveTo(0,-p.r);x.bezierCurveTo(p.r,-p.r*.6,p.r*.7,p.r,0,p.r);x.bezierCurveTo(-p.r*.7,p.r,-p.r,-p.r*.6,0,-p.r);x.fill();
+    x.restore();
+  });
+  if(!still)requestAnimationFrame(draw);
+}
+draw();
+})();
 </script>
 </body>
 </html>
