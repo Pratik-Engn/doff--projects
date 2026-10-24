@@ -48,7 +48,9 @@ h1{font-family:'Great Vibes','Brush Script MT',cursive;font-weight:400;font-size
 .foot{margin-top:22px;font-size:1.05rem;color:var(--muted);font-style:italic;opacity:0;animation:rise 1.6s 2.6s forwards}
 .card{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .25s,box-shadow .25s}
 .card:active{transform:scale(.97)}
-.hint{margin-top:12px;font-size:.95rem;color:var(--rose-soft);font-style:italic;animation:beat 2.4s infinite}
+.hint{margin-top:14px;padding:8px 18px;border-radius:999px;font-size:.85rem;font-weight:600;font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:#2b1038;
+  background:linear-gradient(90deg,var(--rose-soft),var(--gold));box-shadow:0 0 14px rgba(255,143,177,.35);animation:softpulse 3s ease-in-out infinite}
+@keyframes softpulse{50%{opacity:.8}}
 .msg{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;
   background:radial-gradient(ellipse at 50% 40%,rgba(80,20,60,.92),rgba(11,6,20,.96));opacity:0;visibility:hidden;transition:opacity .8s,visibility .8s;cursor:pointer}
 .msg.show{opacity:1;visibility:visible}
@@ -69,7 +71,7 @@ h1{font-family:'Great Vibes','Brush Script MT',cursive;font-weight:400;font-size
 <main>
   <div class="sun">🌸</div>
   <h1>Good Morning</h1>
-  <p class="love">I love you <span>♥</span></p>
+  <div style="height:22px"></div>
   <section class="card" id="card" role="button" tabindex="0" aria-label="Tap for a message">
     <div class="label" id="label">Until your birthday</div>
     <div class="big" id="big">7 days</div>
