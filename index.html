@@ -9,6 +9,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
 html,body{height:100%;margin:0;overscroll-behavior:none}
 html{height:100vh;height:100dvh}
+html,body{touch-action:none}
 body{-webkit-text-size-adjust:100%}
 body{background:radial-gradient(circle at 50% 0%,#2f6b45,#15341f 75%);color:#fff4e6;font-family:Georgia,'Times New Roman',serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 h1{margin:0;font-size:22px;font-weight:normal;letter-spacing:1px;color:#ffc6df}
@@ -34,10 +35,6 @@ button.pop{display:inline-block}
 @keyframes pulse{50%{opacity:.35}}
 @keyframes pop{0%{opacity:0;transform:scale(.3) translateY(24px)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:none}}
 button{font:inherit;border:0;border-radius:26px;padding:13px 30px;background:linear-gradient(#ff8fbd,#e0407f);color:#fff;font-size:18px;box-shadow:0 0 16px rgba(255,120,170,.5);cursor:pointer}
-#pad{display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,50px);gap:6px;margin-bottom:34px}
-#pad button{padding:0;border-radius:14px;font-size:20px;background:#244d33;border:1px solid #ff9ec7;box-shadow:none}
-#pad .u{grid-column:2}
-@media (hover:hover) and (pointer:fine){#pad{display:none}}
 .fl{position:fixed;left:0;right:0;display:flex;justify-content:space-around;font-size:26px;pointer-events:none;z-index:1;opacity:.95}
 .fl.b{bottom:calc(2px + env(safe-area-inset-bottom,0px))}.fl.t{top:calc(2px + env(safe-area-inset-top,0px))}
 #pet{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
@@ -48,7 +45,6 @@ button{font:inherit;border:0;border-radius:26px;padding:13px 30px;background:lin
 <div id="wrap"><canvas id="c"></canvas>
 <div id="ov"><h2 id="t"></h2><p id="s"></p><div id="tap">Tap to start 🌸</div></div></div>
 <div id="toast"></div>
-<div id="pad"><button class="u" data-d="U">▲</button><button data-d="L">◀</button><button data-d="D">▼</button><button data-d="R">▶</button></div>
 <div class="fl b"><span>🌹</span><span>🌼</span><span>🌷</span><span>🌻</span><span>🌸</span><span>🌼</span><span>🌹</span></div>
 <canvas id="pet"></canvas><div id="veil"></div><canvas id="bfc"></canvas><div id="fin"></div>
 <script>
@@ -69,7 +65,7 @@ const FINAL_TITLE = "I love you, baby, so much 💖";
 const FINAL_MSG = "Please take care of yourself.<br>Make sure you rest well,<br>and I’m always with you.";
 // shown on the opening screen, before the game starts
 const INTRO_TITLE = "Good evening, baby 🌷";
-const INTRO_MSG = "I made this little garden just for you.<br>Every flower you catch carries a hug from me.<br>Swipe or tap to guide the caterpillar.";
+const INTRO_MSG = "I made this little garden just for you.<br>Every flower you catch carries a hug from me.<br>Tap or swipe anywhere on the screen — the caterpillar will turn that way.";
 const MESSAGE_EVERY = 3;   // show a message after this many flowers
 const MEDIUM_AT = 25;      // total flowers (all plays together) before it speeds up
 const HARD_AT = 60;        // total flowers before walls become dangerous
@@ -84,7 +80,7 @@ try{S=Object.assign(S,JSON.parse(localStorage.getItem('lovesnake2')||'{}'))}catc
 function save(){try{localStorage.setItem('lovesnake2',JSON.stringify(S))}catch(e){}}
 const speed=()=>Math.round(210-125*Math.min(1,S.total/100));
 const walls=()=>S.total>=HARD_AT;
-function resize(){const ns=Math.max(220,Math.floor(Math.min(innerWidth-24,innerHeight-300,500)));if(ns==size&&gbg)return;size=ns;cell=size/N;
+function resize(){const ns=Math.max(220,Math.floor(Math.min(innerWidth-24,innerHeight-240,500)));if(ns==size&&gbg)return;size=ns;cell=size/N;
   const r=Math.min(devicePixelRatio||1,2);cv.width=cv.height=size*r;cv.style.width=cv.style.height=size+'px';cx.setTransform(r,0,0,r,0,0);$('wrap').style.width=size+'px';$('toast').style.width=size+'px';buildBg();draw()}
 addEventListener('resize',()=>{resize();petInit()});
 function place(){do{food={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N),c:COLS[Math.floor(Math.random()*COLS.length)]}}while(snake.some(s=>s.x==food.x&&s.y==food.y))}
@@ -156,15 +152,19 @@ function cocoon(x,y,h,a,rot,g){cx.save();cx.globalAlpha=a;cx.translate(x,y);cx.r
   cx.fillStyle='#f1e5cc';cx.beginPath();cx.ellipse(0,0,h*.36,h*.62,0,0,7);cx.fill();cx.shadowBlur=0;cx.strokeStyle='rgba(120,90,60,.45)';cx.lineWidth=1.5;
   for(let i=-3;i<=3;i++){cx.beginPath();cx.ellipse(0,i*h*.15,h*.34*Math.sqrt(Math.max(0,1-(i*.25)**2)),h*.05,0,0,Math.PI);cx.stroke()}cx.restore()}
 $('ov').onclick=start;
-document.querySelectorAll('[data-d]').forEach(b=>b.addEventListener('touchstart',e=>{e.preventDefault();turn(b.dataset.d)},{passive:false}));
-document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>turn(b.dataset.d));
 addEventListener('keydown',e=>{const m={ArrowUp:'U',ArrowDown:'D',ArrowLeft:'L',ArrowRight:'R',w:'U',s:'D',a:'L',d:'R',W:'U',S:'D',A:'L',D:'R'}[e.key];if(m){e.preventDefault();turn(m)}
   else if((e.key==' '||e.key=='Enter')&&!alive&&!endT){e.preventDefault();start()}});
-let sx,sy,moved=false;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;moved=false},{passive:true});
-document.addEventListener('touchmove',e=>{if(sx==null)return;const dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
-  if(Math.max(Math.abs(dx),Math.abs(dy))>22){moved=true;turn(Math.abs(dx)>Math.abs(dy)?(dx>0?'R':'L'):(dy>0?'D':'U'));sx=e.touches[0].clientX;sy=e.touches[0].clientY}},{passive:true});
-document.addEventListener('touchend',e=>{if(!moved&&alive&&e.target===cv){const t=e.changedTouches[0],r=cv.getBoundingClientRect(),h=snake[0],dx=(t.clientX-r.left)/cell-.5-h.x,dy=(t.clientY-r.top)/cell-.5-h.y;
-  if(dir.x!=0){if(Math.abs(dy)>.5)turn(dy>0?'D':'U')}else{if(Math.abs(dx)>.5)turn(dx>0?'R':'L')}}sx=null});
+let pid=null,px,py,mv=false;
+function tapSteer(x,y){if(!snake)return;const r=cv.getBoundingClientRect(),k=r.width/size,cp=cell*k,h=snake[0],dx=x-(r.left+(h.x+.5)*cp),dy=y-(r.top+(h.y+.5)*cp),cur=q.length?q[q.length-1]:dir,hz=cur.x!=0;
+  let d=Math.abs(dx)>=Math.abs(dy)?(dx>0?'R':'L'):(dy>0?'D':'U');
+  if(hz&&(d=='R'||d=='L')){if((d=='R')==(cur.x>0)){if(Math.abs(dy)>cp*.8)d=dy>0?'D':'U';else return}else d=dy>=0?'D':'U'}
+  else if(!hz&&(d=='U'||d=='D')){if((d=='D')==(cur.y>0)){if(Math.abs(dx)>cp*.8)d=dx>0?'R':'L';else return}else d=dx>=0?'R':'L'}
+  turn(d)}
+addEventListener('pointerdown',e=>{pid=e.pointerId;px=e.clientX;py=e.clientY;mv=false});
+addEventListener('pointermove',e=>{if(e.pointerId!==pid)return;const dx=e.clientX-px,dy=e.clientY-py;if(Math.max(Math.abs(dx),Math.abs(dy))>16){mv=true;turn(Math.abs(dx)>Math.abs(dy)?(dx>0?'R':'L'):(dy>0?'D':'U'));px=e.clientX;py=e.clientY}});
+addEventListener('pointerup',e=>{if(e.pointerId!==pid)return;pid=null;if(!mv&&alive)tapSteer(e.clientX,e.clientY)});
+addEventListener('pointercancel',()=>{pid=null});
+addEventListener('contextmenu',e=>e.preventDefault());
 let snd=true,ac;let ci=0;function chime(){if(!snd)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();const n=ac.currentTime,F=[523.25,587.33,659.25,783.99,880,783.99,659.25,587.33],f=F[ci++%F.length];
   [[f,.11,1.6],[f*2,.035,1.1]].forEach(([fr,v,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(0,n);g.gain.linearRampToValueAtTime(v,n+.04);g.gain.exponentialRampToValueAtTime(.0005,n+d);o.connect(g);g.connect(ac.destination);o.start(n);o.stop(n+d+.05)})}catch(e){}}
 document.addEventListener('visibilitychange',()=>{clearTimeout(timer);if(!document.hidden&&alive)timer=setTimeout(tick,700)});
